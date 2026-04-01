@@ -47,7 +47,7 @@ pip install aiohttp
 
 ## 🚀 Usage Guide
 
-1. **Launch**: Run `python sms_bomber_updated.py`.
+1. **Launch**: Run `python main.py`.
 2. **Select Mode**: 
    - `[1]` SMS Bombing
    - `[2]` Call Bombing
