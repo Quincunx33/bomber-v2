@@ -39,7 +39,7 @@ def clear():
         os.system('clear')
 
 def banner():
-    print(f""
+    print(f"""
 {C}╔══════════════════════════════════════════════════════════════╗
 ║ {Y}   ____  __  __ ____    ____   ___  __  __ ____  _____ ____  {C}║
 ║ {Y}  / ___||  \/  / ___|  | __ ) / _ \|  \/  | | __ )| ____|  _ \ {C}║
@@ -52,7 +52,7 @@ def banner():
 ║ {G}           Security: Session, Smart Retry, Log, Jitter       {C}║
 ║ {P}           Engine: Asyncio & Aiohttp (High Speed)            {C}║
 ╚══════════════════════════════════════════════════════════════╝
-    "")
+    """)
 
 def get_random_name():
     return ''.join(random.choices(string.ascii_letters, k=8))
@@ -61,7 +61,7 @@ def get_random_email():
     return f"{get_random_name()}@gmail.com"
 
 def get_random_phone():
-    return "01" + ".join(random.choices(string.digits, k=9))
+    return "01" + "".join(random.choices(string.digits, k=9))
 
 class AsyncBomber:
     def __init__(self, target, limit, mode='sms', stop_event=None):
@@ -3761,10 +3761,11 @@ class AsyncBomber:
             ]
         else:
             apis = [
-                self.api_email1___bikroy_account, self.api_email2___bikroy_password_reset, self.api_email3___busbud_signup, self.api_email4___mithaibd_register, self.api_email5___saralifestyle_reset, self.api_email6___tohfay_register, self.api_email7___tohfay_forgot, self.api_email8___mrmedicinemart_signup, self.api_email9___mrmedicinemart_reset, self.api_email10___robishop_create, self.api_email11___robishop_reset, self.api_email12___singerbd_otp, self.api_email13___potakait_register, self.api_email14___electronicsbd_register, self.api_email15___electronicsbd_recovery, self.api_email16___globalbrand_register, self.api_email17___globalbrand_forgot, self.api_email18___zymak_register, self.api_email19___zymak_lost_password, self.api_email20___shopz_register, self.api_email21___shopz_lost_password, self.api_email22___xclusivebrands_register, self.api_email23___xclusivebrands_lost_password, self.api_email24___gamebuybd_register, self.api_email25___gamebuybd_lost_password, self.api_email26___gameforce_register, self.api_email27___gameforce_lost_password, self.api_email28___gamecastlebd_register, self.api_email29___gamecastlebd_lost_password, self.api_email30___techshopbd_signup, self.api_email31___electronicshopbd_ajax_register, self.api_email32___electronicshopbd_lost_password, self.api_email33___makersbd_register, self.api_email34___abe_register, self.api_email35___abe_forget_password, self.api_email36___colorcrazebd_signup, self.api_email37___colorcrazebd_reset, self.api_email38___chowdhuryelectronics_register, self.api_email39___smartview_register, self.api_email40___smartview_verify_resend, self.api_email41___smartview_password_code, self.api_email42___gadstyle_register, self.api_email43___gadstyle_lost_password, self.api_email44___havit_register, self.api_email45___havit_lost_pa                self.api_email46___htebd_register, self.api_email47___htebd_lost_password, self.api_email48___shanbd_register, self.api_email49___quora_signup, self.api_email50___pinterest_signup,
+                self.api_email1___bikroy_account, self.api_email2___bikroy_password_reset, self.api_email3___busbud_signup, self.api_email4___mithaibd_register, self.api_email5___saralifestyle_reset, self.api_email6___tohfay_register, self.api_email7___tohfay_forgot, self.api_email8___mrmedicinemart_signup, self.api_email9___mrmedicinemart_reset, self.api_email10___robishop_create, self.api_email11___robishop_reset, self.api_email12___singerbd_otp, self.api_email13___potakait_register, self.api_email14___electronicsbd_register, self.api_email15___electronicsbd_recovery, self.api_email16___globalbrand_register, self.api_email17___globalbrand_forgot, self.api_email18___zymak_register, self.api_email19___zymak_lost_password, self.api_email20___shopz_register, self.api_email21___shopz_lost_password, self.api_email22___xclusivebrands_register, self.api_email23___xclusivebrands_lost_password, self.api_email24___gamebuybd_register, self.api_email25___gamebuybd_lost_password, self.api_email26___gameforce_register, self.api_email27___gameforce_lost_password, self.api_email28___gamecastlebd_register, self.api_email29___gamecastlebd_lost_password, self.api_email30___techshopbd_signup, self.api_email31___electronicshopbd_ajax_register, self.api_email32___electronicshopbd_lost_password, self.api_email33___makersbd_register, self.api_email34___abe_register, self.api_email35___abe_forget_password, self.api_email36___colorcrazebd_signup, self.api_email37___colorcrazebd_reset, self.api_email38___chowdhuryelectronics_register, self.api_email39___smartview_register, self.api_email40___smartview_verify_resend, self.api_email41___smartview_password_code, self.api_email42___gadstyle_register, self.api_email43___gadstyle_lost_password, self.api_email44___havit_register, self.api_email45___havit_lost_password, self.api_email46___htebd_register, self.api_email47___htebd_lost_password, self.api_email48___shanbd_register, self.api_email49___quora_signup, self.api_email50___pinterest_signup,
                 self.api_email51___shikho_email_otp
             ]
-        while self.running and not self.stop_event.is_set():     if self.limit != 0 and self.sent >= self.limit:
+        while self.running and not self.stop_event.is_set():
+            if self.limit != 0 and self.sent >= self.limit:
                 self.running = False
                 break
 
@@ -3862,7 +3863,7 @@ async def main():
                 bombing_tasks = [asyncio.create_task(bomber.bomb_task()) for _ in range(tasks_count)]
 
                 # Task to wait for user input to stop the bombing
-                input_task = asyncio.create_task(asyncio.to_thread(input, "))
+                input_task = asyncio.create_task(asyncio.to_thread(input, ""))
                 
                 # Wait for either all bombing tasks to complete (if limit is set) or user input to stop
                 # We want to stop if the user presses Enter (input_task) OR if all bombing tasks finish.
