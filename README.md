@@ -1,84 +1,49 @@
-# 🚀 Ultimate SMS, Call & Email Bomber v2.2 (Multi-Engine Edition)
+# Bomber-V2 🚀
 
-[![Python](https://img.shields.io/badge/Python-3.x-blue.svg)](https://www.python.org/)
-[![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20iOS%20%7C%20PC-green.svg)]()
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)]()
+[![Python Version](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Release](https://img.shields.io/github/v/release/Quincunx33/bomber-v2)](https://github.com/Quincunx33/bomber-v2/releases)
 
-A high-performance, interactive, and cross-platform bombing tool designed for **Termux (Android)**, **a-Shell (iOS)**, and **PC (Windows/Linux)**. This repository offers advanced asynchronous bombing capabilities with support for SMS, Call, and Email.
+A professional, cross-platform asynchronous SMS, Call, and Email bomber designed for security testing and educational purposes.
 
----
+## ✨ Features
 
-## 🌟 Key Features
+- **Asynchronous Engine**: Powered by `asyncio` and `aiohttp` for high-speed concurrent requests.
+- **Smart Cooldown System**: Automatically detects rate limits and puts APIs on cooldown to avoid IP bans.
+- **Stealth Headers**: Dynamically generates modern browser headers (Origin, Referer, Sec-Ch-Ua) to mimic real user traffic.
+- **Cross-Platform**: Works seamlessly on Windows, Linux (Termux), and iOS (a-Shell).
+- **Multi-Mode**: Supports SMS, Call, and Email bombing with 180+ integrated APIs.
+- **Professional Packaging**: Installable as a package via `pip`.
 
-### ⚡ Extreme Performance (Asyncio & Aiohttp)
-- **Asynchronous Engine**: Utilizes `asyncio` and `aiohttp` for non-blocking HTTP requests, enabling massive concurrency and speed.
-- **Multi-Mode Support**: Seamlessly switch between **SMS**, **Call**, and **Email** bombing.
-- **Massive API Collection**: 
-  - **120+ SMS APIs** (including Bikroy, Daraz, Chaldal, Pathao, etc.)
-  - **11+ Call APIs** (including Robi, Airtel, GP, Banglalink, etc.)
-  - **50+ Email APIs** (including Quora, Pinterest, Adobe, etc.)
+## 🚀 Installation & Usage
 
-### 🛠️ Advanced Functionality
-- **♾️ Unlimited Mode**: Set limit to `0` for continuous bombing until manually stopped.
-- **🛑 Smart Stop**: Press **Enter** at any time to stop bombing and return to the main menu.
-- **🕵️ Stealth & Security**:
-  - **Random User-Agents**: Rotates device signatures to avoid detection.
-  - **Smart Retry & Jitter**: Automatically handles API failures and adds random delays to mimic human behavior.
-  - **VPN Recommended**: Built-in advice for using VPN to avoid IP bans.
-- **📊 Detailed Logging**: Live terminal logs with success/failure indicators and persistent file-based logging.
+### From Source (Recommended)
 
----
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/Quincunx33/bomber-v2.git
+    cd bomber-v2
+    ```
 
-## 🛠️ Installation
+2.  **Install the package:**
+    ```bash
+    pip install .
+    ```
 
-First, clone the repository:
-```bash
-git clone https://github.com/Quincunx33/bomber-v2.git
-cd bomber-v2
-```
+3.  **Run the application:**
+    After installation, the command `bomber-v2` will be available globally.
+    ```bash
+    bomber-v2
+    ```
 
-### Install Dependencies
-```bash
-pip install aiohttp
-```
+## 🛡 Disclaimer
 
----
-
-## 🚀 Usage Guide
-
-1. **Launch**: Run `python main.py`.
-2. **Select Mode**: 
-   - `[1]` SMS Bombing
-   - `[2]` Call Bombing
-   - `[3]` Email Bombing
-3. **Target**: 
-   - For SMS/Call: Enter phone number (e.g., `017xxxxxxxx`).
-   - For Email: Enter target email address.
-4. **Limit**: Enter bombing limit (0 for Unlimited).
-5. **Concurrency**: Enter number of concurrent tasks (e.g., `50`).
-6. **Stop**: Press **Enter** at any time to stop and return to the menu.
-
----
-
-## ⚠️ Important VPN Notice
-For optimal performance, to maintain anonymity, and to prevent IP bans, it is **highly recommended** to use a **VPN service** before running this tool.
-
----
-
-## ⚠️ Disclaimer
-This tool is developed for **educational purposes only**. The developer is not responsible for any misuse or damage caused by this tool. Use it responsibly and at your own risk.
-
----
+This tool is created for **educational purposes only**. The author is not responsible for any misuse or damage caused by this tool. Use it at your own risk and only on targets you have permission to test.
 
 ## 🤝 Contributing
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/Quincunx33/bomber-v2/issues).
 
----
+Contributions are welcome! Please see `CONTRIBUTING.md` for details on how to get started.
 
-## 📜 License
+## 📄 License
+
 Distributed under the MIT License. See `LICENSE` for more information.
-
----
-
-### #SMSBomber #CallBomber #EmailBomber #Python #Asyncio #Aiohttp #CyberSecurity #Termux #aShell #Automation

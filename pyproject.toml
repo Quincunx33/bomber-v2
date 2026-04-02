@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bomber-v2"
+version = "2.1.0"
+authors = [
+  { name="Quincunx33", email="quincunx33@example.com" },
+]
+description = "A professional, cross-platform asynchronous SMS, Call, and Email bomber."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Security",
+    "Topic :: Utilities",
+]
+dependencies = [
+    "aiohttp>=3.8.0",
+    "aiohttp-retry>=2.8.3",
+    "requests>=2.28.0",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/Quincunx33/bomber-v2"
+"Bug Tracker" = "https://github.com/Quincunx33/bomber-v2/issues"
+
+[project.scripts]
+bomber-v2 = "bomber_v2.main:main_entry"
+
+[tool.setuptools.packages.find]
+where = ["src"]
