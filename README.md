@@ -4,7 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Release](https://img.shields.io/github/v/release/Quincunx33/bomber-v2)](https://github.com/Quincunx33/bomber-v2/releases)
 
-A professional, cross-platform asynchronous SMS, Call, and Email bomber designed for security testing and educational purposes.
+A professional, cross-platform asynchronous SMS, Call, and Email bomber designed for security testing and educational purposes (works only on Bd numbers).
 
 ## ✨ Features
 
