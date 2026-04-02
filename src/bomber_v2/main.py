@@ -3855,5 +3855,12 @@ async def main():
             logging.error(f"\n{R}[!] Error: {e}{W}")
             await asyncio.sleep(3)
 
+def main_entry():
+    """Entry point for the console script."""
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        pass
+
 if __name__ == "__main__":
-    asyncio.run(main())
+    main_entry()
